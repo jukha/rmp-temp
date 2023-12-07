@@ -56,7 +56,7 @@ function Login() {
                     className="w-full rounded-[34px] border border-gray-200 bg-gray-100 py-3 pl-3 text-sm font-medium placeholder-gray-500 focus:border-gray-400 focus:bg-white focus:outline-none"
                     onChange={(e) => setEmail(e.target.value)}
                   />
-                  <label htmlFor="email" className="text-primary pl-2">
+                  <label htmlFor="email" className="pl-2 text-primary">
                     Email
                   </label>
                 </span>
@@ -67,11 +67,12 @@ function Login() {
                     className="w-full rounded-[34px] border border-gray-200 bg-gray-100 py-3 pl-3 text-sm font-medium placeholder-gray-500 focus:border-gray-400 focus:bg-white focus:outline-none"
                     onChange={(e) => setEmail(e.target.value)}
                   />
-                  <label htmlFor="password" className="text-primary pl-2">
+                  <label htmlFor="password" className="pl-2 text-primary">
                     Password
                   </label>
                 </span>
 
+                <Link className="block my-5 text-center text-primary" to="/forget">Forgot Password?</Link>
                 <div className="mt-5">
                   <Button type="primary" text="Continue" />
                 </div>
@@ -79,7 +80,7 @@ function Login() {
                   Don't have an account?
                   <Link
                     to="/signup"
-                    className="text-primary ml-1 border-b border-dotted border-gray-500 font-medium"
+                    className="ml-1 border-b border-dotted border-gray-500 font-medium text-primary"
                   >
                     Signup
                   </Link>

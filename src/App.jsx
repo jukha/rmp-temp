@@ -8,6 +8,7 @@ import Login from "./pages/Login";
 import "primereact/resources/themes/vela-blue/theme.css";
 import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
+import ForgetPassword from "./pages/ForgetPassword";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -18,6 +19,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/forget" element={<ForgetPassword />} />
       </Routes>
     </BrowserRouter>
   );
