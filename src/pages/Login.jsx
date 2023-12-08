@@ -35,7 +35,8 @@ function Login() {
       password: "qwerty",
     },
     validate,
-    onSubmit: async (values) => {
+    onSubmit: (values) => {
+      console.log("****");
       const email = values.email;
       const password = values.password;
       if (email && password) login(email, password);
@@ -147,7 +148,7 @@ function Login() {
                   Forgot Password?
                 </Link>
                 <div className="mt-5">
-                  <Button type="primary" text="Continue" />
+                  <Button type="primary" htmlType="submit" text="Continue" />
                 </div>
                 <p className="mt-6 text-center text-xs text-gray-600">
                   Don't have an account?

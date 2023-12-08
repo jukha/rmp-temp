@@ -10,6 +10,9 @@ export default {
         text: "#333333", // Dark Gray
         highlight: "#ff6600", // Orange
       },
+      fontFamily: {
+        poppins: ['Poppins', 'sans-serif'],
+      },
     },
   },
   plugins: [],

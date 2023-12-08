@@ -1,10 +1,8 @@
-import Footer from "../components/footer/Footer";
-import Header from "../components/header/Header";
 import Button from "../ui/Button";
 
 function Home() {
   return (
-    <>
+    <main>
       <section className="flex h-[500px] flex-col items-center justify-center bg-[linear-gradient(to_right_bottom,rgba(49,84,44,0.8),rgba(16,71,52,0.8)),url('/assets/man-reading-book.ec0041cf.jpeg')] bg-cover bg-center">
         <h2 className="mb-10 text-4xl text-white">
           Enter your <b>school</b> to get started
@@ -56,7 +54,7 @@ function Home() {
           <Button text="Sign Up" type="primary" to="/signup" />
         </div>
       </section>
-    </>
+    </main>
   );
 }
 

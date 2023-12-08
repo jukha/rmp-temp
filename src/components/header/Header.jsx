@@ -1,16 +1,41 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import Button from "../../ui/Button";
 import Logo from "../../ui/Logo";
 import { Menu } from "primereact/menu";
 import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
+import { Dropdown } from "primereact/dropdown";
+import SearchProfessorForm from "./SearchProfessorForm";
+import SearchSchoolForm from "./SearchSchoolForm";
+
+const CustomMenu = styled(Menu)`
+  background: #fff;
+  font-family: "Poppins";
+  & * {
+    color: #000;
+  }
+  & .p-menuitem:hover {
+    background-color: #004080;
+    & * {
+      color: #fff;
+    }
+  }
+`;
 
 function Header() {
   const { isAuthenticated, user, logout } = useAuth();
-  const userInitials = "JS";
-  const userName = "Jack";
+  const [searchBy, setSearchBy] = useState("professors");
   const userMenuRef = useRef(null);
   const navigate = useNavigate();
+
+  const userInitials = "JS";
+  const userName = "Jack";
+
+  const searchByTypes = [
+    { name: "Professors", value: "professors" },
+    { name: "Schools", value: "schools" },
+  ];
 
   let items = [
     {
@@ -38,25 +63,48 @@ function Header() {
 
   return (
     <header className="bg-background">
-      <nav className="container mx-auto flex items-center justify-between px-4 py-8">
-        <ul className="flex items-center gap-5">
-          <li>
-            <a>
-              <i className="pi pi-facebook text-2xl"></i>
-            </a>
-          </li>
-          <li>
-            <a>
-              <i className="pi pi-instagram text-2xl"></i>
-            </a>
-          </li>
-          <li>
-            <a>
-              <i className="pi pi-twitter text-2xl"></i>
-            </a>
-          </li>
-        </ul>
+      <nav className="container mx-auto flex items-center justify-between gap-7 px-4 py-6">
+        {!isAuthenticated && (
+          <ul className="flex items-center gap-5">
+            <li>
+              <a>
+                <i className="pi pi-facebook text-2xl"></i>
+              </a>
+            </li>
+            <li>
+              <a>
+                <i className="pi pi-instagram text-2xl"></i>
+              </a>
+            </li>
+            <li>
+              <a>
+                <i className="pi pi-twitter text-2xl"></i>
+              </a>
+            </li>
+          </ul>
+        )}
         <Logo />
+        {isAuthenticated && (
+          <div className="flex flex-grow items-center gap-4">
+            <Dropdown
+              value={searchBy}
+              onChange={(e) => setSearchBy(e.value)}
+              options={searchByTypes}
+              optionLabel="name"
+              placeholder="Select a City"
+              className="font-poppins w-full w-max bg-primary"
+              pt={{
+                input: { className: "font-poppins py-3" },
+                panel: { className: "bg-primary font-poppins" },
+              }}
+            />
+            {searchBy === "schools" ? (
+              <SearchSchoolForm />
+            ) : (
+              <SearchProfessorForm />
+            )}
+          </div>
+        )}
         {isAuthenticated ? (
           <div className="flex items-center gap-4">
             <p>Welcome {userName}!</p>
@@ -66,7 +114,7 @@ function Header() {
             >
               {userInitials}
             </button>
-            <Menu model={items} popup={true} ref={userMenuRef} />
+            <CustomMenu model={items} popup={true} ref={userMenuRef} />
           </div>
         ) : (
           <div className="flex items-center gap-3">

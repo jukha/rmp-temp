@@ -1,6 +1,5 @@
-import { useState } from "react";
 import "./App.css";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
@@ -19,8 +18,6 @@ import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
 
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
     <BrowserRouter>
       <AuthProvider>
@@ -35,6 +32,7 @@ function App() {
                 </ProtectedRoute>
               }
             >
+              <Route index element={<Navigate replace to="profile" />} />
               <Route path="profile" element={<Profile />} />
               <Route path="settings" element={<AccountSettings />} />
               <Route path="ratings" element={<Ratings />} />
