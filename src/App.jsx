@@ -16,6 +16,8 @@ import { AuthProvider } from "./contexts/AuthContext";
 import "primereact/resources/themes/vela-blue/theme.css";
 import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
+import SearchResultPageSchools from "./components/search-result/SearchResultPageSchools";
+import SearchResultPageProfessors from "./components/search-result/SearchResultPageProfessors";
 
 function App() {
   return (
@@ -38,6 +40,8 @@ function App() {
               <Route path="ratings" element={<Ratings />} />
               <Route path="saved-professors" element={<SavedProfessors />} />
             </Route>
+            <Route path="/school" element={<SearchResultPageSchools />} />
+            <Route path="/professor" element={<SearchResultPageProfessors />} />
           </Route>
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />

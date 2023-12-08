@@ -28,25 +28,25 @@ function AccountLayout() {
     {
       label: "Profile",
       slug: "profile",
-      icon: "pi pi-fw pi-home",
+      icon: "pi pi-user",
       command: () => navigate("profile"),
     },
     {
       label: "Account Settings",
       slug: "settings",
-      icon: "pi pi-fw pi-calendar",
+      icon: "pi pi-cog",
       command: () => navigate("settings"),
     },
     {
       label: "Ratings",
       slug: "ratings",
-      icon: "pi pi-fw pi-pencil",
+      icon: "pi pi-star-fill",
       command: () => navigate("ratings"),
     },
     {
       label: "Saved Professors",
       slug: "saved-professor",
-      icon: "pi pi-fw pi-file",
+      icon: "pi pi-save",
       command: () => navigate("saved-professors"),
     },
   ];

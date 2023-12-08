@@ -50,12 +50,12 @@ function Header() {
     },
     {
       label: "Your Ratings",
-      icon: "pi pi-fw pi-trash",
+      icon: "pi pi-star-fill",
       command: () => navigate("account/ratings"),
     },
     {
       label: "Saved Professors",
-      icon: "pi pi-star-fill",
+      icon: "pi pi-save",
       command: () => navigate("account/saved-professors"),
     },
     { label: "Logout", icon: "pi pi-sign-out", command: () => logout() },
@@ -92,7 +92,7 @@ function Header() {
               options={searchByTypes}
               optionLabel="name"
               placeholder="Select a City"
-              className="font-poppins w-full w-max bg-primary"
+              className="font-poppins  bg-primary"
               pt={{
                 input: { className: "font-poppins py-3" },
                 panel: { className: "bg-primary font-poppins" },
