@@ -1,11 +1,58 @@
 import Button from "../ui/Button";
 import Logo from "../ui/Logo";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { InputText } from "primereact/inputtext";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useAuth } from "../contexts/AuthContext";
+import { useFormik } from "formik";
 
 function Login() {
-  const [email, setEmail] = useState("");
+  const navigate = useNavigate();
+  const [inputType, setInputType] = useState("password");
+  const { login, isAuthenticated } = useAuth();
+  const passwordRef = useRef(null);
+
+  const validate = (values) => {
+    const errors = {};
+
+    if (!values.email) {
+      errors.email = "Required";
+    } else if (
+      !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)
+    ) {
+      errors.email = "Invalid email address";
+    }
+    if (!values.password) {
+      errors.password = "Required";
+    }
+
+    return errors;
+  };
+
+  const formik = useFormik({
+    initialValues: {
+      email: "jack@example.com",
+      password: "qwerty",
+    },
+    validate,
+    onSubmit: async (values) => {
+      const email = values.email;
+      const password = values.password;
+      if (email && password) login(email, password);
+    },
+  });
+
+  function toggleInputType(e) {
+    e.preventDefault();
+    passwordRef.current.focus();
+    if (inputType === "password") setInputType("text");
+    else setInputType("password");
+  }
+
+  useEffect(() => {
+    if (isAuthenticated) navigate("/");
+  }, [isAuthenticated, navigate]);
+
   return (
     <div className="flex min-h-screen justify-center bg-gray-100 text-gray-900">
       <div className="m-0 flex max-w-screen-xl flex-1 justify-center bg-white shadow sm:m-10 sm:rounded-lg">
@@ -48,14 +95,19 @@ function Login() {
                 </div>
               </div>
 
-              <div className="mx-auto max-w-xs">
+              <form className="mx-auto max-w-xs" onSubmit={formik.handleSubmit}>
                 <span className="p-float-label mb-9">
                   <InputText
                     id="email"
-                    value={email}
+                    name="email"
                     className="w-full rounded-[34px] border border-gray-200 bg-gray-100 py-3 pl-3 text-sm font-medium placeholder-gray-500 focus:border-gray-400 focus:bg-white focus:outline-none"
-                    onChange={(e) => setEmail(e.target.value)}
+                    {...formik.getFieldProps("email")}
                   />
+                  {formik.touched.email && formik.errors.email ? (
+                    <div className="mt-2 text-left text-red-400">
+                      {formik.errors.email}
+                    </div>
+                  ) : null}
                   <label htmlFor="email" className="pl-2 text-primary">
                     Email
                   </label>
@@ -63,16 +115,37 @@ function Login() {
                 <span className="p-float-label">
                   <InputText
                     id="password"
-                    value={email}
+                    name="password"
                     className="w-full rounded-[34px] border border-gray-200 bg-gray-100 py-3 pl-3 text-sm font-medium placeholder-gray-500 focus:border-gray-400 focus:bg-white focus:outline-none"
-                    onChange={(e) => setEmail(e.target.value)}
+                    ref={passwordRef}
+                    {...formik.getFieldProps("password")}
                   />
+                  <button
+                    className="absolute right-3 top-4  flex transform cursor-pointer items-center justify-center"
+                    type="button"
+                    onClick={toggleInputType}
+                  >
+                    {inputType === "text" && <i className="pi pi-eye"></i>}
+                    {inputType === "password" && (
+                      <i className="pi pi-eye-slash"></i>
+                    )}
+                  </button>
+                  {formik.touched.password && formik.errors.password ? (
+                    <div className="mt-2 text-left text-red-400">
+                      {formik.errors.password}
+                    </div>
+                  ) : null}
                   <label htmlFor="password" className="pl-2 text-primary">
                     Password
                   </label>
                 </span>
 
-                <Link className="block my-5 text-center text-primary" to="/forget">Forgot Password?</Link>
+                <Link
+                  className="my-5 block text-center text-primary"
+                  to="/forget"
+                >
+                  Forgot Password?
+                </Link>
                 <div className="mt-5">
                   <Button type="primary" text="Continue" />
                 </div>
@@ -85,7 +158,7 @@ function Login() {
                     Signup
                   </Link>
                 </p>
-              </div>
+              </form>
             </div>
           </div>
         </div>

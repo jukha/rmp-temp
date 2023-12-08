@@ -5,7 +5,6 @@ import Button from "../ui/Button";
 function Home() {
   return (
     <>
-      <Header />
       <section className="flex h-[500px] flex-col items-center justify-center bg-[linear-gradient(to_right_bottom,rgba(49,84,44,0.8),rgba(16,71,52,0.8)),url('/assets/man-reading-book.ec0041cf.jpeg')] bg-cover bg-center">
         <h2 className="mb-10 text-4xl text-white">
           Enter your <b>school</b> to get started
@@ -20,7 +19,7 @@ function Home() {
         </form>
       </section>
       <section className="container mx-auto px-4 py-40 text-center">
-        <h2 className="text-primary mb-4 text-4xl font-extrabold">
+        <h2 className="mb-4 text-4xl font-extrabold text-primary">
           Join the RMP Family
         </h2>
         <h4 className="text-2xl">Love RMP? Let's make it official.</h4>
@@ -57,7 +56,6 @@ function Home() {
           <Button text="Sign Up" type="primary" to="/signup" />
         </div>
       </section>
-      <Footer />
     </>
   );
 }
