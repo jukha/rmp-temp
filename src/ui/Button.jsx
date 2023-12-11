@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-function Button({ to, type, htmlType = "button", size, text, onClick }) {
+function Button({ to, type, htmlType = "button", text, onClick}) {
   const base =
     "block w-full transition text-base py-2 px-12 rounded-[34px] font-medium focus:outline-none";
   const primaryStyles = "bg-primary hover:bg-accent text-white";
