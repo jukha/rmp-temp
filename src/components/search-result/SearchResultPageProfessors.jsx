@@ -1,5 +1,6 @@
 import { Dropdown } from "primereact/dropdown";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 function SearchResultPageProfessors() {
   const [department, setDepartment] = useState("");
@@ -20,13 +21,13 @@ function SearchResultPageProfessors() {
         options={departments}
         optionLabel="name"
         placeholder="Select..."
-        className="font-poppins w-full max-w-xs bg-primary"
+        className="w-full max-w-xs bg-primary font-poppins"
         pt={{
           input: { className: "font-poppins py-3" },
           panel: { className: "bg-primary font-poppins" },
         }}
       />
-      <div className="mt-6 flex max-w-4xl items-start gap-10 bg-background px-6 py-5 mb-6">
+      <Link to="abc" className="mb-6 mt-6 flex max-w-4xl items-start gap-10 bg-background px-6 py-5">
         <div>
           <p className="text-black">Quality</p>
           <div className="my-2 bg-green-300 px-3 py-4 text-4xl font-extrabold">
@@ -53,8 +54,8 @@ function SearchResultPageProfessors() {
         <button className="ml-auto">
           <i className="pi pi-bookmark"></i>
         </button>
-      </div>
-      <div className="mt-6 flex max-w-4xl items-start gap-10 bg-background px-6 py-5 mb-6">
+      </Link>
+      <Link to="abc" className="mb-6 mt-6 flex max-w-4xl items-start gap-10 bg-background px-6 py-5">
         <div>
           <p className="text-black">Quality</p>
           <div className="my-2 bg-yellow-300 px-3 py-4 text-4xl font-extrabold">
@@ -81,7 +82,7 @@ function SearchResultPageProfessors() {
         <button className="ml-auto">
           <i className="pi pi-bookmark"></i>
         </button>
-      </div>
+      </Link>
     </main>
   );
 }

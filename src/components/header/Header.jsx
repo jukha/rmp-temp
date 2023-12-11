@@ -92,7 +92,7 @@ function Header() {
               options={searchByTypes}
               optionLabel="name"
               placeholder="Select a City"
-              className="font-poppins  bg-primary"
+              className="bg-primary  font-poppins"
               pt={{
                 input: { className: "font-poppins py-3" },
                 panel: { className: "bg-primary font-poppins" },

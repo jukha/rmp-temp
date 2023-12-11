@@ -18,6 +18,8 @@ import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
 import SearchResultPageSchools from "./components/search-result/SearchResultPageSchools";
 import SearchResultPageProfessors from "./components/search-result/SearchResultPageProfessors";
+import DetailPageProfessor from "./components/search-result/DetailPageProfessor";
+import DetailPageSchool from "./components/search-result/DetailPageSchool";
 
 function App() {
   return (
@@ -41,7 +43,9 @@ function App() {
               <Route path="saved-professors" element={<SavedProfessors />} />
             </Route>
             <Route path="/school" element={<SearchResultPageSchools />} />
+            <Route path="school/:id" element={<DetailPageSchool />} />
             <Route path="/professor" element={<SearchResultPageProfessors />} />
+            <Route path="professor/:id" element={<DetailPageProfessor />} />
           </Route>
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
