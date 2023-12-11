@@ -1,7 +1,12 @@
+import { Link } from "react-router-dom";
+
 function SearchResultPageSchools() {
   return (
     <main className="container mx-auto px-4 py-16">
-      <div className="mb-6 mt-6 flex max-w-4xl items-start gap-10 bg-background px-6 py-5">
+      <Link
+        to="abc"
+        className="mb-6 mt-6 flex max-w-4xl items-start gap-10 bg-background px-6 py-5"
+      >
         <div>
           <p className="text-black">Quality</p>
           <div className="my-2 bg-yellow-300 px-3 py-4 text-4xl font-extrabold">
@@ -28,7 +33,7 @@ function SearchResultPageSchools() {
         <button className="ml-auto">
           <i className="pi pi-bookmark"></i>
         </button>
-      </div>
+      </Link>
     </main>
   );
 }

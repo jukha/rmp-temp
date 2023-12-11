@@ -2,13 +2,14 @@ import { useState } from "react";
 import Button from "../../ui/Button";
 import { Dropdown } from "primereact/dropdown";
 import { Tooltip } from "primereact/tooltip";
+import { getBgColor } from "../../utils/calcBgColor";
 
 const ratingData = [
-  { name: "awesome", value: "5", count: "1", color: "#ADD8E6" },
-  { name: "great", value: "4", count: "1", color: "#90EE90" },
-  { name: "good", value: "3", count: "4", color: "#FFFFE0" },
-  { name: "ok", value: "2", count: "6", color: "#FFD700" },
-  { name: "awful", value: "1", count: "4", color: "#FFB6C1" },
+  { name: "awesome", value: 5, count: 1 },
+  { name: "great", value: 4, count: 1 },
+  { name: "good", value: 3, count: 4 },
+  { name: "ok", value: 2, count: 6 },
+  { name: "awful", value: 1, count: 4 },
 ];
 
 const courses = [
@@ -95,7 +96,7 @@ function DetailPageProfessor() {
                   </div>
                   <span
                     className="w-full rounded-3xl py-3"
-                    style={{ background: rating.color }}
+                    style={{ background: getBgColor(rating.value) }}
                   ></span>
                   <span>{rating.count}</span>
                 </div>
@@ -242,14 +243,14 @@ function DetailPageProfessor() {
                     }}
                   />
                   <i
-                    className="pi pi-share-alt share text-2xl"
+                    className="pi pi-share-alt share cursor-pointer text-2xl"
                     data-pr-tooltip="Share this rating"
                     data-pr-position="right"
                     data-pr-at="right+5 top"
                     data-pr-my="left center-2"
                   ></i>
                   <i
-                    className="pi pi-flag report text-2xl"
+                    className="pi pi-flag report cursor-pointer text-2xl"
                     data-pr-tooltip="Report this rating"
                     data-pr-position="right"
                     data-pr-at="right+5 top"
