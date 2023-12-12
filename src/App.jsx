@@ -23,6 +23,7 @@ import DetailPageSchool from "./components/search-result/DetailPageSchool";
 import AddProfessor from "./components/add/AddProfessor";
 import CompareSchools from "./components/compare/CompareSchools";
 import CompareProfessors from "./components/compare/CompareProfessors";
+import AddSchool from "./components/add/AddSchool";
 
 function App() {
   return (
@@ -46,7 +47,8 @@ function App() {
               <Route path="saved-professors" element={<SavedProfessors />} />
             </Route>
             <Route path="/school" element={<SearchResultPageSchools />} />
-            <Route path="/school/:id" element={<DetailPageSchool />} />
+            <Route path="school/:id" element={<DetailPageSchool />} />
+            <Route path="/add/school" element={<AddSchool />} />
             <Route
               path="/compare/schools/:id/:id"
               element={<CompareSchools />}
@@ -54,11 +56,11 @@ function App() {
 
             <Route path="/professor" element={<SearchResultPageProfessors />} />
             <Route path="professor/:id" element={<DetailPageProfessor />} />
+            <Route path="/add/professor" element={<AddProfessor />} />
             <Route
               path="/compare/professors/abc/abc"
               element={<CompareProfessors />}
             />
-            <Route path="add/professor" element={<AddProfessor />} />
           </Route>
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />

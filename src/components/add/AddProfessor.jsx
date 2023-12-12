@@ -178,19 +178,21 @@ function AddProfessor() {
           ) : null}
         </div>
 
-        <div className="mb-6 flex items-center gap-2">
-          <Checkbox
-            onChange={(e) => setChecked(e.checked)}
-            checked={checked}
-            inputId="agreeToTerms"
-            pt={{
-              icon: "bg-white",
-              input: "bg-transparent border border-primary",
-            }}
-          ></Checkbox>
-          <label htmlFor="agreeToTerms">
-            I agree to the Terms of Use and Privacy Policy.
-          </label>
+        <div className="mb-6">
+          <div className="flex items-center gap-2">
+            <Checkbox
+              onChange={(e) => setChecked(e.checked)}
+              checked={checked}
+              inputId="agreeToTerms"
+              pt={{
+                icon: "bg-white",
+                input: "bg-transparent border border-primary",
+              }}
+            ></Checkbox>
+            <label htmlFor="agreeToTerms">
+              I agree to the Terms of Use and Privacy Policy.
+            </label>
+          </div>
           {formik.touched.agreeToTerms && formik.errors.agreeToTerms ? (
             <div className="mt-2 text-left text-red-400">
               {formik.errors.agreeToTerms}
