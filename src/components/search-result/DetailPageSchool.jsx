@@ -29,7 +29,7 @@ function DetailPageSchool() {
               <Button text="Rate" type="primary" to="/login" />
             </div>
             <div>
-              <Button text="Compare" to="/signup" />
+              <Button text="Compare" to="/compare/schools/abc/abc" />
             </div>
           </div>
         </div>

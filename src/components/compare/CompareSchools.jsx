@@ -58,7 +58,7 @@ function CompareSchools() {
             </div>
             {ratingData.map((rating, i) => {
               return (
-                <div className="mb-8 flex items-center gap-4">
+                <div className="mb-8 flex items-center gap-4" key={i}>
                   <div className="grid grid-cols-[repeat(5,57px)] grid-rows-[18px] gap-[2px]">
                     {Array.from({ length: 5 }, (_, index) => {
                       {
@@ -121,7 +121,7 @@ function CompareSchools() {
           </div>
           {ratingData.map((rating, i) => {
             return (
-              <div className="mb-8 flex flex-row-reverse items-center gap-4">
+              <div className="mb-8 flex flex-row-reverse items-center gap-4" key={i}>
                 <div className="grid grid-cols-[repeat(5,57px)] grid-rows-[18px] gap-[2px]">
                   {Array.from({ length: 5 }, (_, index) => {
                     {
