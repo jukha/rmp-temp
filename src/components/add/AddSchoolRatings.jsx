@@ -46,239 +46,90 @@ function AddSchoolRatings() {
       </div>
       <main className="bg-background">
         <div className="container mx-auto px-4 py-16">
+          {/* Reputation */}
           <div className="mb-8 max-w-[900px] bg-white p-7">
             <h6 className="mb-4 font-medium">
-              Select Course Code
-              <span className="font-medium text-red-600">*</span>
-            </h6>
-            <Dropdown
-              value={country}
-              onChange={(e) => setCountry(e.value)}
-              options={countries}
-              optionLabel="name"
-              placeholder="Select Country"
-              className="w-full rounded-[34px] border border-gray-200"
-              pt={{
-                root: "bg-gray-100 text-primary",
-                input: "font-poppins py-3 bg-transparent text-black",
-                panel: "bg-transparent font-poppins rounded-[34px]",
-                wrapper: "bg-gray-100 rounded-[inherit]",
-                item: "text-black",
-                trigger: "text-black",
-              }}
-            />
-          </div>
-          {/* Rate your professor */}
-          <div className="mb-8 max-w-[900px] bg-white p-7">
-            <h6 className="mb-4 font-medium">
-              Rate your professor
+              Reputation
               <span className="font-medium text-red-600">*</span>
             </h6>
             <AddRating ratingData={ratingData} />
           </div>
-          {/* Rate Difficulty */}
+          {/* Location */}
           <div className="mb-8 max-w-[900px] bg-white p-7">
             <h6 className="mb-4 font-medium">
-              How difficult was this professor?
+              Location
               <span className="font-medium text-red-600">*</span>
             </h6>
             <AddRating ratingData={ratingDataDifficulty} />
           </div>
-          {/* Take again */}
+          {/* Opportunities */}
           <div className="mb-8 max-w-[900px] bg-white p-7">
             <h6 className="mb-4 font-medium">
-              Would you take this professor again?
+              Opportunities
               <span className="font-medium text-red-600">*</span>
             </h6>
-            <div className="flex justify-center gap-3">
-              <div className="align-items-center flex">
-                <RadioButton
-                  inputId="takeAgainYes"
-                  name="takeAgain"
-                  value="yes"
-                  onChange={(e) => setTakeAgain(e.value)}
-                  checked={takeAgain === "yes"}
-                />
-                <label htmlFor="takeAgainYes" className="ml-2">
-                  Yes
-                </label>
-              </div>
+            <AddRating ratingData={ratingDataDifficulty} />
+          </div>
+          {/* Facilities and common areas* */}
+          <div className="mb-8 max-w-[900px] bg-white p-7">
+            <h6 className="mb-4 font-medium">
+              Facilities and common areas*
+              <span className="font-medium text-red-600">*</span>
+            </h6>
+            <AddRating ratingData={ratingDataDifficulty} />
+          </div>
+          {/* Internet* */}
+          <div className="mb-8 max-w-[900px] bg-white p-7">
+            <h6 className="mb-4 font-medium">
+              Internet*
+              <span className="font-medium text-red-600">*</span>
+            </h6>
+            <AddRating ratingData={ratingDataDifficulty} />
+          </div>
+          {/* Food */}
+          <div className="mb-8 max-w-[900px] bg-white p-7">
+            <h6 className="mb-4 font-medium">
+              Food
+              <span className="font-medium text-red-600">*</span>
+            </h6>
+            <AddRating ratingData={ratingDataDifficulty} />
+          </div>
+          {/* Clubs */}
+          <div className="mb-8 max-w-[900px] bg-white p-7">
+            <h6 className="mb-4 font-medium">
+              Clubs
+              <span className="font-medium text-red-600">*</span>
+            </h6>
+            <AddRating ratingData={ratingDataDifficulty} />
+          </div>
 
-              <div className="align-items-center flex">
-                <RadioButton
-                  inputId="takeAgainNo"
-                  name="takeAgain"
-                  value="no"
-                  onChange={(e) => setTakeAgain(e.value)}
-                  checked={takeAgain === "no"}
-                />
-                <label htmlFor="takeAgainNo" className="ml-2">
-                  No
-                </label>
-              </div>
-            </div>
-          </div>
-          {/* Credit */}
+          {/* Social */}
           <div className="mb-8 max-w-[900px] bg-white p-7">
             <h6 className="mb-4 font-medium">
-              Was this class taken for credit?
+              Social
               <span className="font-medium text-red-600">*</span>
             </h6>
-            <div className="flex justify-center gap-3">
-              <div className="align-items-center flex">
-                <RadioButton
-                  inputId="takeAgainYes"
-                  name="takeAgain"
-                  value="yes"
-                  onChange={(e) => setTakeAgain(e.value)}
-                  checked={takeAgain === "yes"}
-                />
-                <label htmlFor="takeAgainYes" className="ml-2">
-                  Yes
-                </label>
-              </div>
+            <AddRating ratingData={ratingDataDifficulty} />
+          </div>
 
-              <div className="align-items-center flex">
-                <RadioButton
-                  inputId="takeAgainNo"
-                  name="takeAgain"
-                  value="no"
-                  onChange={(e) => setTakeAgain(e.value)}
-                  checked={takeAgain === "no"}
-                />
-                <label htmlFor="takeAgainNo" className="ml-2">
-                  No
-                </label>
-              </div>
-            </div>
-          </div>
-          {/* textbooks */}
+          {/* Happiness */}
           <div className="mb-8 max-w-[900px] bg-white p-7">
             <h6 className="mb-4 font-medium">
-              Did this professor use textbooks?
+              Happiness
               <span className="font-medium text-red-600">*</span>
             </h6>
-            <div className="flex justify-center gap-3">
-              <div className="align-items-center flex">
-                <RadioButton
-                  inputId="takeAgainYes"
-                  name="takeAgain"
-                  value="yes"
-                  onChange={(e) => setTakeAgain(e.value)}
-                  checked={takeAgain === "yes"}
-                />
-                <label htmlFor="takeAgainYes" className="ml-2">
-                  Yes
-                </label>
-              </div>
+            <AddRating ratingData={ratingDataDifficulty} />
+          </div>
 
-              <div className="align-items-center flex">
-                <RadioButton
-                  inputId="takeAgainNo"
-                  name="takeAgain"
-                  value="no"
-                  onChange={(e) => setTakeAgain(e.value)}
-                  checked={takeAgain === "no"}
-                />
-                <label htmlFor="takeAgainNo" className="ml-2">
-                  No
-                </label>
-              </div>
-            </div>
-          </div>
-          {/* attendance */}
+          {/* Safety */}
           <div className="mb-8 max-w-[900px] bg-white p-7">
             <h6 className="mb-4 font-medium">
-              Was attendance mandatory?
+              Safety
               <span className="font-medium text-red-600">*</span>
             </h6>
-            <div className="flex justify-center gap-3">
-              <div className="align-items-center flex">
-                <RadioButton
-                  inputId="takeAgainYes"
-                  name="takeAgain"
-                  value="yes"
-                  onChange={(e) => setTakeAgain(e.value)}
-                  checked={takeAgain === "yes"}
-                />
-                <label htmlFor="takeAgainYes" className="ml-2">
-                  Yes
-                </label>
-              </div>
+            <AddRating ratingData={ratingDataDifficulty} />
+          </div>
 
-              <div className="align-items-center flex">
-                <RadioButton
-                  inputId="takeAgainNo"
-                  name="takeAgain"
-                  value="no"
-                  onChange={(e) => setTakeAgain(e.value)}
-                  checked={takeAgain === "no"}
-                />
-                <label htmlFor="takeAgainNo" className="ml-2">
-                  No
-                </label>
-              </div>
-            </div>
-          </div>
-          {/* grades */}
-          <div className="mb-8 max-w-[900px] bg-white p-7">
-            <h6 className="mb-4 font-medium">
-              Select grade received
-              <span className="font-medium text-red-600">*</span>
-            </h6>
-            <Dropdown
-              value={country}
-              onChange={(e) => setCountry(e.value)}
-              options={countries}
-              optionLabel="name"
-              placeholder="Select Country"
-              className="w-full rounded-[34px] border border-gray-200"
-              pt={{
-                root: "bg-gray-100 text-primary",
-                input: "font-poppins py-3 bg-transparent text-black",
-                panel: "bg-transparent font-poppins rounded-[34px]",
-                wrapper: "bg-gray-100 rounded-[inherit]",
-                item: "text-black",
-                trigger: "text-black",
-              }}
-            />
-          </div>
-          {/* tags */}
-          <div className="mb-8 max-w-[900px] bg-white p-7">
-            <h6 className="mb-4 font-medium">
-              Select up to 3 tags
-              <span className="font-medium text-red-600">*</span>
-            </h6>
-            <div className="flex flex-wrap gap-4">
-              <span className="inline-block rounded-2xl bg-gray-300 px-4 py-2 uppercase">
-                Extra credit
-              </span>
-              <span className="inline-block rounded-2xl bg-gray-300 px-4 py-2 uppercase">
-                Get ready to read
-              </span>
-              <span className="inline-block rounded-2xl bg-gray-300 px-4 py-2 uppercase">
-                Caring
-              </span>
-              <span className="inline-block rounded-2xl bg-gray-300 px-4 py-2 uppercase">
-                Get ready to read
-              </span>
-              <span className="inline-block rounded-2xl bg-gray-300 px-4 py-2 uppercase">
-                Caring
-              </span>
-              <span className="inline-block rounded-2xl bg-gray-300 px-4 py-2 uppercase">
-                Get ready to read
-              </span>
-              <span className="inline-block rounded-2xl bg-gray-300 px-4 py-2 uppercase">
-                Get ready to read
-              </span>
-              <span className="inline-block rounded-2xl bg-gray-300 px-4 py-2 uppercase">
-                Caring
-              </span>
-              <span className="inline-block rounded-2xl bg-gray-300 px-4 py-2 uppercase">
-                Get ready to read
-              </span>
-            </div>
-          </div>
           {/* review */}
           <div className="mb-8 max-w-[900px] bg-white p-7">
             <h6 className="mb-4 font-medium">
@@ -336,7 +187,7 @@ function AddSchoolRatings() {
               and Privacy Policy. Submitted data becomes the property of
               RateMyProfessors.com. IP addresses are logged.
             </p>
-            <div className="max-w-max mx-auto">
+            <div className="mx-auto max-w-max">
               <Button text="Submit Rating" />
             </div>
           </div>
