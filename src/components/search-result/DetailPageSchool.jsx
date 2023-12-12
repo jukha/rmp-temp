@@ -19,14 +19,16 @@ const ratingsData = [
 function DetailPageSchool() {
   return (
     <>
-      <div className="sticky top-0 z-50 w-full bg-white py-6 shadow-[rgba(0,_0,_0,_0.25)_0px_25px_50px_-12px]">
-        <div className="container mx-auto px-4">
-          <p>Southfield, MI</p>
-          <h2 className="my-3 text-4xl font-extrabold">Abcott Institute</h2>
-          <Link className="font-medium underline">View all Professors</Link>
-          <div className="mb-10 mt-6 flex items-center gap-3">
+      <div className="sticky top-[90px] z-50 w-full bg-white py-6 shadow-[rgba(0,_0,_0,_0.25)_0px_25px_50px_-12px]">
+        <div className="container mx-auto px-4 flex items-center justify-between">
+          <div>
+            <p>Southfield, MI</p>
+            <h2 className="my-3 text-4xl font-extrabold">Abcott Institute</h2>
+            <Link className="font-medium underline">View all Professors</Link>
+          </div>
+          <div className="mt-6 flex items-center gap-3">
             <div>
-              <Button text="Rate" type="primary" to="/login" />
+              <Button text="Rate" type="primary" to="/add/school-rating/abc" />
             </div>
             <div>
               <Button text="Compare" to="/compare/schools/abc/abc" />

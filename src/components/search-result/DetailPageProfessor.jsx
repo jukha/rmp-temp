@@ -53,10 +53,14 @@ function DetailPageProfessor() {
           </div>
           <div className="mb-10 flex items-center gap-3">
             <div>
-              <Button text="Rate" to="/login" />
+              <Button text="Rate" to="/add/professor-rating/abc" />
             </div>
             <div>
-              <Button text="Compare" type="primary" to="/signup" />
+              <Button
+                text="Compare"
+                type="primary"
+                to="/compare/professors/abc/abc"
+              />
             </div>
           </div>
           <h5 className="my-4 font-semibold">I'm Professor Abcede</h5>

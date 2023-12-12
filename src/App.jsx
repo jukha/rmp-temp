@@ -24,6 +24,8 @@ import AddProfessor from "./components/add/AddProfessor";
 import CompareSchools from "./components/compare/CompareSchools";
 import CompareProfessors from "./components/compare/CompareProfessors";
 import AddSchool from "./components/add/AddSchool";
+import AddProfessorRatings from "./components/add/AddProfessorRatings";
+import AddSchoolRatings from "./components/add/AddSchoolRatings";
 
 function App() {
   return (
@@ -50,6 +52,10 @@ function App() {
             <Route path="school/:id" element={<DetailPageSchool />} />
             <Route path="/add/school" element={<AddSchool />} />
             <Route
+              path="/add/school-rating/:id"
+              element={<AddSchoolRatings />}
+            />
+            <Route
               path="/compare/schools/:id/:id"
               element={<CompareSchools />}
             />
@@ -58,7 +64,11 @@ function App() {
             <Route path="professor/:id" element={<DetailPageProfessor />} />
             <Route path="/add/professor" element={<AddProfessor />} />
             <Route
-              path="/compare/professors/abc/abc"
+              path="/add/professor-rating/:id"
+              element={<AddProfessorRatings />}
+            />
+            <Route
+              path="/compare/professors/:id/:id"
               element={<CompareProfessors />}
             />
           </Route>

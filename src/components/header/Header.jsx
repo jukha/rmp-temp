@@ -62,7 +62,7 @@ function Header() {
   ];
 
   return (
-    <header className="bg-background">
+    <header className="bg-background sticky z-50 top-0">
       <nav className="container mx-auto flex items-center justify-between gap-7 px-4 py-6">
         {!isAuthenticated && (
           <ul className="flex items-center gap-5">
