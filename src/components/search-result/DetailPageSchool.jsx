@@ -4,29 +4,31 @@ import { getBgColor } from "../../utils/calcBgColor";
 import { Tooltip } from "primereact/tooltip";
 
 const ratingsData = [
-  { icon: "😊", name: "Happiness", rating: 4.0 },
-  { icon: "🌟", name: "Reputation", rating: 3.0 },
-  { icon: "🏢", name: "Facilities", rating: 3.0 },
-  { icon: "🛡️", name: "Safety", rating: 3.0 },
-  { icon: "🌐", name: "Opportunities", rating: 3.0 },
-  { icon: "🍔", name: "Food", rating: 3.0 },
-  { icon: "📍", name: "Location", rating: 3.0 },
-  { icon: "📡", name: "Internet", rating: 2.0 },
-  { icon: "👥", name: "Social", rating: 2.0 },
-  { icon: "🎉", name: "Clubs", rating: 3.0 },
+  { icon: "pi pi-thumbs-up", name: "Happiness", rating: 4.0 },
+  { icon: "pi pi-sync", name: "Reputation", rating: 3.0 },
+  { icon: "pi pi-angle-double-up", name: "Facilities", rating: 3.0 },
+  { icon: "pi pi-heart", name: "Safety", rating: 3.0 },
+  { icon: "pi pi-chart-line", name: "Opportunities", rating: 3.0 },
+  { icon: "pi pi-tag", name: "Food", rating: 3.0 },
+  { icon: "pi pi-map-marker", name: "Location", rating: 3.0 },
+  { icon: "pi pi-globe", name: "Internet", rating: 2.0 },
+  { icon: "pi pi-users", name: "Social", rating: 2.0 },
+  { icon: "pi pi-building", name: "Clubs", rating: 3.0 },
 ];
 
 function DetailPageSchool() {
   return (
     <>
-      <div className="sticky top-[90px] z-50 w-full bg-white py-6 shadow-[rgba(0,_0,_0,_0.25)_0px_25px_50px_-12px]">
-        <div className="container mx-auto px-4 flex items-center justify-between">
+      <div className="sticky top-[90px] z-50 w-full bg-white py-4 shadow-[rgba(0,_0,_0,_0.25)_0px_25px_50px_-12px] lg:py-6">
+        <div className="container mx-auto flex items-center justify-between px-4">
           <div>
             <p>Southfield, MI</p>
-            <h2 className="my-3 text-4xl font-extrabold">Abcott Institute</h2>
-            <Link className="font-medium underline">View all Professors</Link>
+            <h2 className="my-2 text-xl font-extrabold lg:my-3 lg:text-4xl">
+              Abcott Institute
+            </h2>
+            <Link className="font-medium underline">View all Jobs</Link>
           </div>
-          <div className="mt-6 flex items-center gap-3">
+          <div className="mt-6 flex flex-wrap items-center gap-3">
             <div>
               <Button text="Rate" type="primary" to="/add/company-rating/abc" />
             </div>
@@ -37,16 +39,16 @@ function DetailPageSchool() {
         </div>
       </div>
       <main className="container mx-auto px-4 pt-16">
-        <div className="mb-20 flex max-w-3xl items-center justify-between">
+        <div className="mb-20 flex max-w-3xl flex-col items-center justify-between gap-10 md:flex-row">
           <div className="">
-            <h2 className="text-8xl font-extrabold">2.8</h2>
+            <h2 className="text-6xl font-extrabold lg:text-8xl">2.8</h2>
             <p>Overall Quality</p>
           </div>
-          <div className="grid grid-cols-2 gap-x-10 gap-y-4">
+          <div className="grid gap-8 sm:grid-cols-2 sm:gap-x-10 sm:gap-y-4">
             {ratingsData.map((rating, i) => (
-              <div className="flex justify-between gap-4">
+              <div key={i} className="flex justify-between gap-4">
                 <div className="flex items-center gap-4">
-                  <i>{rating.icon}</i>
+                  <i className={`text-3xl ${rating.icon}`}></i>
                   <p className="text-xl">{rating.name}</p>
                 </div>
                 <div className="relative">
@@ -63,7 +65,7 @@ function DetailPageSchool() {
           </div>
         </div>
         <div>
-          <div className="mb-6 mt-6 flex max-w-4xl items-start gap-10 bg-background px-6 py-5">
+          <div className="mb-6 mt-6 flex max-w-4xl flex-wrap items-start gap-0 bg-background px-6 py-5 lg:gap-10">
             <div>
               <div className="mb-6">
                 <p className="text-black">Overall</p>
@@ -83,11 +85,14 @@ function DetailPageSchool() {
                 students are rude as ever .. great central processing and
                 surgical tech students
               </p>
-              <div className="mt-6 grid grid-cols-2 gap-x-10 gap-y-4">
+              <div className="mt-6 grid gap-8 sm:grid-cols-2 sm:gap-x-10 sm:gap-y-4">
                 {ratingsData.map((rating, i) => (
-                  <div className="flex justify-between gap-3">
+                  <div
+                    key={i}
+                    className="flex flex-col justify-between gap-3 sm:flex-row"
+                  >
                     <p className="font-semibold">{rating.name}</p>
-                    <div className="grid flex-1 grid-cols-[repeat(5,32px)] grid-rows-[18px] justify-end gap-[2px]">
+                    <div className="grid flex-1 grid-cols-[repeat(5,32px)] grid-rows-[18px] justify-start sm:justify-end gap-[2px]">
                       {Array.from({ length: 5 }, (_, index) => {
                         {
                           if (index + 1 > rating.rating)

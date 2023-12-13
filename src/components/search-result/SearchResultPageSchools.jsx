@@ -2,10 +2,10 @@ import { Link } from "react-router-dom";
 
 function SearchResultPageSchools() {
   return (
-    <main className="container mx-auto px-4 py-16">
+    <main className="xl:container mx-auto px-4 py-16">
       <Link
         to="abc"
-        className="mb-6 mt-6 flex max-w-4xl items-start gap-10 bg-background px-6 py-5"
+        className="mb-6 mt-6 flex max-w-4xl flex-wrap items-start gap-10 bg-background px-6 py-5 relative"
       >
         <div>
           <p className="text-black">Quality</p>
@@ -30,7 +30,7 @@ function SearchResultPageSchools() {
             </p>
           </div>
         </div>
-        <button className="ml-auto">
+        <button className="ml-auto absolute top-6 right-6">
           <i className="pi pi-bookmark"></i>
         </button>
       </Link>

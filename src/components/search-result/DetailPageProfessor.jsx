@@ -21,18 +21,18 @@ const courses = [
 function DetailPageProfessor() {
   const [course, setCourse] = useState("all");
   return (
-    <main className="container mx-auto px-4 py-16">
-      <div className="flex items-start gap-10">
+    <main className="mx-auto px-4 py-16 xl:container">
+      <div className="flex flex-col lg:flex-row items-start gap-10">
         <div className="max-w-md flex-1">
           <div className="mb-3 flex items-start gap-3">
-            <h3 className="text-7xl font-extrabold">4</h3>
+            <h3 className="text-4xl sm:text-7xl font-extrabold">4</h3>
             <h4 className="text-lg font-medium text-gray-600">/ 5</h4>
           </div>
           <h5 className="font-medium">Overall Quality Based on 5 ratings</h5>
-          <h1 className="mb-2 mt-6 text-4xl font-extrabold">
-            <span>Vanessa</span>
+          <h1 className="mb-2 mt-6 text-2xl sm:text-4xl font-extrabold">
+            <span>Python</span>
             <br />
-            <span>Abcede</span>
+            <span>Developer</span>
           </h1>
           <p>
             Professor in the
@@ -42,13 +42,13 @@ function DetailPageProfessor() {
           </p>
           <div className="my-10 flex gap-5">
             <div className="text-center">
-              <h5 className="text-4xl font-extrabold">100%</h5>
+              <h5 className="text-2xl sm:text-4xl font-extrabold">100%</h5>
               <p>Would take again</p>
             </div>
             <span className="inline-block h-16 w-[1px] bg-black"></span>
             <div className="text-center">
-              <h5 className="text-4xl font-extrabold">2.6</h5>
-              <p>Level of Difficult</p>
+              <h5 className="text-2xl sm:text-4xl font-extrabold">2.6</h5>
+              <p>Level of Difficulty</p>
             </div>
           </div>
           <div className="mb-10 flex items-center gap-3">
@@ -111,7 +111,7 @@ function DetailPageProfessor() {
             <h3 className="mb-2 font-semibold">
               Check out Similar Professors in the Sociology Department
             </h3>
-            <div className="flex justify-center bg-blue-300 p-8">
+            <div className="flex flex-col xl:flex-row justify-center gap-3 bg-blue-300 p-8">
               <div className="flex gap-2">
                 <span className="bg-primary p-3 font-bold text-white">5.0</span>
                 <h5 className="max-w-[120px]">Alexander Patrick</h5>
@@ -148,7 +148,7 @@ function DetailPageProfessor() {
         {/* Ratings result */}
         {/* ============== */}
         <div>
-          <div className="mb-6 mt-6 flex max-w-4xl items-start gap-10 bg-background px-6 py-5">
+          <div className="mb-6 mt-6 flex flex-col sm:flex-row max-w-4xl items-start gap-10 bg-background px-6 py-5">
             <div>
               <div className="mb-6">
                 <p className="text-black">Quality</p>

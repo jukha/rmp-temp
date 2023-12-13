@@ -11,10 +11,10 @@ const ratingData = [
 
 function CompareSchools() {
   return (
-    <main className="container mx-auto px-4 py-16">
-      <div className="mb-8 flex justify-between">
-        <h1 className="text-4xl font-extrabold">Compare Schools</h1>
-        <div className="flex gap-4">
+    <main className="mx-auto px-4 py-16 xl:container">
+      <div className="mb-8 flex flex-wrap justify-between gap-4">
+        <h1 className="text-3xl font-extrabold sm:text-4xl">Compare Companies</h1>
+        <div className="flex flex-wrap gap-4">
           <div>
             <Button type="primary" text="Reset" />
           </div>
@@ -23,7 +23,7 @@ function CompareSchools() {
           </div>
         </div>
       </div>
-      <div className="grid max-w-4xl grid-cols-2 gap-3">
+      <div className="grid max-w-4xl gap-3 md:grid-cols-2">
         {/* ======= */}
         {/* 01 */}
         {/* ======= */}
@@ -46,7 +46,7 @@ function CompareSchools() {
             {/* ================= */}
             {/* Comparison Params */}
             {/* ================= */}
-            <div className="absolute -right-12 transform">
+            <div className="absolute -right-12 hidden transform lg:block">
               {ratingData.map((rating, i) => (
                 <div
                   key={i}
@@ -58,7 +58,10 @@ function CompareSchools() {
             </div>
             {ratingData.map((rating, i) => {
               return (
-                <div className="mb-8 flex items-center gap-4" key={i}>
+                <div
+                  className="mb-8 flex flex-col items-center gap-4 sm:flex-row"
+                  key={i}
+                >
                   <div className="grid grid-cols-[repeat(5,57px)] grid-rows-[18px] gap-[2px]">
                     {Array.from({ length: 5 }, (_, index) => {
                       {
@@ -92,7 +95,7 @@ function CompareSchools() {
                     })}
                   </div>
                   <span
-                    className="inline-block h-3 w-3 rounded-full"
+                    className="hidden h-3 w-3 rounded-full sm:inline-block "
                     style={{ background: getBgColor(rating.value) }}
                   ></span>
                   <h6 className="font-bold">{rating.value}</h6>
@@ -121,7 +124,10 @@ function CompareSchools() {
           </div>
           {ratingData.map((rating, i) => {
             return (
-              <div className="mb-8 flex flex-row-reverse items-center gap-4" key={i}>
+              <div
+                className="mb-8 flex flex-col sm:flex-row-reverse items-center gap-4"
+                key={i}
+              >
                 <div className="grid grid-cols-[repeat(5,57px)] grid-rows-[18px] gap-[2px]">
                   {Array.from({ length: 5 }, (_, index) => {
                     {
@@ -155,7 +161,7 @@ function CompareSchools() {
                   })}
                 </div>
                 <span
-                  className="inline-block h-3 w-3 rounded-full"
+                  className="sm:inline-block hidden h-3 w-3 rounded-full"
                   style={{ background: getBgColor(rating.value) }}
                 ></span>
                 <h6 className="font-bold">{rating.value}</h6>

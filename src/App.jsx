@@ -41,9 +41,6 @@ function App() {
         <Routes>
           <Route element={<AppLayout />}>
             <Route path="/" element={<Home />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
-            <Route path="/forget" element={<ForgetPassword />} />
             <Route path="/site-guidelines" element={<SiteGuidelines />} />
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/copyright" element={<CopyRight />} />
@@ -88,6 +85,9 @@ function App() {
               element={<CompareProfessors />}
             />
           </Route>
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/forget" element={<ForgetPassword />} />
         </Routes>
       </AuthProvider>
     </BrowserRouter>

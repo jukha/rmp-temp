@@ -40,12 +40,12 @@ function AddSchoolRatings() {
         <div className="container mx-auto flex items-center justify-between px-4">
           <div>
             <p>Southfield, MI</p>
-            <h2 className="my-3 text-4xl font-extrabold">Abcott Institute</h2>
+            <h2 className="my-3 tex-2xl sm:text-4xl font-extrabold">Abcott Institute</h2>
           </div>
         </div>
       </div>
       <main className="bg-background">
-        <div className="container mx-auto px-4 py-16">
+        <div className="container mx-auto px-4 py-8 sm:py-16">
           {/* Reputation */}
           <div className="mb-8 max-w-[900px] bg-white p-7">
             <h6 className="mb-4 font-medium">

@@ -40,7 +40,7 @@ function AddProfessorRatings() {
         <div className="container mx-auto flex items-center justify-between px-4">
           <div>
             <p>Southfield, MI</p>
-            <h2 className="my-3 text-4xl font-extrabold">Abcott Institute</h2>
+            <h2 className="my-3 text-2xl sm:text-4xl font-extrabold">Abcott Institute</h2>
           </div>
         </div>
       </div>

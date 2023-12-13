@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { getBgColor } from "../utils/calcBgColor";
+import styled from "styled-components";
 
 function AddRating({
   tileWidth = "60px",
@@ -38,6 +39,18 @@ function AddRating({
     gridTemplateColumns: `repeat(${maxRating}, ${tileWidth})`,
   };
 
+  const Wrapper = styled.div`
+    display: grid;
+    gap: ${(props) => props.gap};
+    grid-template-rows: ${(props) => props.tileHeight};
+    grid-template-columns: ${(props) =>
+      `repeat(${props.maxRating}, ${props.tileWidth})`};
+    @media (max-width: 576px) {
+      grid-template-columns: ${(props) => `repeat(${props.maxRating}, 40px)`};
+      grid-template-rows: 30px;
+    }
+  `;
+
   const firstTileStylings = {
     borderRadius: "20px 0px 0px 20px",
   };
@@ -48,7 +61,12 @@ function AddRating({
 
   return (
     <div className="mx-auto max-w-max">
-      <div style={wrapperStylings}>
+      <Wrapper
+        gap={gap}
+        tileHeight={tileHeight}
+        tileWidth={tileWidth}
+        maxRating={maxRating}
+      >
         {Array.from({ length: maxRating }, (_, i) => (
           <div
             key={i}
@@ -69,7 +87,8 @@ function AddRating({
             onMouseLeave={handleMouseLeave}
           ></div>
         ))}
-      </div>
+      </Wrapper>
+
       <div className="mt-4">
         <p className="text-center">
           {isHovered ? `${ratingData[tempRating - 1]?.name}-${tempRating}` : ""}

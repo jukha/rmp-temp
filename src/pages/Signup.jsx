@@ -8,7 +8,7 @@ function Signup() {
   const [email, setEmail] = useState("");
   return (
     <div className="flex min-h-screen justify-center bg-gray-100 text-gray-900">
-      <div className="m-0 flex max-w-screen-xl flex-1 justify-center bg-white shadow sm:m-10 sm:rounded-lg">
+      <div className="m-0 lg:flex max-w-screen-xl flex-1 justify-center bg-white shadow sm:m-10 sm:rounded-lg">
         <div className="p-6 sm:p-12 lg:w-1/2 xl:w-5/12">
           <div className="mx-auto max-w-max">
             <Logo />

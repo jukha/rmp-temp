@@ -4,7 +4,7 @@ import Logo from "../../ui/Logo";
 function Footer() {
   return (
     <footer className="bg-primary p-10">
-      <div className="container mx-auto flex flex-wrap justify-between gap-4 px-4 text-white">
+      <div className="xl:container mx-auto flex flex-wrap justify-between gap-8 lg:gap-4 px-4 text-white">
         <nav>
           <ul>
             <h4 className="mb-7 text-xl font-semibold uppercase">Site</h4>

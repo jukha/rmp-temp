@@ -9,10 +9,13 @@ function SearchProfessorForm() {
   function handleSubmit(e) {
     e.preventDefault();
     if (!professorName || !schoolName) return;
-    navigate("/jobs")
+    navigate("/jobs");
   }
   return (
-    <form className="flex flex-grow items-center gap-4" onSubmit={handleSubmit}>
+    <form
+      className="flex flex-grow flex-wrap sm:flex-nowrap items-center gap-4"
+      onSubmit={handleSubmit}
+    >
       <input
         type="text"
         className="w-full rounded-xl p-3"

@@ -1,13 +1,15 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import Button from "../../ui/Button";
 import Logo from "../../ui/Logo";
 import { Menu } from "primereact/menu";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { Dropdown } from "primereact/dropdown";
 import SearchProfessorForm from "./SearchProfessorForm";
 import SearchSchoolForm from "./SearchSchoolForm";
+import AuthBtnGroup from "./AuthBtnGroup";
+import SearchForms from "./SearchForms";
 
 const CustomMenu = styled(Menu)`
   background: #fff;
@@ -25,17 +27,14 @@ const CustomMenu = styled(Menu)`
 
 function Header() {
   const { isAuthenticated, user, logout } = useAuth();
-  const [searchBy, setSearchBy] = useState("jobs");
+  const [showMobileAuthGroup, setShowMobileAuthGroup] = useState(false);
+  const [showMobileSearchForms, setshowMobileSearchForms] = useState(false);
   const userMenuRef = useRef(null);
+  const location = useLocation();
   const navigate = useNavigate();
 
   const userInitials = "JS";
   const userName = "Jack";
-
-  const searchByTypes = [
-    { name: "Jobs", value: "jobs" },
-    { name: "Company", value: "company" },
-  ];
 
   let items = [
     {
@@ -60,54 +59,57 @@ function Header() {
     },
     { label: "Logout", icon: "pi pi-sign-out", command: () => logout() },
   ];
-
+  useEffect(() => {
+    setShowMobileAuthGroup(false);
+    setshowMobileSearchForms(false);
+  }, [location.pathname]);
   return (
-    <header className="bg-background sticky z-50 top-0">
-      <nav className="container mx-auto flex items-center justify-between gap-7 px-4 py-6">
+    <header className="sticky top-0 z-50 bg-background">
+      <nav className="mx-auto flex items-center justify-between gap-7 px-4 py-6 xl:container">
         {!isAuthenticated && (
-          <ul className="flex items-center gap-5">
-            <li>
-              <a>
-                <i className="pi pi-facebook text-2xl"></i>
-              </a>
-            </li>
-            <li>
-              <a>
-                <i className="pi pi-instagram text-2xl"></i>
-              </a>
-            </li>
-            <li>
-              <a>
-                <i className="pi pi-twitter text-2xl"></i>
-              </a>
-            </li>
-          </ul>
+          <>
+            <ul className="hidden items-center gap-5 lg:flex">
+              <li>
+                <a>
+                  <i className="pi pi-facebook text-2xl"></i>
+                </a>
+              </li>
+              <li>
+                <a>
+                  <i className="pi pi-instagram text-2xl"></i>
+                </a>
+              </li>
+              <li>
+                <a>
+                  <i className="pi pi-twitter text-2xl"></i>
+                </a>
+              </li>
+            </ul>
+            <div className="lg:hidden">
+              <Button
+                text="Join"
+                onClick={() => setShowMobileAuthGroup((state) => !state)}
+              />
+            </div>
+          </>
         )}
         <Logo />
         {isAuthenticated && (
-          <div className="flex flex-grow items-center gap-4">
-            <Dropdown
-              value={searchBy}
-              onChange={(e) => setSearchBy(e.value)}
-              options={searchByTypes}
-              optionLabel="name"
-              placeholder="Select a City"
-              className="bg-primary  font-poppins"
-              pt={{
-                input: { className: "font-poppins py-3" },
-                panel: { className: "bg-primary font-poppins" },
-              }}
-            />
-            {searchBy === "company" ? (
-              <SearchSchoolForm />
-            ) : (
-              <SearchProfessorForm />
-            )}
+          <button
+            className="lg:hidden"
+            onClick={() => setshowMobileSearchForms(true)}
+          >
+            <i className="pi pi-search text-xl"></i>
+          </button>
+        )}
+        {isAuthenticated && (
+          <div className="hidden lg:block">
+            <SearchForms />
           </div>
         )}
         {isAuthenticated ? (
           <div className="flex items-center gap-4">
-            <p>Welcome {userName}!</p>
+            <p className="hidden sm:block">Welcome {userName}!</p>
             <button
               className="flex h-[50px] w-[50px] items-center justify-center rounded-full bg-primary text-xl uppercase text-white"
               onClick={(e) => userMenuRef.current.toggle(e)}
@@ -117,13 +119,33 @@ function Header() {
             <CustomMenu model={items} popup={true} ref={userMenuRef} />
           </div>
         ) : (
-          <div className="flex items-center gap-3">
-            <div>
-              <Button text="Log In" to="/login" />
-            </div>
-            <div>
-              <Button text="Sign Up" type="primary" to="/signup" />
-            </div>
+          <div className="hidden lg:block">
+            <AuthBtnGroup />
+          </div>
+        )}
+        {/* ======== */}
+        {/* Mobile */}
+        {/* ======== */}
+        {showMobileSearchForms && (
+          <div className="fixed left-0 right-0 top-0 flex w-full justify-center bg-white px-4 py-8">
+            <button
+              className="absolute right-6 top-4"
+              onClick={() => setshowMobileSearchForms(false)}
+            >
+              <i className="pi pi-times"></i>
+            </button>
+            <SearchForms />
+          </div>
+        )}
+        {showMobileAuthGroup && (
+          <div className="fixed left-0 right-0 top-0 flex w-full justify-center bg-white px-4 py-8">
+            <button
+              className="absolute right-6 top-4"
+              onClick={() => setShowMobileAuthGroup(false)}
+            >
+              <i className="pi pi-times"></i>
+            </button>
+            <AuthBtnGroup />
           </div>
         )}
       </nav>

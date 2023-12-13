@@ -13,7 +13,7 @@ function SearchResultPageProfessors() {
   ];
 
   return (
-    <main className="container mx-auto px-4 py-16">
+    <main className="mx-auto px-4 py-16 xl:container">
       <h2 className="mb-3 font-bold">Department</h2>
       <Dropdown
         value={department}
@@ -27,7 +27,10 @@ function SearchResultPageProfessors() {
           panel: { className: "bg-primary font-poppins" },
         }}
       />
-      <Link to="abc" className="mb-6 mt-6 flex max-w-4xl items-start gap-10 bg-background px-6 py-5">
+      <Link
+        to="abc"
+        className="relative mb-6 mt-6 flex max-w-4xl flex-wrap items-start gap-10 bg-background px-6 py-5"
+      >
         <div>
           <p className="text-black">Quality</p>
           <div className="my-2 bg-green-300 px-3 py-4 text-4xl font-extrabold">
@@ -51,11 +54,14 @@ function SearchResultPageProfessors() {
             </p>
           </div>
         </div>
-        <button className="ml-auto">
+        <button className="absolute right-6 top-6 ml-auto">
           <i className="pi pi-bookmark"></i>
         </button>
       </Link>
-      <Link to="abc" className="mb-6 mt-6 flex max-w-4xl items-start gap-10 bg-background px-6 py-5">
+      <Link
+        to="abc"
+        className="relative mb-6 mt-6 flex max-w-4xl flex-wrap items-start gap-10 bg-background px-6 py-5"
+      >
         <div>
           <p className="text-black">Quality</p>
           <div className="my-2 bg-yellow-300 px-3 py-4 text-4xl font-extrabold">
@@ -79,7 +85,7 @@ function SearchResultPageProfessors() {
             </p>
           </div>
         </div>
-        <button className="ml-auto">
+        <button className="absolute right-6 top-6 ml-auto">
           <i className="pi pi-bookmark"></i>
         </button>
       </Link>

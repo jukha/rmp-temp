@@ -9,7 +9,7 @@ function ForgetPassword() {
     <div className=" flex min-h-screen flex-col items-center justify-center  space-y-4 bg-gray-100 p-4 text-gray-900 antialiased">
       <div className="w-full max-w-lg space-y-6 rounded-md bg-white px-8 py-16">
         <h1 className=" mb-6 text-center text-3xl font-bold">Don't worry</h1>
-        <p className="mx-12 text-center">
+        <p className="lg:mx-12 text-center">
           We are here to help you to recover your password. Enter the email
           address you used when you joined and we'll send you instructions to
           reset your password.

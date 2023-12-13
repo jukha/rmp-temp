@@ -1,6 +1,6 @@
 function ComingSoon() {
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-accent">
+    <div className="flex min-h-screen px-4 flex-col items-center justify-center bg-accent">
       <h1 className="mb-8 animate-pulse text-5xl font-bold text-white">
         Coming Soon
       </h1>

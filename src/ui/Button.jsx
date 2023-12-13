@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 function Button({ to, type, htmlType = "button", text, onClick}) {
   const base =
-    "block w-full transition text-base py-2 px-12 rounded-[34px] font-medium focus:outline-none";
+    "block w-full transition text-base py-2 px-8 sm:px-12 rounded-[34px] font-medium focus:outline-none";
   const primaryStyles = "bg-primary hover:bg-accent text-white";
   const secondaryStyles =
     "border bg-transparent border-primary text-primary hover:bg-primary hover:text-white";
