@@ -5,12 +5,12 @@ function Home() {
     <main>
       <section className="flex h-[500px] flex-col items-center justify-center bg-[linear-gradient(to_right_bottom,rgba(49,84,44,0.8),rgba(16,71,52,0.8)),url('/assets/man-reading-book.ec0041cf.jpeg')] bg-cover bg-center">
         <h2 className="mb-10 text-4xl text-white">
-          Enter your <b>school</b> to get started
+          Enter your <b>company</b> to get started
         </h2>
         <form className="relative flex w-full max-w-xl items-center text-xl">
           <input
             type="text"
-            placeholder="Your School"
+            placeholder="Your Company"
             className="w-full rounded-3xl px-12 py-4"
           />
           <i className="pi pi-building absolute left-4 bg-white text-2xl"></i>

@@ -25,7 +25,7 @@ const CustomMenu = styled(Menu)`
 
 function Header() {
   const { isAuthenticated, user, logout } = useAuth();
-  const [searchBy, setSearchBy] = useState("professors");
+  const [searchBy, setSearchBy] = useState("jobs");
   const userMenuRef = useRef(null);
   const navigate = useNavigate();
 
@@ -33,8 +33,8 @@ function Header() {
   const userName = "Jack";
 
   const searchByTypes = [
-    { name: "Professors", value: "professors" },
-    { name: "Schools", value: "schools" },
+    { name: "Jobs", value: "jobs" },
+    { name: "Company", value: "company" },
   ];
 
   let items = [
@@ -98,7 +98,7 @@ function Header() {
                 panel: { className: "bg-primary font-poppins" },
               }}
             />
-            {searchBy === "schools" ? (
+            {searchBy === "company" ? (
               <SearchSchoolForm />
             ) : (
               <SearchProfessorForm />

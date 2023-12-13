@@ -28,10 +28,10 @@ function DetailPageSchool() {
           </div>
           <div className="mt-6 flex items-center gap-3">
             <div>
-              <Button text="Rate" type="primary" to="/add/school-rating/abc" />
+              <Button text="Rate" type="primary" to="/add/company-rating/abc" />
             </div>
             <div>
-              <Button text="Compare" to="/compare/schools/abc/abc" />
+              <Button text="Compare" to="/compare/companies/abc/abc" />
             </div>
           </div>
         </div>

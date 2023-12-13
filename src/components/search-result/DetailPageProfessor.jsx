@@ -53,13 +53,13 @@ function DetailPageProfessor() {
           </div>
           <div className="mb-10 flex items-center gap-3">
             <div>
-              <Button text="Rate" to="/add/professor-rating/abc" />
+              <Button text="Rate" to="/add/job-rating/abc" />
             </div>
             <div>
               <Button
                 text="Compare"
                 type="primary"
-                to="/compare/professors/abc/abc"
+                to="/compare/jobs/abc/abc"
               />
             </div>
           </div>

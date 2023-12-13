@@ -9,14 +9,14 @@ function SearchProfessorForm() {
   function handleSubmit(e) {
     e.preventDefault();
     if (!professorName || !schoolName) return;
-    navigate("/professor")
+    navigate("/jobs")
   }
   return (
     <form className="flex flex-grow items-center gap-4" onSubmit={handleSubmit}>
       <input
         type="text"
         className="w-full rounded-xl p-3"
-        placeholder="Professor name"
+        placeholder="Job"
         value={professorName}
         onChange={(e) => setProfessorName(e.target.value)}
       />
@@ -24,7 +24,7 @@ function SearchProfessorForm() {
       <input
         type="text"
         className="w-full rounded-xl p-3"
-        placeholder="Your School"
+        placeholder="Company"
         value={schoolName}
         onChange={(e) => setSchoolName(e.target.value)}
       />

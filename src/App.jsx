@@ -63,27 +63,28 @@ function App() {
               <Route path="ratings" element={<Ratings />} />
               <Route path="saved-professors" element={<SavedProfessors />} />
             </Route>
-            <Route path="/school" element={<SearchResultPageSchools />} />
-            <Route path="school/:id" element={<DetailPageSchool />} />
-            <Route path="/add/school" element={<AddSchool />} />
+            {/* COMPANY */}
+            <Route path="/companies" element={<SearchResultPageSchools />} />
+            <Route path="companies/:id" element={<DetailPageSchool />} />
+            <Route path="/add/company" element={<AddSchool />} />
             <Route
-              path="/add/school-rating/:id"
+              path="/add/company-rating/:id"
               element={<AddSchoolRatings />}
             />
             <Route
-              path="/compare/schools/:id/:id"
+              path="/compare/companies/:id/:id"
               element={<CompareSchools />}
             />
-
-            <Route path="/professor" element={<SearchResultPageProfessors />} />
-            <Route path="professor/:id" element={<DetailPageProfessor />} />
-            <Route path="/add/professor" element={<AddProfessor />} />
+            {/* JOBS */}
+            <Route path="/jobs" element={<SearchResultPageProfessors />} />
+            <Route path="jobs/:id" element={<DetailPageProfessor />} />
+            <Route path="/add/job" element={<AddProfessor />} />
             <Route
-              path="/add/professor-rating/:id"
+              path="/add/job-rating/:id"
               element={<AddProfessorRatings />}
             />
             <Route
-              path="/compare/professors/:id/:id"
+              path="/compare/jobs/:id/:id"
               element={<CompareProfessors />}
             />
           </Route>

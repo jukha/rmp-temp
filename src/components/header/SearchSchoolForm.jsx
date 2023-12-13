@@ -8,7 +8,7 @@ function SearchSchoolForm() {
   function handleSubmit(e) {
     e.preventDefault();
     if (!schoolName) return;
-    navigate("/school");
+    navigate("/companies");
   }
 
   return (
@@ -16,7 +16,7 @@ function SearchSchoolForm() {
       <input
         type="text"
         className="w-full rounded-xl p-3"
-        placeholder="Your School"
+        placeholder="Company"
         value={schoolName}
         onChange={(e) => setSchoolName(e.target.value)}
       />
