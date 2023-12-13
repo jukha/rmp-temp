@@ -30,6 +30,40 @@ const ratingDataDifficulty = [
   { name: "Very Difficult", value: 5 },
 ];
 
+const locationRatingData = [
+  { name: "Very Dissatisfied", value: 1 },
+  { name: "Dissatisfied", value: 2 },
+  { name: "Neutral", value: 3 },
+  { name: "Satisfied", value: 4 },
+  { name: "Very Satisfied", value: 5 },
+];
+
+const opportunitiesRatingData = [
+  { name: "Limited", value: 1 },
+  { name: "Some", value: 2 },
+  { name: "Moderate", value: 3 },
+  { name: "Abundant", value: 4 },
+  { name: "Exceptional", value: 5 },
+];
+
+const internetRatingData = [
+  { name: "Poor", value: 1 },
+  { name: "Average", value: 2 },
+  { name: "Good", value: 3 },
+  { name: "Excellent", value: 4 },
+  { name: "Outstanding", value: 5 },
+];
+
+const safetyRatingData = [
+  { name: "Unsafe", value: 1 },
+  { name: "Average", value: 2 },
+  { name: "Safe", value: 3 },
+  { name: "Exceptional", value: 4 },
+  { name: "Very Safe", value: 5 },
+];
+
+const foodRatingData = internetRatingData;
+
 function AddSchoolRatings() {
   const [country, setCountry] = useState("");
   const [takeAgain, setTakeAgain] = useState("");
@@ -40,7 +74,9 @@ function AddSchoolRatings() {
         <div className="container mx-auto flex items-center justify-between px-4">
           <div>
             <p>Southfield, MI</p>
-            <h2 className="my-3 tex-2xl sm:text-4xl font-extrabold">Abcott Institute</h2>
+            <h2 className="tex-2xl my-3 font-extrabold sm:text-4xl">
+              Abcott Institute
+            </h2>
           </div>
         </div>
       </div>
@@ -60,7 +96,7 @@ function AddSchoolRatings() {
               Location
               <span className="font-medium text-red-600">*</span>
             </h6>
-            <AddRating ratingData={ratingDataDifficulty} />
+            <AddRating ratingData={locationRatingData} />
           </div>
           {/* Opportunities */}
           <div className="mb-8 max-w-[900px] bg-white p-7">
@@ -68,7 +104,7 @@ function AddSchoolRatings() {
               Opportunities
               <span className="font-medium text-red-600">*</span>
             </h6>
-            <AddRating ratingData={ratingDataDifficulty} />
+            <AddRating ratingData={opportunitiesRatingData} />
           </div>
           {/* Facilities and common areas* */}
           <div className="mb-8 max-w-[900px] bg-white p-7">
@@ -84,7 +120,7 @@ function AddSchoolRatings() {
               Internet*
               <span className="font-medium text-red-600">*</span>
             </h6>
-            <AddRating ratingData={ratingDataDifficulty} />
+            <AddRating ratingData={internetRatingData} />
           </div>
           {/* Food */}
           <div className="mb-8 max-w-[900px] bg-white p-7">
@@ -92,15 +128,7 @@ function AddSchoolRatings() {
               Food
               <span className="font-medium text-red-600">*</span>
             </h6>
-            <AddRating ratingData={ratingDataDifficulty} />
-          </div>
-          {/* Clubs */}
-          <div className="mb-8 max-w-[900px] bg-white p-7">
-            <h6 className="mb-4 font-medium">
-              Clubs
-              <span className="font-medium text-red-600">*</span>
-            </h6>
-            <AddRating ratingData={ratingDataDifficulty} />
+            <AddRating ratingData={foodRatingData} />
           </div>
 
           {/* Social */}
@@ -127,7 +155,7 @@ function AddSchoolRatings() {
               Safety
               <span className="font-medium text-red-600">*</span>
             </h6>
-            <AddRating ratingData={ratingDataDifficulty} />
+            <AddRating ratingData={safetyRatingData} />
           </div>
 
           {/* review */}

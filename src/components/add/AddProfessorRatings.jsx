@@ -15,19 +15,19 @@ const countries = [
 ];
 
 const ratingData = [
-  { name: "Awful", value: 1 },
-  { name: "Bad", value: 2 },
-  { name: "Okay", value: 3 },
-  { name: "Good", value: 4 },
-  { name: "Awesome", value: 5 },
+  { name: "Unsatisfactory", value: 1 },
+  { name: "Below Expectations", value: 2 },
+  { name: "Satisfactory", value: 3 },
+  { name: "Above Expectations", value: 4 },
+  { name: "Exceptional", value: 5 },
 ];
 
 const ratingDataDifficulty = [
   { name: "Very Easy", value: 1 },
   { name: "Easy", value: 2 },
-  { name: "Average", value: 3 },
-  { name: "Difficult", value: 4 },
-  { name: "Very Difficult", value: 5 },
+  { name: "Moderate", value: 3 },
+  { name: "Challenging", value: 4 },
+  { name: "Very Challenging", value: 5 },
 ];
 
 function AddProfessorRatings() {
@@ -40,7 +40,9 @@ function AddProfessorRatings() {
         <div className="container mx-auto flex items-center justify-between px-4">
           <div>
             <p>Southfield, MI</p>
-            <h2 className="my-3 text-2xl sm:text-4xl font-extrabold">Abcott Institute</h2>
+            <h2 className="my-3 text-2xl font-extrabold sm:text-4xl">
+              Abcott Institute
+            </h2>
           </div>
         </div>
       </div>
