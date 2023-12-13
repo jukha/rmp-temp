@@ -19,7 +19,7 @@ const ratingsData = [
 function DetailPageSchool() {
   return (
     <>
-      <div className="sticky top-[90px] z-50 w-full bg-white py-4 shadow-[rgba(0,_0,_0,_0.25)_0px_25px_50px_-12px] lg:py-6">
+      <div className="z-50 w-full bg-white py-4 shadow-[rgba(0,_0,_0,_0.25)_0px_25px_50px_-12px] lg:py-6">
         <div className="container mx-auto flex items-center justify-between px-4">
           <div>
             <p>Southfield, MI</p>
