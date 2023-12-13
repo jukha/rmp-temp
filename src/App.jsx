@@ -26,14 +26,29 @@ import CompareProfessors from "./components/compare/CompareProfessors";
 import AddSchool from "./components/add/AddSchool";
 import AddProfessorRatings from "./components/add/AddProfessorRatings";
 import AddSchoolRatings from "./components/add/AddSchoolRatings";
+import CopyRight from "./pages/Copyright";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import TermsOfUse from "./pages/TermsOfUse";
+import SiteGuidelines from "./pages/SiteGuidelines";
+import ComingSoon from "./pages/ComingSoon";
+import ScrollToTop from "./components/scroll-to-top/ScrollToTop";
 
 function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
+        <ScrollToTop />
         <Routes>
           <Route element={<AppLayout />}>
             <Route path="/" element={<Home />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/forget" element={<ForgetPassword />} />
+            <Route path="/site-guidelines" element={<SiteGuidelines />} />
+            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+            <Route path="/copyright" element={<CopyRight />} />
+            <Route path="/terms-of-use" element={<TermsOfUse />} />
+            <Route path="*" element={<ComingSoon />} />
             <Route
               path="/account"
               element={
@@ -72,9 +87,6 @@ function App() {
               element={<CompareProfessors />}
             />
           </Route>
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/forget" element={<ForgetPassword />} />
         </Routes>
       </AuthProvider>
     </BrowserRouter>
