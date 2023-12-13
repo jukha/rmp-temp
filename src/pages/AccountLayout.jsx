@@ -44,10 +44,10 @@ function AccountLayout() {
       command: () => navigate("ratings"),
     },
     {
-      label: "Saved Professors",
-      slug: "saved-professor",
+      label: "Saved Jobs",
+      slug: "saved-jobs",
       icon: "pi pi-save",
-      command: () => navigate("saved-professors"),
+      command: () => navigate("saved-jobs"),
     },
   ];
 
@@ -66,13 +66,15 @@ function AccountLayout() {
   return (
     <main className="mx-auto max-w-5xl px-4 py-20">
       <h1 className="text-3xl font-extrabold">Hey, Jack</h1>
-      <CustomTabMenu
-        activeIndex={activeIndex}
-        model={items}
-        className="my-8 py-3"
-        onTabChange={(e) => setActiveIndex(e.index)}
-        key={forceUpdate ? "forceUpdate" : "normal"}
-      />
+      <div className="overflow-x-auto">
+        <CustomTabMenu
+          activeIndex={activeIndex}
+          model={items}
+          className="my-8 py-3"
+          onTabChange={(e) => setActiveIndex(e.index)}
+          key={forceUpdate ? "forceUpdate" : "normal"}
+        />
+      </div>
       <Outlet />
     </main>
   );

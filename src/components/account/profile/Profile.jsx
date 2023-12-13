@@ -33,8 +33,8 @@ function Profile() {
       onSubmit={onSubmit}
     >
       <Form>
-        <div className="mb-6 flex gap-3">
-          <div className="flex-1">
+        <div className="mb-6 flex flex-wrap gap-3">
+          <div className=" w-full lg:flex-1 ">
             <label className="mb-2 inline-block" htmlFor="firstName">
               First Name:
             </label>
@@ -50,7 +50,7 @@ function Profile() {
               component="div"
             />
           </div>
-          <div className="flex-1">
+          <div className=" w-full lg:flex-1">
             <label className="mb-2 inline-block" htmlFor="lastName">
               Last Name:
             </label>

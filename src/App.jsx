@@ -58,8 +58,8 @@ function App() {
               <Route path="profile" element={<Profile />} />
               <Route path="settings" element={<AccountSettings />} />
               <Route path="ratings" element={<Ratings />} />
-              <Route path="saved-professors" element={<SavedProfessors />} />
-            </Route>
+              <Route path="saved-jobs" element={<SavedProfessors />} />
+            </Route> 
             {/* COMPANY */}
             <Route path="/companies" element={<SearchResultPageSchools />} />
             <Route path="companies/:id" element={<DetailPageSchool />} />

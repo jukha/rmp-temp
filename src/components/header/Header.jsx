@@ -53,7 +53,7 @@ function Header() {
       command: () => navigate("account/ratings"),
     },
     {
-      label: "Saved Professors",
+      label: "Saved Jobs",
       icon: "pi pi-save",
       command: () => navigate("account/saved-professors"),
     },

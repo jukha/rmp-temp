@@ -1,5 +1,5 @@
 function SavedProfessors() {
-  return <h1>SavedProfessors</h1>;
+  return <h1>Saved Jobs</h1>;
 }
 
 export default SavedProfessors;
