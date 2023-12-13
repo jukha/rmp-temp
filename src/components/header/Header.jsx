@@ -55,7 +55,7 @@ function Header() {
     {
       label: "Saved Jobs",
       icon: "pi pi-save",
-      command: () => navigate("account/saved-professors"),
+      command: () => navigate("account/saved-jobs"),
     },
     { label: "Logout", icon: "pi pi-sign-out", command: () => logout() },
   ];
