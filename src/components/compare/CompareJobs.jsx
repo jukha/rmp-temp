@@ -11,7 +11,7 @@ const ratingData = [
   { name: "awful", value: 1, count: 4 },
 ];
 
-function CompareProfessors() {
+function CompareJobs() {
   const [chartData, setChartData] = useState({});
   const [chartOptions, setChartOptions] = useState({});
   useEffect(() => {
@@ -254,4 +254,4 @@ function CompareProfessors() {
   );
 }
 
-export default CompareProfessors;
+export default CompareJobs;

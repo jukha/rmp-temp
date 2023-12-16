@@ -9,7 +9,7 @@ const ratingData = [
   { name: "awful", value: 1, count: 4 },
 ];
 
-function CompareSchools() {
+function CompareCompanies() {
   return (
     <main className="mx-auto px-4 py-16 xl:container">
       <div className="mb-8 flex flex-wrap justify-between gap-4">
@@ -174,4 +174,4 @@ function CompareSchools() {
   );
 }
 
-export default CompareSchools;
+export default CompareCompanies;

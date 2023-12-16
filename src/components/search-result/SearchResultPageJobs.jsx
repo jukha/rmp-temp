@@ -2,7 +2,7 @@ import { Dropdown } from "primereact/dropdown";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
-function SearchResultPageProfessors() {
+function SearchResultPageJobs() {
   const [department, setDepartment] = useState("");
 
   const departments = [
@@ -93,4 +93,4 @@ function SearchResultPageProfessors() {
   );
 }
 
-export default SearchResultPageProfessors;
+export default SearchResultPageJobs;

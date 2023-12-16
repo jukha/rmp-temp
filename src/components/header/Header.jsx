@@ -6,8 +6,8 @@ import { Menu } from "primereact/menu";
 import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { Dropdown } from "primereact/dropdown";
-import SearchProfessorForm from "./SearchProfessorForm";
-import SearchSchoolForm from "./SearchSchoolForm";
+import SearchProfessorForm from "./SearchJobForm";
+import SearchSchoolForm from "./SearchCompanyForm";
 import AuthBtnGroup from "./AuthBtnGroup";
 import SearchForms from "./SearchForms";
 

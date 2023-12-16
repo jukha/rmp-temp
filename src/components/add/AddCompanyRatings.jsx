@@ -64,7 +64,7 @@ const safetyRatingData = [
 
 const foodRatingData = internetRatingData;
 
-function AddSchoolRatings() {
+function AddCompanyRatings() {
   const [country, setCountry] = useState("");
   const [takeAgain, setTakeAgain] = useState("");
   const [showGuidelinesDialog, setShowGuidelinesDialog] = useState(false);
@@ -225,4 +225,4 @@ function AddSchoolRatings() {
   );
 }
 
-export default AddSchoolRatings;
+export default AddCompanyRatings;

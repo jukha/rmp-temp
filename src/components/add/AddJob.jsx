@@ -12,7 +12,7 @@ const departments = [
   { name: "Speech", value: "speech" },
 ];
 
-function AddProfessor() {
+function AddJob() {
   const [checked, setChecked] = useState(false);
   const [department, setDepartment] = useState("");
   const validationSchema = Yup.object({
@@ -207,4 +207,4 @@ function AddProfessor() {
   );
 }
 
-export default AddProfessor;
+export default AddJob;

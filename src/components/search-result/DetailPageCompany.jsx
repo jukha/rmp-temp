@@ -16,7 +16,7 @@ const ratingsData = [
   { icon: "pi pi-building", name: "Clubs", rating: 3.0 },
 ];
 
-function DetailPageSchool() {
+function DetailPageCompany() {
   return (
     <>
       <div className="z-50 w-full bg-white py-4 shadow-[rgba(0,_0,_0,_0.25)_0px_25px_50px_-12px] lg:py-6">
@@ -204,4 +204,4 @@ function DetailPageSchool() {
   );
 }
 
-export default DetailPageSchool;
+export default DetailPageCompany;

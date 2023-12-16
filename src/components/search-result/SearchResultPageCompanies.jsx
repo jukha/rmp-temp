@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-function SearchResultPageSchools() {
+function SearchResultPageCompanies() {
   return (
     <main className="xl:container mx-auto px-4 py-16">
       <Link
@@ -38,4 +38,4 @@ function SearchResultPageSchools() {
   );
 }
 
-export default SearchResultPageSchools;
+export default SearchResultPageCompanies;

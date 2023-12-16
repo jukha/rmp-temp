@@ -19,7 +19,7 @@ const states = [
   // Add more states/provinces as needed
 ];
 
-function AddSchool() {
+function AddCompany() {
   const [checked, setChecked] = useState(false);
   const [country, setCountry] = useState("");
   const [state, setState] = useState("");
@@ -225,4 +225,4 @@ function AddSchool() {
   );
 }
 
-export default AddSchool;
+export default AddCompany;

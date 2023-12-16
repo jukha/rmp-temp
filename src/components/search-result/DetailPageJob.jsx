@@ -18,7 +18,7 @@ const courses = [
   { name: "Artificial Intelligence", value: "ai" },
 ];
 
-function DetailPageProfessor() {
+function DetailPageJob() {
   const [course, setCourse] = useState("all");
   return (
     <main className="mx-auto px-4 py-16 xl:container">
@@ -270,4 +270,4 @@ function DetailPageProfessor() {
   );
 }
 
-export default DetailPageProfessor;
+export default DetailPageJob;

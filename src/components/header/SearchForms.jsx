@@ -1,6 +1,6 @@
 import { Dropdown } from "primereact/dropdown";
-import SearchProfessorForm from "./SearchProfessorForm";
-import SearchSchoolForm from "./SearchSchoolForm";
+import SearchProfessorForm from "./SearchJobForm";
+import SearchSchoolForm from "./SearchCompanyForm";
 import { useState } from "react";
 
 const searchByTypes = [
