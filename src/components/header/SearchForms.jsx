@@ -11,7 +11,7 @@ const searchByTypes = [
 function SearchForms() {
   const [searchBy, setSearchBy] = useState("jobs");
   return (
-    <div className="flex flex-grow flex-wrap items-center gap-4">
+    <div className="flex flex-grow flex-wrap items-center gap-4 lg:flex-nowrap">
       <Dropdown
         value={searchBy}
         onChange={(e) => setSearchBy(e.value)}

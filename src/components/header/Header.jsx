@@ -103,7 +103,7 @@ function Header() {
           </button>
         )}
         {isAuthenticated && (
-          <div className="hidden lg:block">
+          <div className="hidden lg:block flex-grow">
             <SearchForms />
           </div>
         )}

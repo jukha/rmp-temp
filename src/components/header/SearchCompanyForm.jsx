@@ -15,7 +15,7 @@ function SearchSchoolForm() {
     <form className="flex-grow" onSubmit={handleSubmit}>
       <input
         type="text"
-        className="w-full rounded-xl p-3"
+        className="w-full rounded-xl p-3 border border-primary"
         placeholder="Company"
         value={schoolName}
         onChange={(e) => setSchoolName(e.target.value)}

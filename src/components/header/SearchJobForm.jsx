@@ -18,7 +18,7 @@ function SearchProfessorForm() {
     >
       <input
         type="text"
-        className="w-full rounded-xl p-3"
+        className="w-full rounded-xl p-3 border border-primary"
         placeholder="Job"
         value={professorName}
         onChange={(e) => setProfessorName(e.target.value)}
@@ -26,7 +26,7 @@ function SearchProfessorForm() {
       <p>at</p>
       <input
         type="text"
-        className="w-full rounded-xl p-3"
+        className="w-full rounded-xl p-3 border border-primary"
         placeholder="Company"
         value={schoolName}
         onChange={(e) => setSchoolName(e.target.value)}
