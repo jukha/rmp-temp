@@ -33,8 +33,8 @@ function Header() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const userInitials = "JS";
-  const userName = "Jack";
+  const userInitials = `${user?.firstName[0]}${user?.lastName[0]}`;
+  const userName = user?.firstName;
 
   let items = [
     {
@@ -103,13 +103,13 @@ function Header() {
           </button>
         )}
         {isAuthenticated && (
-          <div className="hidden lg:block flex-grow">
+          <div className="hidden flex-grow lg:block">
             <SearchForms />
           </div>
         )}
         {isAuthenticated ? (
           <div className="flex items-center gap-4">
-            <p className="hidden sm:block">Welcome {userName}!</p>
+            <p className="hidden sm:block capitalize">Welcome {userName}!</p>
             <button
               className="flex h-[50px] w-[50px] items-center justify-center rounded-full bg-primary text-xl uppercase text-white"
               onClick={(e) => userMenuRef.current.toggle(e)}

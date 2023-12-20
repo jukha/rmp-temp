@@ -5,12 +5,19 @@ import { InputText } from "primereact/inputtext";
 import { useEffect, useRef, useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { useFormik } from "formik";
+import { useGoogleLogin } from "@react-oauth/google";
 
 function Login() {
   const navigate = useNavigate();
   const [inputType, setInputType] = useState("password");
-  const { login, isAuthenticated } = useAuth();
+  const { login, isAuthenticated, googleAuth } = useAuth();
   const passwordRef = useRef(null);
+
+  function handleGoogleLoginSuccess(tokenResponse) {
+    const accessToken = tokenResponse.access_token;
+    googleAuth(accessToken);
+  }
+  const googleLogin = useGoogleLogin({ onSuccess: handleGoogleLoginSuccess });
 
   const validate = (values) => {
     const errors = {};
@@ -31,15 +38,14 @@ function Login() {
 
   const formik = useFormik({
     initialValues: {
-      email: "jack@example.com",
-      password: "qwerty",
+      email: "",
+      password: "",
     },
     validate,
-    onSubmit: (values) => {
-      console.log("****");
+    onSubmit: async (values) => {
       const email = values.email;
       const password = values.password;
-      if (email && password) login(email, password);
+      await login(email, password);
     },
   });
 
@@ -56,16 +62,23 @@ function Login() {
 
   return (
     <div className="flex min-h-screen justify-center bg-gray-100 text-gray-900">
-      <div className="m-0 lg:flex max-w-screen-xl flex-1 justify-center bg-white shadow sm:m-10 sm:rounded-lg">
+      <div className="m-0 max-w-screen-2xl flex-1 justify-center bg-white shadow sm:m-10 sm:rounded-lg lg:flex">
         <div className="p-6 sm:p-12 lg:w-1/2 xl:w-5/12">
           <div className="mx-auto max-w-max">
             <Logo />
           </div>
-          <div className="mt-12 flex flex-col items-center">
+          <form
+            onSubmit={formik.handleSubmit}
+            className="mt-12 flex flex-col items-center"
+          >
             <h1 className="text-2xl font-extrabold xl:text-3xl">Login</h1>
             <div className="mt-8 w-full flex-1">
               <div className="flex flex-col items-center">
-                <button className="focus:shadow-outline flex w-full max-w-xs items-center justify-center rounded-[34px] bg-indigo-100 py-3 font-bold text-gray-800 shadow-sm transition-all duration-300 ease-in-out hover:shadow focus:shadow-sm focus:outline-none">
+                <button
+                  type="button"
+                  onClick={googleLogin}
+                  className="focus:shadow-outline flex w-full max-w-xs items-center justify-center rounded-[34px] bg-indigo-100 py-3 font-bold text-gray-800 shadow-sm transition-all duration-300 ease-in-out hover:shadow focus:shadow-sm focus:outline-none"
+                >
                   <div className="rounded-full bg-white p-2">
                     <svg className="w-4" viewBox="0 0 533.5 544.3">
                       <path
@@ -96,50 +109,66 @@ function Login() {
                 </div>
               </div>
 
-              <form className="mx-auto max-w-xs" onSubmit={formik.handleSubmit}>
-                <span className="p-float-label mb-9">
-                  <InputText
-                    id="email"
-                    name="email"
-                    className="w-full rounded-[34px] border border-gray-200 bg-gray-100 py-3 pl-3 text-sm font-medium placeholder-gray-500 focus:border-gray-400 focus:bg-white focus:outline-none"
-                    {...formik.getFieldProps("email")}
-                  />
+              <div>
+                <div className="mb-9">
+                  <div>
+                    <span className="p-float-label">
+                      <InputText
+                        id="email"
+                        name="email"
+                        className="w-full rounded-[34px] border border-gray-200 bg-gray-100 py-3 pl-3 text-sm font-medium placeholder-gray-500 focus:border-gray-400 focus:bg-white focus:outline-none"
+                        value={formik.values.email}
+                        onChange={(e) =>
+                          formik.setFieldValue("email", e.target.value)
+                        }
+                      />
+                      <label htmlFor="email" className="pl-2 text-primary">
+                        Email
+                      </label>
+                    </span>
+                  </div>
                   {formik.touched.email && formik.errors.email ? (
-                    <div className="mt-2 text-left text-red-400">
+                    <div className="ml-3 mt-2 text-left text-red-400">
                       {formik.errors.email}
                     </div>
                   ) : null}
-                  <label htmlFor="email" className="pl-2 text-primary">
-                    Email
-                  </label>
-                </span>
-                <span className="p-float-label">
-                  <InputText
-                    id="password"
-                    name="password"
-                    className="w-full rounded-[34px] border border-gray-200 bg-gray-100 py-3 pl-3 text-sm font-medium placeholder-gray-500 focus:border-gray-400 focus:bg-white focus:outline-none"
-                    ref={passwordRef}
-                    {...formik.getFieldProps("password")}
-                  />
-                  <button
-                    className="absolute right-3 top-4  flex transform cursor-pointer items-center justify-center"
-                    type="button"
-                    onClick={toggleInputType}
-                  >
-                    {inputType === "text" && <i className="pi pi-eye"></i>}
-                    {inputType === "password" && (
-                      <i className="pi pi-eye-slash"></i>
-                    )}
-                  </button>
+                </div>
+                <div>
+                  <div>
+                    <span className="p-float-label">
+                      <InputText
+                        id="password"
+                        name="password"
+                        type={inputType}
+                        className="w-full rounded-[34px] border border-gray-200 bg-gray-100 py-3 pl-3 text-sm font-medium placeholder-gray-500 focus:border-gray-400 focus:bg-white focus:outline-none"
+                        ref={passwordRef}
+                        value={formik.values.password}
+                        onChange={(e) =>
+                          formik.setFieldValue("password", e.target.value)
+                        }
+                      />
+                      <button
+                        className="absolute right-3 top-4  flex transform cursor-pointer items-center justify-center"
+                        type="button"
+                        onClick={toggleInputType}
+                      >
+                        {inputType === "text" && <i className="pi pi-eye"></i>}
+                        {inputType === "password" && (
+                          <i className="pi pi-eye-slash"></i>
+                        )}
+                      </button>
+
+                      <label htmlFor="password" className="pl-2 text-primary">
+                        Password
+                      </label>
+                    </span>
+                  </div>
                   {formik.touched.password && formik.errors.password ? (
-                    <div className="mt-2 text-left text-red-400">
+                    <div className="ml-3 mt-2 text-left text-red-400">
                       {formik.errors.password}
                     </div>
                   ) : null}
-                  <label htmlFor="password" className="pl-2 text-primary">
-                    Password
-                  </label>
-                </span>
+                </div>
 
                 <Link
                   className="my-5 block text-center text-primary"
@@ -159,9 +188,9 @@ function Login() {
                     Signup
                   </Link>
                 </p>
-              </form>
+              </div>
             </div>
-          </div>
+          </form>
         </div>
         <div className="hidden flex-1 bg-indigo-100 text-center lg:flex">
           <div className="m-12 w-full bg-[url('/assets/signup-bg.svg')] bg-contain bg-center bg-no-repeat xl:m-16"></div>
