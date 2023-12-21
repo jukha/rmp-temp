@@ -1,6 +1,6 @@
 import { Dropdown } from "primereact/dropdown";
-import SearchProfessorForm from "./SearchJobForm";
-import SearchSchoolForm from "./SearchCompanyForm";
+import SearchJobForm from "./SearchJobForm";
+import SearchCompanyForm from "./SearchCompanyForm";
 import { useState } from "react";
 
 const searchByTypes = [
@@ -24,7 +24,7 @@ function SearchForms() {
           panel: { className: "bg-primary font-poppins" },
         }}
       />
-      {searchBy === "company" ? <SearchSchoolForm /> : <SearchProfessorForm />}
+      {searchBy === "company" ? <SearchCompanyForm /> : <SearchJobForm />}
     </div>
   );
 }

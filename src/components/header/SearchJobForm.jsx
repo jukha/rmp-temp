@@ -1,39 +1,81 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { ReactSearchAutocomplete } from "react-search-autocomplete";
+import styled from "styled-components";
+import { getJobSuggestions } from "../../services/apiJob";
 
-function SearchProfessorForm() {
-  const [professorName, setProfessorName] = useState("");
-  const [schoolName, setSchoolName] = useState("");
+const JobReactSearchAutocomplete = styled(ReactSearchAutocomplete)`
+  && {
+    width: 100%;
+    height: 50px;
+    font-family: "Poppins", sans-serif;
+    .wrapper {
+      position: unset;
+      border-radius: 12px;
+      border: 1px solid #004080;
+      background: #f3f3f3;
+      padding: 12px;
+      & > :first-child {
+        min-height: unset;
+      }
+      & * {
+        font-family: "Poppins";
+      }
+    }
+  }
+`;
+
+function SearchJobForm() {
+  
+  const [jobSuggestions, setJobSuggestions] = useState([]);
   const navigate = useNavigate();
 
-  function handleSubmit(e) {
-    e.preventDefault();
-    if (!professorName || !schoolName) return;
-    navigate("/jobs");
+  async function handleJobSearch(string, results) {
+    const apiResponse = await getJobSuggestions(string);
+    // Transform the API response to match the expected format
+    const suggestions = apiResponse.suggestions.map((item) => ({
+      id: item._id,
+      name: item.title,
+      slug: item.slug,
+    }));
+
+    setJobSuggestions(suggestions);
   }
+
+  function formatResult(item) {
+    return (
+      <>
+        <span
+          style={{
+            display: "block",
+            textAlign: "left",
+            marginBlock: "10px",
+            cursor: "pointer",
+          }}
+        >
+          {item.name}
+        </span>
+      </>
+    );
+  }
+
+  function handleSelect(item) {
+    navigate(`/jobs/${item.slug}`);
+  }
+
   return (
-    <form
-      className="flex flex-grow flex-wrap sm:flex-nowrap items-center gap-4"
-      onSubmit={handleSubmit}
-    >
-      <input
-        type="text"
-        className="w-full rounded-xl p-3 border border-primary"
-        placeholder="Job"
-        value={professorName}
-        onChange={(e) => setProfessorName(e.target.value)}
+    <div className="flex flex-grow flex-wrap items-center gap-4 sm:flex-nowrap">
+      <JobReactSearchAutocomplete
+        items={jobSuggestions}
+        showIcon={false}
+        formatResult={formatResult}
+        onSelect={handleSelect}
+        placeholder="Search Jobs"
+        onSearch={handleJobSearch}
+        inputDebounce={250}
       />
-      <p>at</p>
-      <input
-        type="text"
-        className="w-full rounded-xl p-3 border border-primary"
-        placeholder="Company"
-        value={schoolName}
-        onChange={(e) => setSchoolName(e.target.value)}
-      />
-      <button type="submit" hidden></button>
-    </form>
+    </div>
   );
 }
 
-export default SearchProfessorForm;
+export default SearchJobForm;

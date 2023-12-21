@@ -1,7 +1,9 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import Button from "../../ui/Button";
 import { getBgColor } from "../../utils/calcBgColor";
 import { Tooltip } from "primereact/tooltip";
+import { useEffect, useState } from "react";
+import { getCompanyBySlug } from "../../services/apiCompany";
 
 const ratingsData = [
   { icon: "pi pi-thumbs-up", name: "Happiness", rating: 4.0 },
@@ -17,14 +19,24 @@ const ratingsData = [
 ];
 
 function DetailPageCompany() {
+  const [company, setCompany] = useState(null);
+  const location = useLocation();
+
+  useEffect(() => {
+    (async () => {
+      const slug = location.pathname.split("/").pop();
+      const response = await getCompanyBySlug(slug);
+      setCompany(response?.company);
+    })();
+  }, [location.pathname]);
   return (
     <>
       <div className="z-50 w-full bg-white py-4 shadow-[rgba(0,_0,_0,_0.25)_0px_25px_50px_-12px] lg:py-6">
         <div className="container mx-auto flex items-center justify-between px-4">
           <div>
-            <p>Southfield, MI</p>
+            <p>{company?.location}</p>
             <h2 className="my-2 text-xl font-extrabold lg:my-3 lg:text-4xl">
-              Abcott Institute
+              {company?.name}
             </h2>
             <Link className="font-medium underline">View all Jobs</Link>
           </div>
@@ -41,7 +53,7 @@ function DetailPageCompany() {
       <main className="container mx-auto px-4 pt-16">
         <div className="mb-20 flex max-w-3xl flex-col items-center justify-between gap-10 md:flex-row">
           <div className="">
-            <h2 className="text-6xl font-extrabold lg:text-8xl">2.8</h2>
+            <h2 className="text-6xl font-extrabold lg:text-8xl">{company?.averageOverallRating}</h2>
             <p>Overall Quality</p>
           </div>
           <div className="grid gap-8 sm:grid-cols-2 sm:gap-x-10 sm:gap-y-4">
@@ -92,7 +104,7 @@ function DetailPageCompany() {
                     className="flex flex-col justify-between gap-3 sm:flex-row"
                   >
                     <p className="font-semibold">{rating.name}</p>
-                    <div className="grid flex-1 grid-cols-[repeat(5,32px)] grid-rows-[18px] justify-start sm:justify-end gap-[2px]">
+                    <div className="grid flex-1 grid-cols-[repeat(5,32px)] grid-rows-[18px] justify-start gap-[2px] sm:justify-end">
                       {Array.from({ length: 5 }, (_, index) => {
                         {
                           if (index + 1 > rating.rating)

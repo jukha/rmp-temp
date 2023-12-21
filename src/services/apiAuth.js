@@ -1,6 +1,7 @@
 import axios from "axios";
+import { handleApiError } from "./handleApiError";
 
-const BASE_URL = "http://localhost:4000/api/v1/users";
+const BASE_URL = `${import.meta.env.VITE_API_BASE_URL}/users`;
 
 export const loginApi = async (email, password) => {
   try {
@@ -11,14 +12,7 @@ export const loginApi = async (email, password) => {
 
     return response.data;
   } catch (error) {
-    if (error.response) {
-      const errorMessage = error.response.data.message || "Login failed";
-      throw new Error(errorMessage);
-    } else if (error.request) {
-      throw new Error("No response received");
-    } else {
-      throw new Error("An error occurred before sending the request");
-    }
+    handleApiError(error);
   }
 };
 
@@ -27,14 +21,7 @@ export const signupApi = async (userData) => {
     const response = await axios.post(`${BASE_URL}/signup`, userData);
     return response.data;
   } catch (error) {
-    if (error.response) {
-      const errorMessage = error.response.data.message || "Signup failed";
-      throw new Error(errorMessage);
-    } else if (error.request) {
-      throw new Error("No response received");
-    } else {
-      throw new Error("An error occurred before sending the request");
-    }
+    handleApiError(error);
   }
 };
 
@@ -45,13 +32,6 @@ export const googleAuthApi = async (accessToken) => {
     });
     return response.data;
   } catch (error) {
-    if (error.response) {
-      const errorMessage = error.response.data.message || "Signup failed";
-      throw new Error(errorMessage);
-    } else if (error.request) {
-      throw new Error("No response received");
-    } else {
-      throw new Error("An error occurred before sending the request");
-    }
+    handleApiError(error);
   }
 };

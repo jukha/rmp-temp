@@ -6,8 +6,8 @@ import { Menu } from "primereact/menu";
 import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { Dropdown } from "primereact/dropdown";
-import SearchProfessorForm from "./SearchJobForm";
-import SearchSchoolForm from "./SearchCompanyForm";
+import SearchJobForm from "./SearchJobForm";
+import SearchCompanyForm from "./SearchCompanyForm";
 import AuthBtnGroup from "./AuthBtnGroup";
 import SearchForms from "./SearchForms";
 
@@ -109,7 +109,7 @@ function Header() {
         )}
         {isAuthenticated ? (
           <div className="flex items-center gap-4">
-            <p className="hidden sm:block capitalize">Welcome {userName}!</p>
+            <p className="hidden capitalize sm:block">Welcome {userName}!</p>
             <button
               className="flex h-[50px] w-[50px] items-center justify-center rounded-full bg-primary text-xl uppercase text-white"
               onClick={(e) => userMenuRef.current.toggle(e)}
