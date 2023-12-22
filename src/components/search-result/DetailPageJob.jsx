@@ -60,7 +60,7 @@ function DetailPageJob() {
           </div>
           <div className="mb-10 flex items-center gap-3">
             <div>
-              <Button text="Rate" to="/add/job-rating/abc" />
+              <Button text="Rate" to={`/add/job-rating/${job?.slug}`} />
             </div>
             <div>
               <Button

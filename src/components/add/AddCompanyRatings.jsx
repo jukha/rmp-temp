@@ -1,82 +1,11 @@
-import { Link } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import Button from "../../ui/Button";
-import styled from "styled-components";
-import { Dropdown } from "primereact/dropdown";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AddRating from "../../ui/AddRating";
-import { RadioButton } from "primereact/radiobutton";
-import { Dialog } from "primereact/dialog";
-
-const countries = [
-  { name: "Select Country", value: "" },
-  { name: "United States", value: "US" },
-  { name: "Canada", value: "CA" },
-  // Add more countries as needed
-];
-
-const ratingData = [
-  { name: "Awful", value: 1 },
-  { name: "Bad", value: 2 },
-  { name: "Okay", value: 3 },
-  { name: "Good", value: 4 },
-  { name: "Awesome", value: 5 },
-];
-
-const ratingDataDifficulty = [
-  { name: "Very Easy", value: 1 },
-  { name: "Easy", value: 2 },
-  { name: "Average", value: 3 },
-  { name: "Difficult", value: 4 },
-  { name: "Very Difficult", value: 5 },
-];
-
-const locationRatingData = [
-  { name: "Very Dissatisfied", value: 1 },
-  { name: "Dissatisfied", value: 2 },
-  { name: "Neutral", value: 3 },
-  { name: "Satisfied", value: 4 },
-  { name: "Very Satisfied", value: 5 },
-];
-
-const opportunitiesRatingData = [
-  { name: "Limited", value: 1 },
-  { name: "Some", value: 2 },
-  { name: "Moderate", value: 3 },
-  { name: "Abundant", value: 4 },
-  { name: "Exceptional", value: 5 },
-];
-
-const internetRatingData = [
-  { name: "Poor", value: 1 },
-  { name: "Average", value: 2 },
-  { name: "Good", value: 3 },
-  { name: "Excellent", value: 4 },
-  { name: "Outstanding", value: 5 },
-];
-
-const safetyRatingData = [
-  { name: "Unsafe", value: 1 },
-  { name: "Average", value: 2 },
-  { name: "Safe", value: 3 },
-  { name: "Exceptional", value: 4 },
-  { name: "Very Safe", value: 5 },
-];
-
-const foodRatingData = internetRatingData;
+import { addCompanyRating, getCompanyBySlug } from "../../services/apiCompany";
+import { toast } from "react-toastify";
 
 function AddCompanyRatings() {
-  /*
-
-
-Opportunities for advancement
-Work-life balance
-Employee benefits
-Leadership and management
-Innovation and technology adoption
-Diversity and inclusion
-Corporate social responsibility
-Financial stability
-  */
   const [reputationRating, setReputationRating] = useState(0);
   const [companyCultureRating, setCompanyCultureRating] = useState(0);
   const [advancementOpportunitiesRating, setAdvancementOpportunitiesRating] =
@@ -89,15 +18,51 @@ Financial stability
   const [socialResponsibilityRating, setSocialResponsibilityRating] =
     useState(0);
   const [financialStability, setFinancialStability] = useState(0);
-  const [showGuidelinesDialog, setShowGuidelinesDialog] = useState(false);
+  // const [showGuidelinesDialog, setShowGuidelinesDialog] = useState(false);
+  const [company, setCompany] = useState(null);
+  const location = useLocation();
+
+  useEffect(() => {
+    (async () => {
+      const slug = location.pathname.split("/").pop();
+      const response = await getCompanyBySlug(slug);
+      setCompany(response?.company);
+    })();
+  }, [location.pathname]);
+
+  async function handleSubmit() {
+    try {
+      const data = {
+        reputation: reputationRating,
+        companyCulture: companyCultureRating,
+        opportunitiesForAdvancement: advancementOpportunitiesRating,
+        workLifeBalance: workLifeBalanceRating,
+        employeeBenefits: benefitsRating,
+        leadershipAndManagement: managementRating,
+        innovationAndTechnologyAdoption: technologyAdoptionRating,
+        diversityAndInclusion: diversityRating,
+        corporateSocialResponsibility: socialResponsibilityRating,
+        financialStability: financialStability,
+      };
+      const apiResponse = await addCompanyRating(company.slug, data);
+
+      if (apiResponse.success) {
+        toast.success(apiResponse.message);
+      } else {
+        toast.error(apiResponse.message);
+      }
+    } catch (error) {
+      toast.error("An error occurred while submitting the rating.");
+    }
+  }
   return (
     <>
       <div className="w-full bg-white py-4 shadow-[rgba(0,_0,_0,_0.25)_0px_25px_50px_-12px]">
         <div className="container mx-auto flex items-center justify-between px-4">
           <div>
-            <p>Southfield, MI</p>
+            <p>{company?.location}</p>
             <h2 className="tex-2xl my-3 font-extrabold sm:text-4xl">
-              Abcott Institute
+              {company?.name}
             </h2>
           </div>
         </div>
@@ -106,70 +71,70 @@ Financial stability
         <div className="container mx-auto px-4 py-8 sm:py-16">
           <div className="grid gap-8 px-4  lg:grid-cols-2">
             <div className=" bg-white p-7">
-              <h6 className="mb-4 text-center font-medium text-xl">
+              <h6 className="mb-4 text-center text-xl font-medium">
                 Reputation
                 <span className="font-medium text-red-600">*</span>
               </h6>
               <AddRating setRating={setReputationRating} />
             </div>
             <div className=" bg-white p-7">
-              <h6 className="mb-4 text-center font-medium text-xl">
+              <h6 className="mb-4 text-center text-xl font-medium">
                 Company culture
                 <span className="font-medium text-red-600">*</span>
               </h6>
               <AddRating setRating={setCompanyCultureRating} />
             </div>
             <div className=" bg-white p-7">
-              <h6 className="mb-4 text-center font-medium text-xl">
+              <h6 className="mb-4 text-center text-xl font-medium">
                 Opportunities for advancement
                 <span className="font-medium text-red-600">*</span>
               </h6>
               <AddRating setRating={setAdvancementOpportunitiesRating} />
             </div>
             <div className=" bg-white p-7">
-              <h6 className="mb-4 text-center font-medium text-xl">
+              <h6 className="mb-4 text-center text-xl font-medium">
                 Work-life balance
                 <span className="font-medium text-red-600">*</span>
               </h6>
               <AddRating setRating={setWorkLifeBalanceRating} />
             </div>
             <div className=" bg-white p-7">
-              <h6 className="mb-4 text-center font-medium text-xl">
+              <h6 className="mb-4 text-center text-xl font-medium">
                 Employee benefits
                 <span className="font-medium text-red-600">*</span>
               </h6>
               <AddRating setRating={setBenefitsRating} />
             </div>
             <div className=" bg-white p-7">
-              <h6 className="mb-4 text-center font-medium text-xl">
+              <h6 className="mb-4 text-center text-xl font-medium">
                 Leadership and management
                 <span className="font-medium text-red-600">*</span>
               </h6>
               <AddRating setRating={setManagementRating} />
             </div>
             <div className=" bg-white p-7">
-              <h6 className="mb-4 text-center font-medium text-xl">
+              <h6 className="mb-4 text-center text-xl font-medium">
                 Innovation and technology adoption
                 <span className="font-medium text-red-600">*</span>
               </h6>
               <AddRating setRating={setTechnologyAdoptionRating} />
             </div>
             <div className=" bg-white p-7">
-              <h6 className="mb-4 text-center font-medium text-xl">
+              <h6 className="mb-4 text-center text-xl font-medium">
                 Diversity and inclusion
                 <span className="font-medium text-red-600">*</span>
               </h6>
               <AddRating setRating={setDiversityRating} />
             </div>
             <div className=" bg-white p-7">
-              <h6 className="mb-4 text-center font-medium text-xl">
+              <h6 className="mb-4 text-center text-xl font-medium">
                 Corporate social responsibility
                 <span className="font-medium text-red-600">*</span>
               </h6>
               <AddRating setRating={setSocialResponsibilityRating} />
             </div>
             <div className=" bg-white p-7">
-              <h6 className="mb-4 text-center font-medium text-xl">
+              <h6 className="mb-4 text-center text-xl font-medium">
                 Financial stability
                 <span className="font-medium text-red-600">*</span>
               </h6>
@@ -185,7 +150,7 @@ Financial stability
               RateMyProfessors.com. IP addresses are logged.
             </p>
             <div className="mx-auto max-w-max">
-              <Button text="Submit Rating" />
+              <Button text="Submit Rating" onClick={handleSubmit} />
             </div>
           </div>
         </div>

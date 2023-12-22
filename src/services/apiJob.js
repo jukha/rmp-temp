@@ -1,3 +1,4 @@
+import { getAuthorizationHeader } from "./authUtils";
 import { handleApiError } from "./handleApiError";
 import axios from "axios";
 
@@ -19,6 +20,17 @@ export const getJobBySlug = async (slug) => {
   try {
     const response = await axios.get(`${BASE_URL}/${slug}`);
     return response.data.data;
+  } catch (error) {
+    handleApiError(error);
+  }
+};
+
+export const addJobRating = async (slug, data) => {
+  try {
+    const response = await axios.post(`${BASE_URL}/${slug}/ratings`, data, {
+      headers: getAuthorizationHeader(),
+    });
+    return response.data;
   } catch (error) {
     handleApiError(error);
   }

@@ -1,47 +1,9 @@
-import { Link } from "react-router-dom";
 import Button from "../../ui/Button";
-import styled from "styled-components";
-import { Dropdown } from "primereact/dropdown";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AddRating from "../../ui/AddRating";
-import { RadioButton } from "primereact/radiobutton";
-import { Dialog } from "primereact/dialog";
-import ReactSpeedometer from "react-d3-speedometer";
-import { Slider } from "primereact/slider";
-import { InputNumber } from "primereact/inputnumber";
-
-const countries = [
-  { name: "Select Country", value: "" },
-  { name: "United States", value: "US" },
-  { name: "Canada", value: "CA" },
-  // Add more countries as needed
-];
-
-const ratingData = [
-  { name: "Unsatisfactory", value: 1 },
-  { name: "Below Expectations", value: 2 },
-  { name: "Satisfactory", value: 3 },
-  { name: "Above Expectations", value: 4 },
-  { name: "Exceptional", value: 5 },
-];
-
-const ratingDataDifficulty = [
-  { name: "Very Easy", value: 1 },
-  { name: "Easy", value: 2 },
-  { name: "Moderate", value: 3 },
-  { name: "Challenging", value: 4 },
-  { name: "Very Challenging", value: 5 },
-];
-
-const ReactSpeedometerWrapper = styled.div`
-  .segment-value,
-  .current-value {
-    user-select: none;
-  }
-  svg {
-    height: 200px !important;
-  }
-`;
+import { useLocation } from "react-router-dom";
+import { addJobRating, getJobBySlug } from "../../services/apiJob";
+import { toast } from "react-toastify";
 
 function AddJobRatings() {
   const [compensationRating, setCompensationRating] = useState(0);
@@ -53,6 +15,43 @@ function AddJobRatings() {
   const [workloadRating, setWorkloadRating] = useState(0);
   const [benefitsRating, setBenefitsRating] = useState(0);
   const [flexibilityRating, setFlexibilityRating] = useState(0);
+
+  const [job, setJob] = useState(null);
+  const location = useLocation();
+
+  useEffect(() => {
+    (async () => {
+      const slug = location.pathname.split("/").pop();
+      const response = await getJobBySlug(slug);
+      setJob(response?.job);
+    })();
+  }, [location.pathname]);
+
+
+  async function handleSubmit() {
+    try {
+      const data = {
+        compensation: compensationRating,
+        workLifeBalance: workLifeBalanceRating,
+        jobSecurity: jobSecurityRating,
+        opportunitiesForGrowth: growthOpportunitiesRating,
+        companyCulture: companyCultureRating,
+        jobSatisfaction: jobSatisfactionRating,
+        workload: workloadRating,
+        benefits: benefitsRating,
+        flexibility: flexibilityRating,
+      };
+      const apiResponse = await addJobRating(job.slug, data);
+
+      if (apiResponse.success) {
+        toast.success(apiResponse.message);
+      } else {
+        toast.error(apiResponse.message);
+      }
+    } catch (error) {
+      toast.error(`An error occurred while submitting the rating.${error.message}`);
+    }
+  }
 
   return (
     <>
@@ -70,70 +69,70 @@ function AddJobRatings() {
         <div className="container mx-auto py-16">
           <div className="grid gap-8 px-4  lg:grid-cols-2">
             <div className=" bg-white p-7">
-              <h6 className="mb-4 text-center font-medium text-xl">
+              <h6 className="mb-4 text-center text-xl font-medium">
                 Compensation
                 <span className="font-medium text-red-600">*</span>
               </h6>
               <AddRating setRating={setCompensationRating} />
             </div>
             <div className=" bg-white p-7">
-              <h6 className="mb-4 text-center font-medium text-xl">
+              <h6 className="mb-4 text-center text-xl font-medium">
                 Work-life balance
                 <span className="font-medium text-red-600">*</span>
               </h6>
               <AddRating setRating={setWorkLifeBalanceRating} />
             </div>
             <div className=" bg-white p-7">
-              <h6 className="mb-4 text-center font-medium text-xl">
+              <h6 className="mb-4 text-center text-xl font-medium">
                 Job security
                 <span className="font-medium text-red-600">*</span>
               </h6>
               <AddRating setRating={setJobSecurityRating} />
             </div>
             <div className=" bg-white p-7">
-              <h6 className="mb-4 text-center font-medium text-xl">
+              <h6 className="mb-4 text-center text-xl font-medium">
                 Opportunities for growth
                 <span className="font-medium text-red-600">*</span>
               </h6>
               <AddRating setRating={setGrowthOpportunitiesRating} />
             </div>
             <div className=" bg-white p-7">
-              <h6 className="mb-4 text-center font-medium text-xl">
+              <h6 className="mb-4 text-center text-xl font-medium">
                 Company culture
                 <span className="font-medium text-red-600">*</span>
               </h6>
               <AddRating setRating={setCompanyCultureRating} />
             </div>
             <div className=" bg-white p-7">
-              <h6 className="mb-4 text-center font-medium text-xl">
+              <h6 className="mb-4 text-center text-xl font-medium">
                 Job satisfaction
                 <span className="font-medium text-red-600">*</span>
               </h6>
               <AddRating setRating={setJobSatisfactionRating} />
             </div>
             <div className=" bg-white p-7">
-              <h6 className="mb-4 text-center font-medium text-xl">
+              <h6 className="mb-4 text-center text-xl font-medium">
                 Workload
                 <span className="font-medium text-red-600">*</span>
               </h6>
               <AddRating setRating={setWorkloadRating} />
             </div>
             <div className=" bg-white p-7">
-              <h6 className="mb-4 text-center font-medium text-xl">
+              <h6 className="mb-4 text-center text-xl font-medium">
                 Benefits
                 <span className="font-medium text-red-600">*</span>
               </h6>
               <AddRating setRating={setBenefitsRating} />
             </div>
             <div className=" bg-white p-7">
-              <h6 className="mb-4 text-center font-medium text-xl">
+              <h6 className="mb-4 text-center text-xl font-medium">
                 Flexibility
                 <span className="font-medium text-red-600">*</span>
               </h6>
               <AddRating setRating={setFlexibilityRating} />
             </div>
           </div>
-          <div className="max-w-[900px] mx-auto text-center mt-16">
+          <div className="mx-auto mt-16 max-w-[900px] text-center">
             <p className="mb-6">
               By clicking the "Submit" button, I acknowledge that I have read
               and agreed to the Rate My Professors Site Guidelines, Terms of Use
@@ -141,7 +140,7 @@ function AddJobRatings() {
               RateMyProfessors.com. IP addresses are logged.
             </p>
             <div className="mx-auto max-w-max">
-              <Button text="Submit Rating" />
+              <Button text="Submit Rating" onClick={handleSubmit} />
             </div>
           </div>
         </div>

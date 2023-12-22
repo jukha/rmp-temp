@@ -4,23 +4,38 @@ import { getBgColor } from "../../utils/calcBgColor";
 import { Tooltip } from "primereact/tooltip";
 import { useEffect, useState } from "react";
 import { getCompanyBySlug } from "../../services/apiCompany";
+import { transformRatingKeys } from "../../utils/transformRatingsData";
+import { format, parseISO } from "date-fns";
 
 const ratingsData = [
-  { icon: "pi pi-thumbs-up", name: "Happiness", rating: 4.0 },
-  { icon: "pi pi-sync", name: "Reputation", rating: 3.0 },
-  { icon: "pi pi-angle-double-up", name: "Facilities", rating: 3.0 },
-  { icon: "pi pi-heart", name: "Safety", rating: 3.0 },
-  { icon: "pi pi-chart-line", name: "Opportunities", rating: 3.0 },
-  { icon: "pi pi-tag", name: "Food", rating: 3.0 },
-  { icon: "pi pi-map-marker", name: "Location", rating: 3.0 },
-  { icon: "pi pi-globe", name: "Internet", rating: 2.0 },
-  { icon: "pi pi-users", name: "Social", rating: 2.0 },
-  { icon: "pi pi-building", name: "Clubs", rating: 3.0 },
+  { icon: "pi pi-sync", name: "reputation" },
+  { icon: "pi pi-thumbs-up", name: "company culture" },
+  {
+    icon: "pi pi-angle-double-up",
+    name: "opportunities for advancement",
+  },
+  { icon: "pi pi-heart", name: "financial stability" },
+  { icon: "pi pi-chart-line", name: "work life balance" },
+  { icon: "pi pi-tag", name: "employee benefits" },
+  { icon: "pi pi-map-marker", name: "leadership and management" },
+  { icon: "pi pi-globe", name: "innovation and technology adoption" },
+  { icon: "pi pi-users", name: "diversity and inclusion" },
+  {
+    icon: "pi pi-building",
+    name: "corporate social responsibility",
+  },
 ];
 
 function DetailPageCompany() {
   const [company, setCompany] = useState(null);
   const location = useLocation();
+
+  function getRatingIcon(ratingParam) {
+    const paramIndex = ratingsData.findIndex(
+      (el) => el.name.toLowerCase() === ratingParam?.toLowerCase(),
+    );
+    return ratingsData[paramIndex].icon;
+  }
 
   useEffect(() => {
     (async () => {
@@ -42,7 +57,7 @@ function DetailPageCompany() {
           </div>
           <div className="mt-6 flex flex-wrap items-center gap-3">
             <div>
-              <Button text="Rate" type="primary" to="/add/company-rating/abc" />
+              <Button text="Rate" type="primary" to={`/add/company-rating/${company?.slug}`} />
             </div>
             <div>
               <Button text="Compare" to="/compare/companies/abc/abc" />
@@ -51,165 +66,181 @@ function DetailPageCompany() {
         </div>
       </div>
       <main className="container mx-auto px-4 pt-16">
-        <div className="mb-20 flex max-w-3xl flex-col items-center justify-between gap-10 md:flex-row">
+        <div className="mb-20 flex max-w-max flex-col items-center justify-between gap-10 md:flex-row">
           <div className="">
-            <h2 className="text-6xl font-extrabold lg:text-8xl">{company?.averageOverallRating}</h2>
+            <h2 className="text-6xl font-extrabold lg:text-8xl">
+              {company?.averageOverallRating}
+            </h2>
             <p>Overall Quality</p>
           </div>
           <div className="grid gap-8 sm:grid-cols-2 sm:gap-x-10 sm:gap-y-4">
-            {ratingsData.map((rating, i) => (
-              <div key={i} className="flex justify-between gap-4">
-                <div className="flex items-center gap-4">
-                  <i className={`text-3xl ${rating.icon}`}></i>
-                  <p className="text-xl">{rating.name}</p>
+            {company?.averageRatings &&
+              Object.entries(transformRatingKeys(company.averageRatings)).map(
+                ([ratingName, ratingValue], i) => (
+                  <div key={i} className="flex justify-between gap-4">
+                    <div className="flex items-center gap-4">
+                      <i
+                        className={`text-3xl ${getRatingIcon(ratingName)}`}
+                      ></i>
+                      <p className="text-xl first-letter:capitalize">
+                        {ratingName}
+                      </p>
+                    </div>
+                    <div className="relative">
+                      <span
+                        className="absolute block h-full w-2/3 bg-black"
+                        style={{ background: getBgColor(ratingValue) }}
+                      ></span>
+                      <h6 className="relative py-1 text-4xl font-extrabold">
+                        {ratingValue.toFixed(1)}
+                      </h6>
+                    </div>
+                  </div>
+                ),
+              )}
+          </div>
+        </div>
+        {/* All Ratings */}
+        <div>
+          {company?.ratings &&
+            company?.ratings.map((rating, i) => (
+              <div
+                key={i}
+                className="mb-6 mt-6 flex max-w-5xl flex-wrap items-start gap-0 bg-background px-6 py-5 lg:gap-10"
+              >
+                <div>
+                  <div className="mb-6">
+                    <p className="text-black">Overall</p>
+                    <div
+                      className="my-2 px-3 py-4 text-4xl font-extrabold"
+                      style={{ background: getBgColor(rating?.average) }}
+                    >
+                      {rating?.average}
+                    </div>
+                  </div>
                 </div>
-                <div className="relative">
-                  <span
-                    className="absolute block h-full w-2/3 bg-black"
-                    style={{ background: getBgColor(rating.rating) }}
-                  ></span>
-                  <h6 className="relative py-1 text-4xl font-extrabold">
-                    {rating.rating.toFixed(1)}
-                  </h6>
+                <div>
+                  <h3 className="mb-5 text-end font-medium">
+                    {format(parseISO(rating.createdAt), "MMM do, yyyy")}
+                  </h3>
+                  <p>{rating.text}</p>
+                  <div className="mt-6 grid gap-8 sm:grid-cols-2 sm:gap-x-10 sm:gap-y-4">
+                    {Object.entries(transformRatingKeys(rating.data)).map(
+                      ([ratingName, ratingValue], i) => (
+                        <div
+                          key={i}
+                          className="flex flex-col justify-between gap-3 sm:flex-row"
+                        >
+                          <p className="font-semibold first-letter:capitalize">
+                            {ratingName}
+                          </p>
+                          <div className="grid flex-1 grid-cols-[repeat(5,32px)] grid-rows-[18px] justify-start gap-[2px] sm:justify-end">
+                            {Array.from({ length: 5 }, (_, index) => {
+                              {
+                                if (index + 1 > ratingValue)
+                                  return (
+                                    <span
+                                      key={index}
+                                      className={`bg-gray-300 ${
+                                        index === 0
+                                          ? "rounded-bl-md rounded-tl-md"
+                                          : index === 4
+                                            ? "rounded-br-md rounded-tr-md"
+                                            : ""
+                                      }`}
+                                    ></span>
+                                  );
+                                else
+                                  return (
+                                    <span
+                                      key={index}
+                                      className={`${
+                                        index === 0
+                                          ? "rounded-bl-md rounded-tl-md"
+                                          : index === 4
+                                            ? "rounded-br-md rounded-tr-md"
+                                            : ""
+                                      }`}
+                                      style={{
+                                        background: getBgColor(ratingValue),
+                                      }}
+                                    ></span>
+                                  );
+                              }
+                            })}
+                          </div>
+                        </div>
+                      ),
+                    )}
+                  </div>
+                  {/* ============== */}
+                  {/* rating actions */}
+                  {/* ============== */}
+                  <div className="mt-10 flex items-center justify-between">
+                    <div className="flex gap-4">
+                      <Tooltip
+                        className="bg-black font-poppins"
+                        target=".like"
+                        pt={{
+                          text: { className: "bg-black" },
+                        }}
+                      />
+                      <Tooltip
+                        className="bg-black font-poppins"
+                        target=".dislike"
+                        pt={{
+                          text: { className: "bg-black" },
+                        }}
+                      />
+                      <i
+                        className="pi pi-thumbs-up like cursor-pointer text-2xl"
+                        data-pr-tooltip="Helpful"
+                        data-pr-position="right"
+                        data-pr-at="right+5 top"
+                        data-pr-my="left center-2"
+                      ></i>
+                      <i
+                        className="pi pi-thumbs-down dislike cursor-pointer text-2xl"
+                        data-pr-tooltip="Not helpful"
+                        data-pr-position="right"
+                        data-pr-at="right+5 top"
+                        data-pr-my="left center-2"
+                      ></i>
+                    </div>
+                    <div className="flex items-center gap-4">
+                      <Tooltip
+                        className="bg-black font-poppins"
+                        target=".share"
+                        pt={{
+                          text: { className: "bg-black" },
+                        }}
+                      />
+                      <Tooltip
+                        className="bg-black font-poppins"
+                        target=".report"
+                        pt={{
+                          text: { className: "bg-black" },
+                        }}
+                      />
+                      <i
+                        className="pi pi-share-alt share cursor-pointer text-2xl"
+                        data-pr-tooltip="Share this rating"
+                        data-pr-position="right"
+                        data-pr-at="right+5 top"
+                        data-pr-my="left center-2"
+                      ></i>
+                      <i
+                        className="pi pi-flag report cursor-pointer text-2xl"
+                        data-pr-tooltip="Report this rating"
+                        data-pr-position="right"
+                        data-pr-at="right+5 top"
+                        data-pr-my="left center-2"
+                      ></i>
+                    </div>
+                  </div>
                 </div>
               </div>
             ))}
-          </div>
-        </div>
-        <div>
-          <div className="mb-6 mt-6 flex max-w-4xl flex-wrap items-start gap-0 bg-background px-6 py-5 lg:gap-10">
-            <div>
-              <div className="mb-6">
-                <p className="text-black">Overall</p>
-                <div
-                  className="my-2 px-3 py-4 text-4xl font-extrabold"
-                  style={{ background: getBgColor(4) }}
-                >
-                  4.0
-                </div>
-              </div>
-            </div>
-
-            <div>
-              <h3 className="mb-5 text-end font-medium">Apr 14th, 2023</h3>
-              <p>
-                Oddly functional chaos … mean nurse professor and the nursing
-                students are rude as ever .. great central processing and
-                surgical tech students
-              </p>
-              <div className="mt-6 grid gap-8 sm:grid-cols-2 sm:gap-x-10 sm:gap-y-4">
-                {ratingsData.map((rating, i) => (
-                  <div
-                    key={i}
-                    className="flex flex-col justify-between gap-3 sm:flex-row"
-                  >
-                    <p className="font-semibold">{rating.name}</p>
-                    <div className="grid flex-1 grid-cols-[repeat(5,32px)] grid-rows-[18px] justify-start gap-[2px] sm:justify-end">
-                      {Array.from({ length: 5 }, (_, index) => {
-                        {
-                          if (index + 1 > rating.rating)
-                            return (
-                              <span
-                                key={index}
-                                className={`bg-gray-300 ${
-                                  index === 0
-                                    ? "rounded-bl-md rounded-tl-md"
-                                    : index === 4
-                                      ? "rounded-br-md rounded-tr-md"
-                                      : ""
-                                }`}
-                              ></span>
-                            );
-                          else
-                            return (
-                              <span
-                                key={index}
-                                className={`${
-                                  index === 0
-                                    ? "rounded-bl-md rounded-tl-md"
-                                    : index === 4
-                                      ? "rounded-br-md rounded-tr-md"
-                                      : ""
-                                }`}
-                                style={{
-                                  background: getBgColor(rating.rating),
-                                }}
-                              ></span>
-                            );
-                        }
-                      })}
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              {/* ============== */}
-              {/* rating actions */}
-              {/* ============== */}
-              <div className="mt-10 flex items-center justify-between">
-                <div className="flex gap-4">
-                  <Tooltip
-                    className="bg-black font-poppins"
-                    target=".like"
-                    pt={{
-                      text: { className: "bg-black" },
-                    }}
-                  />
-                  <Tooltip
-                    className="bg-black font-poppins"
-                    target=".dislike"
-                    pt={{
-                      text: { className: "bg-black" },
-                    }}
-                  />
-                  <i
-                    className="pi pi-thumbs-up like cursor-pointer text-2xl"
-                    data-pr-tooltip="Helpful"
-                    data-pr-position="right"
-                    data-pr-at="right+5 top"
-                    data-pr-my="left center-2"
-                  ></i>
-                  <i
-                    className="pi pi-thumbs-down dislike cursor-pointer text-2xl"
-                    data-pr-tooltip="Not helpful"
-                    data-pr-position="right"
-                    data-pr-at="right+5 top"
-                    data-pr-my="left center-2"
-                  ></i>
-                </div>
-                <div className="flex items-center gap-4">
-                  <Tooltip
-                    className="bg-black font-poppins"
-                    target=".share"
-                    pt={{
-                      text: { className: "bg-black" },
-                    }}
-                  />
-                  <Tooltip
-                    className="bg-black font-poppins"
-                    target=".report"
-                    pt={{
-                      text: { className: "bg-black" },
-                    }}
-                  />
-                  <i
-                    className="pi pi-share-alt share cursor-pointer text-2xl"
-                    data-pr-tooltip="Share this rating"
-                    data-pr-position="right"
-                    data-pr-at="right+5 top"
-                    data-pr-my="left center-2"
-                  ></i>
-                  <i
-                    className="pi pi-flag report cursor-pointer text-2xl"
-                    data-pr-tooltip="Report this rating"
-                    data-pr-position="right"
-                    data-pr-at="right+5 top"
-                    data-pr-my="left center-2"
-                  ></i>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
       </main>
     </>
