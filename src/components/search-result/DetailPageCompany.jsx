@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { getCompanyBySlug } from "../../services/apiCompany";
 import { transformRatingKeys } from "../../utils/transformRatingsData";
 import { format, parseISO } from "date-fns";
+import { useAuth } from "../../contexts/AuthContext";
 
 const ratingsData = [
   { icon: "pi pi-sync", name: "reputation" },
@@ -29,6 +30,7 @@ const ratingsData = [
 function DetailPageCompany() {
   const [company, setCompany] = useState(null);
   const location = useLocation();
+  const { isAuthenticated, user } = useAuth();
 
   function getRatingIcon(ratingParam) {
     const paramIndex = ratingsData.findIndex(
@@ -53,11 +55,24 @@ function DetailPageCompany() {
             <h2 className="my-2 text-xl font-extrabold lg:my-3 lg:text-4xl">
               {company?.name}
             </h2>
-            <Link className="font-medium underline">View all Jobs</Link>
+            <Link
+              className="font-medium underline"
+              to={
+                isAuthenticated
+                  ? `/jobs/company/${company?._id}/${user._id}`
+                  : `/jobs/company/${company?._id}`
+              }
+            >
+              View all Jobs
+            </Link>
           </div>
           <div className="mt-6 flex flex-wrap items-center gap-3">
             <div>
-              <Button text="Rate" type="primary" to={`/add/company-rating/${company?.slug}`} />
+              <Button
+                text="Rate"
+                type="primary"
+                to={`/add/company-rating/${company?.slug}`}
+              />
             </div>
             <div>
               <Button text="Compare" to="/compare/companies/abc/abc" />

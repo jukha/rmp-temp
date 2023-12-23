@@ -34,6 +34,7 @@ import ScrollToTop from "./components/scroll-to-top/ScrollToTop";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { GoogleOAuthProvider } from "@react-oauth/google";
+import CompanyAllJobs from "./components/search-result/CompanyAllJobs";
 
 function App() {
   return (
@@ -81,6 +82,7 @@ function App() {
               />
               {/* JOBS */}
               <Route path="/jobs" element={<SearchResultPageJobs />} />
+              <Route path="jobs/company/:id/*" element={<CompanyAllJobs />} />
               <Route path="jobs/:id" element={<DetailPageJob />} />
               <Route path="/add/job" element={<AddJob />} />
               <Route path="/add/job-rating/:id" element={<AddJobRatings />} />

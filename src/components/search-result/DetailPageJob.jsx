@@ -36,10 +36,14 @@ function DetailPageJob() {
       <div className="flex flex-col items-start gap-10 lg:flex-row">
         <div className="max-w-md flex-1">
           <div className="mb-3 flex items-start gap-3">
-            <h3 className="text-4xl font-extrabold sm:text-7xl">4</h3>
+            <h3 className="text-4xl font-extrabold sm:text-7xl">
+              {job?.averageOverallRating}
+            </h3>
             <h4 className="text-lg font-medium text-gray-600">/ 5</h4>
           </div>
-          <h5 className="font-medium">Overall Quality Based on 5 ratings</h5>
+          <h5 className="font-medium">
+            Overall Quality Based on {job?.ratings?.length} ratings
+          </h5>
           <h1 className="mb-2 mt-6 text-2xl font-extrabold sm:text-4xl">
             <span className="capitalize">{job?.title}</span>
           </h1>
@@ -155,122 +159,90 @@ function DetailPageJob() {
         {/* Ratings result */}
         {/* ============== */}
         <div>
-          <div className="mb-6 mt-6 flex max-w-4xl flex-col items-start gap-10 bg-background px-6 py-5 sm:flex-row">
-            <div>
-              <div className="mb-6">
-                <p className="text-black">Quality</p>
-                <div className="my-2 bg-[#90EE90] px-3 py-4 text-4xl font-extrabold">
-                  4.0
-                </div>
-              </div>
+          {job?.ratings?.map((rating, i) => (
+            <div
+              key={i}
+              className="mb-6 mt-6 flex max-w-4xl flex-col items-start gap-10 bg-background px-6 py-5 sm:flex-row"
+            >
               <div>
-                <p className="text-black">Quality</p>
-                <div className="my-2 bg-[#FFB6C1] px-3 py-4 text-4xl font-extrabold">
-                  1.0
+                <div className="mb-6">
+                  <p className="text-black">Overall Quality</p>
+                  <div className="my-2 bg-[#90EE90] px-3 py-4 text-center text-4xl font-extrabold">
+                    {rating.average}
+                  </div>
+                </div>
+              </div>
+              <div className="w-full">
+                <h3 className="mb-2 text-xl font-bold capitalize">{`${rating.user.firstName} ${rating.user.lastName}`}</h3>
+                <p>{rating.text}</p>
+                {/* ============== */}
+                {/* rating actions */}
+                {/* ============== */}
+                <div className="mt-8 flex items-center justify-between">
+                  <div className="flex gap-4">
+                    <Tooltip
+                      className="bg-black font-poppins"
+                      target=".like"
+                      pt={{
+                        text: { className: "bg-black" },
+                      }}
+                    />
+                    <Tooltip
+                      className="bg-black font-poppins"
+                      target=".dislike"
+                      pt={{
+                        text: { className: "bg-black" },
+                      }}
+                    />
+                    <i
+                      className="pi pi-thumbs-up like cursor-pointer text-2xl"
+                      data-pr-tooltip="Helpful"
+                      data-pr-position="right"
+                      data-pr-at="right+5 top"
+                      data-pr-my="left center-2"
+                    ></i>
+                    <i
+                      className="pi pi-thumbs-down dislike cursor-pointer text-2xl"
+                      data-pr-tooltip="Not helpful"
+                      data-pr-position="right"
+                      data-pr-at="right+5 top"
+                      data-pr-my="left center-2"
+                    ></i>
+                  </div>
+                  <div className="flex items-center gap-4">
+                    <Tooltip
+                      className="bg-black font-poppins"
+                      target=".share"
+                      pt={{
+                        text: { className: "bg-black" },
+                      }}
+                    />
+                    <Tooltip
+                      className="bg-black font-poppins"
+                      target=".report"
+                      pt={{
+                        text: { className: "bg-black" },
+                      }}
+                    />
+                    <i
+                      className="pi pi-share-alt share cursor-pointer text-2xl"
+                      data-pr-tooltip="Share this rating"
+                      data-pr-position="right"
+                      data-pr-at="right+5 top"
+                      data-pr-my="left center-2"
+                    ></i>
+                    <i
+                      className="pi pi-flag report cursor-pointer text-2xl"
+                      data-pr-tooltip="Report this rating"
+                      data-pr-position="right"
+                      data-pr-at="right+5 top"
+                      data-pr-my="left center-2"
+                    ></i>
+                  </div>
                 </div>
               </div>
             </div>
-
-            <div>
-              <h3 className="mb-2 text-xl font-bold">SOC101</h3>
-              <div className="my-5 flex gap-4">
-                <div className="flex gap-2">
-                  <span>For Credit</span>
-                  <b>Yes</b>
-                </div>
-                <div className="className=" flex gap-2>
-                  <span>For Credit</span>
-                  <b>Yes</b>
-                </div>
-              </div>
-              <p>
-                I enjoyed my soc 101 class with this professor. I hadnt taken
-                many in person classes since the pandemic, but glad I took this
-                one. She engaged a lot with us and cared about our thoughts and
-                opinions. She is very nice too. I had fun in the class and still
-                learned some cool stuff.
-              </p>
-              <div className="my-6 flex flex-wrap gap-4">
-                <span className="inline-block rounded-2xl bg-gray-300 px-4 py-2 uppercase">
-                  Extra credit
-                </span>
-                <span className="inline-block rounded-2xl bg-gray-300 px-4 py-2 uppercase">
-                  Get ready to read
-                </span>
-                <span className="inline-block rounded-2xl bg-gray-300 px-4 py-2 uppercase">
-                  Caring
-                </span>
-                <span className="inline-block rounded-2xl bg-gray-300 px-4 py-2 uppercase">
-                  Get ready to read
-                </span>
-              </div>
-              {/* ============== */}
-              {/* rating actions */}
-              {/* ============== */}
-              <div className="mt-8 flex items-center justify-between">
-                <div className="flex gap-4">
-                  <Tooltip
-                    className="bg-black font-poppins"
-                    target=".like"
-                    pt={{
-                      text: { className: "bg-black" },
-                    }}
-                  />
-                  <Tooltip
-                    className="bg-black font-poppins"
-                    target=".dislike"
-                    pt={{
-                      text: { className: "bg-black" },
-                    }}
-                  />
-                  <i
-                    className="pi pi-thumbs-up like cursor-pointer text-2xl"
-                    data-pr-tooltip="Helpful"
-                    data-pr-position="right"
-                    data-pr-at="right+5 top"
-                    data-pr-my="left center-2"
-                  ></i>
-                  <i
-                    className="pi pi-thumbs-down dislike cursor-pointer text-2xl"
-                    data-pr-tooltip="Not helpful"
-                    data-pr-position="right"
-                    data-pr-at="right+5 top"
-                    data-pr-my="left center-2"
-                  ></i>
-                </div>
-                <div className="flex items-center gap-4">
-                  <Tooltip
-                    className="bg-black font-poppins"
-                    target=".share"
-                    pt={{
-                      text: { className: "bg-black" },
-                    }}
-                  />
-                  <Tooltip
-                    className="bg-black font-poppins"
-                    target=".report"
-                    pt={{
-                      text: { className: "bg-black" },
-                    }}
-                  />
-                  <i
-                    className="pi pi-share-alt share cursor-pointer text-2xl"
-                    data-pr-tooltip="Share this rating"
-                    data-pr-position="right"
-                    data-pr-at="right+5 top"
-                    data-pr-my="left center-2"
-                  ></i>
-                  <i
-                    className="pi pi-flag report cursor-pointer text-2xl"
-                    data-pr-tooltip="Report this rating"
-                    data-pr-position="right"
-                    data-pr-at="right+5 top"
-                    data-pr-my="left center-2"
-                  ></i>
-                </div>
-              </div>
-            </div>
-          </div>
+          ))}
         </div>
       </div>
     </main>

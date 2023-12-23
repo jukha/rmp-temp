@@ -22,7 +22,7 @@ function AddRating({ setRating }) {
   return (
     <div className="flex flex-col items-center justify-center">
       <ReactSpeedometerWrapper>
-        <ReactSpeedometer minValue={0} maxValue={10} value={value} />
+        <ReactSpeedometer minValue={0} maxValue={5} value={value} />
       </ReactSpeedometerWrapper>
       <div>
         <InputNumber
@@ -30,7 +30,7 @@ function AddRating({ setRating }) {
           inputClassName="bg-transparent border-primary border p-2 font-poppins w-[150px] mx-auto text-center"
           value={value}
           min={0}
-          max={10}
+          max={5}
           onValueChange={handleSelection}
         />
       </div>
