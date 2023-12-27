@@ -70,7 +70,7 @@ function DetailPageJob() {
               <Button
                 text="Compare"
                 type="primary"
-                to="/compare/jobs/abc/abc"
+                to={`/compare/jobs/${job?.slug}`}
               />
             </div>
           </div>

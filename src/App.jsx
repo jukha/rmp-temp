@@ -93,6 +93,8 @@ function App() {
               <Route path="jobs/:id" element={<DetailPageJob />} />
               <Route path="/add/job" element={<AddJob />} />
               <Route path="/add/job-rating/:id" element={<AddJobRatings />} />
+              <Route path="/compare/jobs" element={<CompareJobs />} />
+              <Route path="/compare/jobs/:id" element={<CompareJobs />} />
               <Route path="/compare/jobs/:id/:id" element={<CompareJobs />} />
             </Route>
             <Route path="/login" element={<Login />} />

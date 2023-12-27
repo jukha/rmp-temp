@@ -1,23 +1,20 @@
 import { useEffect, useState } from "react";
-import SearchCompanyForm from "../header/SearchCompanyForm";
+import SearchJobForm from "../header/SearchJobForm";
 import { useLocation, useNavigate } from "react-router-dom";
 
-function CompanyDefaultCard({ companyNo }) {
-  const [companyData, setCompanyData] = useState([]);
+function JobDefaultCard({ jobNo }) {
+  const [jobData, setJobData] = useState([]);
   const location = useLocation();
   const navigate = useNavigate();
-  const [disableSecondCompanySearch, setDisableSecondCompanySearch] =
-    useState(false);
+  const [disableSecondJobSearch, setDisableSecondJobSearch] = useState(false);
 
   function handleSelect() {
-    if (companyNo === 1) {
-      navigate(`/compare/companies/${companyData[0]?.slug}`);
+    if (jobNo === 1) {
+      navigate(`/compare/jobs/${jobData[0]?.slug}`);
     } else {
       const pathParts = location.pathname.split("/");
-      const firstCompanySlug = pathParts[pathParts.length - 1];
-      navigate(
-        `/compare/companies/${firstCompanySlug}/${companyData[0]?.slug}`,
-      );
+      const firstJobSlug = pathParts[pathParts.length - 1];
+      navigate(`/compare/jobs/${firstJobSlug}/${jobData[0]?.slug}`);
     }
   }
   console.log("hi");
@@ -27,12 +24,12 @@ function CompanyDefaultCard({ companyNo }) {
     switch (pathParts.length) {
       // DEFAULT URL: compare/companies
       case 2:
-        setDisableSecondCompanySearch(true);
+        setDisableSecondJobSearch(true);
         break;
 
       //compare/companies/:slug
       case 3:
-        setDisableSecondCompanySearch(false);
+        setDisableSecondJobSearch(false);
         break;
 
       default:
@@ -47,18 +44,18 @@ function CompanyDefaultCard({ companyNo }) {
           <div className="mx-auto mb-8 max-w-max bg-gray-400 p-6 text-4xl font-extrabold">
             N/A
           </div>
-          <SearchCompanyForm
+          <SearchJobForm
             onSelect={handleSelect}
-            onSetData={setCompanyData}
-            disabled={companyNo === 2 && disableSecondCompanySearch}
+            onSetData={setJobData}
+            disabled={jobNo === 2 && disableSecondJobSearch}
           />
         </div>
       </div>
-      {Array.from({ length: 11 }).map((_, i) => {
+      {Array.from({ length: 9 }).map((_, i) => {
         return (
           <div
             className={`mb-8 flex flex-col items-center gap-4 ${
-              companyNo === 1 ? "sm:flex-row" : "sm:flex-row-reverse"
+              jobNo === 1 ? "sm:flex-row" : "sm:flex-row-reverse"
             }`}
             key={i}
           >
@@ -86,4 +83,4 @@ function CompanyDefaultCard({ companyNo }) {
   );
 }
 
-export default CompanyDefaultCard;
+export default JobDefaultCard;

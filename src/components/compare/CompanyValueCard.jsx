@@ -12,7 +12,7 @@ function CompanyValueCard({ companyData, companyNo }) {
   console.log(companyData);
   return (
     <article>
-      <div className="mb-8 bg-background p-4 text-center">
+      <div className="mb-8 flex h-60 flex-col items-center justify-center bg-background text-center">
         <div
           className="mx-auto my-2 min-w-[80px] max-w-max px-3 py-4 text-center text-4xl font-extrabold"
           style={{ background: getBgColor(1) }}

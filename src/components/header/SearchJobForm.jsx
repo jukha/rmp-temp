@@ -25,13 +25,15 @@ const JobReactSearchAutocomplete = styled(ReactSearchAutocomplete)`
   }
 `;
 
-function SearchJobForm() {
-  
+function SearchJobForm({ onSelect, onSetData, disabled }) {
   const [jobSuggestions, setJobSuggestions] = useState([]);
   const navigate = useNavigate();
 
   async function handleJobSearch(string, results) {
     const apiResponse = await getJobSuggestions(string);
+    if (onSetData) {
+      onSetData(apiResponse.suggestions);
+    }
     // Transform the API response to match the expected format
     const suggestions = apiResponse.suggestions.map((item) => ({
       id: item._id,
@@ -60,6 +62,10 @@ function SearchJobForm() {
   }
 
   function handleSelect(item) {
+    if (onSelect) {
+      onSelect();
+      return;
+    }
     navigate(`/jobs/${item.slug}`);
   }
 
@@ -70,6 +76,7 @@ function SearchJobForm() {
         showIcon={false}
         formatResult={formatResult}
         onSelect={handleSelect}
+        className={disabled ? "pointer-events-none" : "pointer-events-auto"} // for disabling purpose
         placeholder="Search Jobs"
         onSearch={handleJobSearch}
         inputDebounce={250}
