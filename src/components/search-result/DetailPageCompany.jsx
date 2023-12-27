@@ -75,7 +75,10 @@ function DetailPageCompany() {
               />
             </div>
             <div>
-              <Button text="Compare" to="/compare/companies/abc/abc" />
+              <Button
+                text="Compare"
+                to={`/compare/companies/${company?.slug}`}
+              />
             </div>
           </div>
         </div>

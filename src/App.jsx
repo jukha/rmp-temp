@@ -76,10 +76,17 @@ function App() {
                 path="/add/company-rating/:id"
                 element={<AddCompanyRatings />}
               />
+
+              <Route path="/compare/companies" element={<CompareCompanies />} />
+              <Route
+                path="/compare/companies/:id"
+                element={<CompareCompanies />}
+              />
               <Route
                 path="/compare/companies/:id/:id"
                 element={<CompareCompanies />}
               />
+
               {/* JOBS */}
               <Route path="/jobs" element={<SearchResultPageJobs />} />
               <Route path="jobs/company/:id/*" element={<CompanyAllJobs />} />

@@ -25,12 +25,15 @@ const CompanyReactSearchAutocomplete = styled(ReactSearchAutocomplete)`
   }
 `;
 
-function SearchCompanyForm() {
+function SearchCompanyForm({ onSelect, onSetData, disabled }) {
   const [companySuggestions, setCompanySuggestions] = useState([]);
   const navigate = useNavigate();
 
   async function handleCompanySearch(string, results) {
     const apiResponse = await getCompanySuggestions(string);
+    if (onSetData) {
+      onSetData(apiResponse.suggestions);
+    }
     // Transform the API response to match the expected format
     const suggestions = apiResponse.suggestions.map((item) => ({
       id: item._id,
@@ -59,6 +62,10 @@ function SearchCompanyForm() {
   }
 
   function handleSelect(item) {
+    if (onSelect) {
+      onSelect();
+      return;
+    }
     navigate(`/companies/${item.slug}`);
   }
 
@@ -69,9 +76,10 @@ function SearchCompanyForm() {
         showIcon={false}
         formatResult={formatResult}
         onSelect={handleSelect}
-        placeholder="Search Jobs"
+        className={disabled ? "pointer-events-none" : "pointer-events-auto"} // for disabling purpose
+        placeholder="Search Company"
         onSearch={handleCompanySearch}
-        inputDebounce={250}
+        inputDebounce={100}
       />
     </div>
   );
