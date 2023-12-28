@@ -4,7 +4,7 @@ import { Dropdown } from "primereact/dropdown";
 import { Tooltip } from "primereact/tooltip";
 import { getBgColor } from "../../utils/calcBgColor";
 import { getJobBySlug } from "../../services/apiJob";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const ratingData = [
   { name: "awesome", value: 5, count: 1 },
@@ -49,7 +49,9 @@ function DetailPageJob() {
           </h1>
           <p>
             at
-            <strong> {job?.companyDetails?.name}</strong>
+            <Link to={`/companies/${job?.companyDetails?.slug}`}>
+              <strong> {job?.companyDetails?.name}</strong>
+            </Link>
           </p>
           <div className="my-10 flex gap-5">
             <div className="text-center">

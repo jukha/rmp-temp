@@ -9,11 +9,15 @@ function CompanyAllJobs() {
   const { isAuthenticated, user } = useAuth();
   const [companyjobs, setCompanyjobs] = useState([]);
   const [companyName, setCompanyName] = useState("");
+  const [updatingJobId, setUpdatingJobId] = useState(null);
   const [jobSaveStatus, setJobSaveStatus] = useState({});
+  const [savingJobStatus, setSavingJobStatus] = useState(false);
   const location = useLocation();
 
   async function toggleJobSaveStatus(jobId) {
     try {
+      setUpdatingJobId(jobId);
+      setSavingJobStatus(true);
       const response = await saveJob(jobId);
       if (response?.success) {
         setJobSaveStatus((prevStatus) => ({
@@ -24,6 +28,9 @@ function CompanyAllJobs() {
       }
     } catch (error) {
       console.log("error");
+    } finally {
+      setUpdatingJobId(null);
+      setSavingJobStatus(false);
     }
   }
 
@@ -48,7 +55,7 @@ function CompanyAllJobs() {
         // Initialize job save status based on the response
         const initialSaveStatus = {};
         response?.data.forEach((job) => {
-          initialSaveStatus[job._id] = job.isSaved; // Assuming isSaved is a property indicating whether the job is saved
+          initialSaveStatus[job._id] = job.isSaved;
         });
         setJobSaveStatus(initialSaveStatus);
       } catch (error) {
@@ -97,11 +104,17 @@ function CompanyAllJobs() {
               className="absolute right-6 top-6 ml-auto"
               onClick={() => toggleJobSaveStatus(job?._id)}
             >
-              <i
-                className={`pi ${
-                  !jobSaveStatus[job?._id] ? "pi-bookmark" : "pi-bookmark-fill"
-                }`}
-              ></i>
+              {updatingJobId === job?._id && savingJobStatus ? (
+                <i className="pi pi-spin pi-spinner"></i>
+              ) : (
+                <i
+                  className={`pi ${
+                    !jobSaveStatus[job?._id]
+                      ? "pi-bookmark"
+                      : "pi-bookmark-fill"
+                  }`}
+                ></i>
+              )}
             </button>
           </div>
         ))}

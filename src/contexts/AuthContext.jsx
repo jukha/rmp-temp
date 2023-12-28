@@ -1,5 +1,10 @@
 import React, { createContext, useContext, useReducer } from "react";
-import { loginApi, signupApi, googleAuthApi, updateUserApi } from "../services/apiAuth";
+import {
+  loginApi,
+  signupApi,
+  googleAuthApi,
+  updateUserApi,
+} from "../services/apiAuth";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
 
@@ -126,6 +131,7 @@ function AuthProvider({ children }) {
       const updatedUser = response.data.user;
 
       localStorage.setItem("user", JSON.stringify(updatedUser));
+      localStorage.setItem("token", token);
       dispatch({ type: "update_user", payload: { user: updatedUser } });
 
       toast.success(response.message);

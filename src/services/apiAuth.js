@@ -47,3 +47,14 @@ export const updateUserApi = async (updatedData) => {
     handleApiError(error);
   }
 };
+
+export const getUserRatedJobsAndCompanies = async () => {
+  try {
+    const response = await axios.get(`${BASE_URL}/rated-jobs-companies`, {
+      headers: getAuthorizationHeader(),
+    });
+    return response.data;
+  } catch (error) {
+    handleApiError(error);
+  }
+};

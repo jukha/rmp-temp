@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Outlet, useNavigate, useLocation } from "react-router-dom";
 import { TabMenu } from "primereact/tabmenu";
 import styled from "styled-components";
+import { useAuth } from "../contexts/AuthContext";
 
 const CustomTabMenu = styled(TabMenu)`
   background-color: transparent;
@@ -19,6 +20,7 @@ const CustomTabMenu = styled(TabMenu)`
 `;
 
 function AccountLayout() {
+  const { user } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   const [activeIndex, setActiveIndex] = useState(null);
@@ -65,7 +67,7 @@ function AccountLayout() {
 
   return (
     <main className="mx-auto max-w-5xl px-4 py-20">
-      <h1 className="text-3xl font-extrabold">Hey, Jack</h1>
+      <h1 className="text-3xl font-extrabold">Hey, {user.firstName}</h1>
       <div className="overflow-x-auto">
         <CustomTabMenu
           activeIndex={activeIndex}
