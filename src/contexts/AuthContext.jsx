@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useReducer } from "react";
-import { loginApi, signupApi, googleAuthApi } from "../services/apiAuth";
+import { loginApi, signupApi, googleAuthApi, updateUserApi } from "../services/apiAuth";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
 
@@ -19,6 +19,11 @@ function reducer(state, action) {
         user: action.payload.user,
         isAuthenticated: action.payload.isAuthenticated,
         loading: false,
+      };
+    case "update_user":
+      return {
+        ...state,
+        user: action.payload.user,
       };
     case "logout":
       return initialState;
@@ -113,6 +118,25 @@ function AuthProvider({ children }) {
     }
   }
 
+  async function updateUser(data) {
+    try {
+      dispatch({ type: "start_loading" });
+
+      const response = await updateUserApi(data);
+      const updatedUser = response.data.user;
+
+      localStorage.setItem("user", JSON.stringify(updatedUser));
+      dispatch({ type: "update_user", payload: { user: updatedUser } });
+
+      toast.success(response.message);
+    } catch (error) {
+      toast.error("Error updating user:", error);
+      console.log(error);
+    } finally {
+      dispatch({ type: "stop_loading" });
+    }
+  }
+
   function logout() {
     dispatch({ type: "logout" });
     localStorage.removeItem("user");
@@ -129,6 +153,7 @@ function AuthProvider({ children }) {
         signup,
         logout,
         googleAuth,
+        updateUser,
       }}
     >
       {children}

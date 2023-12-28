@@ -2,28 +2,33 @@ import React, { useState } from "react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import Button from "../../../ui/Button";
-import { Calendar } from "primereact/calendar";
+import { useAuth } from "../../../contexts/AuthContext";
+import { toast } from "react-toastify";
 
 function Profile() {
-  const [date, setDate] = useState(null);
+  const [allowEdit, setAllowEdit] = useState(false);
+  const { user, updateUser } = useAuth();
 
   const validationSchema = Yup.object().shape({
     firstName: Yup.string().required("First Name is required"),
     lastName: Yup.string().required("Last Name is required"),
-    school: Yup.string().required("School is required"),
-    // expectedYear: Yup.number()
-    //   .integer("Expected Year should be a whole number")
-    //   .required("Expected Year is required"),
   });
   const initialValues = {
-    firstName: "",
-    lastName: "",
-    school: "",
-    // expectedYear: "",
+    firstName: user.firstName,
+    lastName: user.lastName,
   };
 
-  function onSubmit(values) {
-    console.log("Form data submitted:", values);
+  async function onSubmit(values) {
+    try {
+      setAllowEdit(false);
+
+      await updateUser({
+        firstName: values.firstName,
+        lastName: values.lastName,
+      });
+    } catch (error) {
+      toast.error(`Error updating user: ${error.message}`);
+    }
   }
 
   return (
@@ -33,89 +38,59 @@ function Profile() {
       onSubmit={onSubmit}
     >
       <Form>
-        <div className="mb-6 flex flex-wrap gap-3">
-          <div className=" w-full lg:flex-1 ">
-            <label className="mb-2 inline-block" htmlFor="firstName">
-              First Name:
-            </label>
-            <Field
-              className="w-full rounded-[34px] border border-gray-200 bg-gray-100 py-3 pl-3 text-sm font-medium placeholder-gray-500 focus:border-gray-400 focus:bg-white focus:outline-none"
-              type="text"
-              id="firstName"
-              name="firstName"
-            />
-            <ErrorMessage
-              className="mt-2 text-left text-red-400"
-              name="firstName"
-              component="div"
-            />
+        {!allowEdit && (
+          <div className="flex justify-end">
+            <button
+              className="flex items-center gap-2 rounded-md bg-primary px-3 py-2 text-lg text-white"
+              onClick={() => setAllowEdit(true)}
+            >
+              <i className="pi pi-user-edit text-xl"></i>
+              Edit
+            </button>
           </div>
-          <div className=" w-full lg:flex-1">
-            <label className="mb-2 inline-block" htmlFor="lastName">
-              Last Name:
-            </label>
-            <Field
-              className="w-full rounded-[34px] border border-gray-200 bg-gray-100 py-3 pl-3 text-sm font-medium placeholder-gray-500 focus:border-gray-400 focus:bg-white focus:outline-none"
-              type="text"
-              id="lastName"
-              name="lastName"
-            />
-            <ErrorMessage
-              className="mt-2 text-left text-red-400"
-              name="lastName"
-              component="div"
-            />
-          </div>
-        </div>
+        )}
 
         <div className="mb-6">
-          <label className="mb-2 inline-block" htmlFor="school">
-            School:
+          <label className="mb-2 inline-block" htmlFor="firstName">
+            First Name:
           </label>
           <Field
             className="w-full rounded-[34px] border border-gray-200 bg-gray-100 py-3 pl-3 text-sm font-medium placeholder-gray-500 focus:border-gray-400 focus:bg-white focus:outline-none"
             type="text"
-            id="school"
-            name="school"
+            id="firstName"
+            name="firstName"
+            disabled={!allowEdit}
           />
           <ErrorMessage
             className="mt-2 text-left text-red-400"
-            name="school"
+            name="firstName"
+            component="div"
+          />
+        </div>
+        <div className="mb-6">
+          <label className="mb-2 inline-block" htmlFor="lastName">
+            Last Name:
+          </label>
+          <Field
+            className="w-full rounded-[34px] border border-gray-200 bg-gray-100 py-3 pl-3 text-sm font-medium placeholder-gray-500 focus:border-gray-400 focus:bg-white focus:outline-none"
+            type="text"
+            id="lastName"
+            name="lastName"
+            disabled={!allowEdit}
+          />
+          <ErrorMessage
+            className="mt-2 text-left text-red-400"
+            name="lastName"
             component="div"
           />
         </div>
 
-        <div>
-          <label className="mb-2 block" htmlFor="expectedYear">
-            Expected Year of Education:
-          </label>
-          <Calendar
-            value={date}
-            onChange={(e) => setDate(e.value)}
-            view="year"
-            className="w-full max-w-3xl"
-            dateFormat="yy"
-            pt={{
-              input: {
-                root: {
-                  className:
-                    "border-gray-200 bg-gray-100 border rounded-[34px] py-3 pl-3",
-                },
-              },
-
-              dropdownButton: {
-                root: { className: "bg-teal-500 border-teal-500" },
-              },
-              panel: { className: "bg-white" },
-              header: { className: "bg-primary" },
-              yearPicker: { className: "text-primary" },
-            }}
-          />
-        </div>
-        <div className="mt-10 flex max-w-max gap-3">
-          <Button text="Cancel" />
-          <Button text="Save" htmlType="submit" type="primary" />
-        </div>
+        {allowEdit && (
+          <div className="mt-10 flex max-w-max gap-3">
+            <Button text="Cancel" onClick={() => setAllowEdit(false)} />
+            <Button text="Save" htmlType="submit" type="primary" />
+          </div>
+        )}
       </Form>
     </Formik>
   );

@@ -1,5 +1,6 @@
 import axios from "axios";
 import { handleApiError } from "./handleApiError";
+import { getAuthorizationHeader } from "./authUtils";
 
 const BASE_URL = `${import.meta.env.VITE_API_BASE_URL}/users`;
 
@@ -29,6 +30,17 @@ export const googleAuthApi = async (accessToken) => {
   try {
     const response = await axios.post(`${BASE_URL}/google-auth`, {
       googleAccessToken: accessToken,
+    });
+    return response.data;
+  } catch (error) {
+    handleApiError(error);
+  }
+};
+
+export const updateUserApi = async (updatedData) => {
+  try {
+    const response = await axios.patch(`${BASE_URL}/update`, updatedData, {
+      headers: getAuthorizationHeader(),
     });
     return response.data;
   } catch (error) {
