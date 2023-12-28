@@ -38,7 +38,7 @@ function CompanyDefaultCard({ companyNo }) {
       default:
         break;
     }
-  }, []);
+  }, [location.pathname]);
 
   return (
     <article>

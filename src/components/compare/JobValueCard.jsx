@@ -9,7 +9,6 @@ const ratingData = [
 ];
 
 function JobValueCard({ jobData, jobNo }) {
-  console.log(jobData);
   return (
     <article>
       <div className="mb-8 flex h-60 flex-col items-center justify-center bg-background text-center">

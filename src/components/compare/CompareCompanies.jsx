@@ -110,7 +110,7 @@ function CompareCompanies() {
           {showFirstValueCard && (
             <CompanyValueCard companyData={firstCompanyData} companyNo={1} />
           )}
-          <div className="absolute top-64 -right-36 hidden transform lg:block">
+          <div className="absolute top-[272px] -right-36 hidden transform lg:block">
             {ratingData.map((rating, i) => (
               <div
                 key={i}

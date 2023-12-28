@@ -17,7 +17,6 @@ function JobDefaultCard({ jobNo }) {
       navigate(`/compare/jobs/${firstJobSlug}/${jobData[0]?.slug}`);
     }
   }
-  console.log("hi");
   useEffect(() => {
     const pathParts = location.pathname.split("/").filter(Boolean);
 
@@ -35,7 +34,7 @@ function JobDefaultCard({ jobNo }) {
       default:
         break;
     }
-  }, []);
+  }, [location.pathname]);
 
   return (
     <article>
@@ -51,7 +50,7 @@ function JobDefaultCard({ jobNo }) {
           />
         </div>
       </div>
-      {Array.from({ length: 9 }).map((_, i) => {
+      {Array.from({ length: 10 }).map((_, i) => {
         return (
           <div
             className={`mb-8 flex flex-col items-center gap-4 ${
