@@ -22,15 +22,30 @@ const courses = [
 
 function DetailPageJob() {
   const [course, setCourse] = useState("all");
+  const [loading, setLoading] = useState(true);
   const [job, setJob] = useState(null);
   const location = useLocation();
   useEffect(() => {
     (async () => {
-      const slug = location.pathname.split("/").pop();
-      const response = await getJobBySlug(slug);
-      setJob(response?.job);
+      try {
+        const slug = location.pathname.split("/").pop();
+        const response = await getJobBySlug(slug);
+        setJob(response?.job);
+      } catch (error) {
+        console.log("error", error);
+      } finally {
+        setLoading(false);
+      }
     })();
   }, [location.pathname]);
+
+  if (loading) {
+    return (
+      <div className="flex justify-center">
+        {loading && <i className="pi pi-spin pi-spinner text-4xl"></i>}
+      </div>
+    );
+  }
   return (
     <main className="mx-auto px-4 py-16 xl:container">
       <div className="flex flex-col items-start gap-10 lg:flex-row">

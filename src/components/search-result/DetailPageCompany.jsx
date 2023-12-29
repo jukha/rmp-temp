@@ -31,6 +31,7 @@ function DetailPageCompany() {
   const [company, setCompany] = useState(null);
   const location = useLocation();
   const { isAuthenticated, user } = useAuth();
+  const [loading, setLoading] = useState(true);
 
   function getRatingIcon(ratingParam) {
     const paramIndex = ratingsData.findIndex(
@@ -41,11 +42,24 @@ function DetailPageCompany() {
 
   useEffect(() => {
     (async () => {
-      const slug = location.pathname.split("/").pop();
-      const response = await getCompanyBySlug(slug);
-      setCompany(response?.company);
+      try {
+        const slug = location.pathname.split("/").pop();
+        const response = await getCompanyBySlug(slug);
+        setCompany(response?.company);
+      } catch (error) {
+        console.log("error", error);
+      } finally {
+        setLoading(false);
+      }
     })();
   }, [location.pathname]);
+  if (loading) {
+    return (
+      <div className="flex justify-center">
+        {loading && <i className="pi pi-spin pi-spinner text-4xl"></i>}
+      </div>
+    );
+  }
   return (
     <>
       <div className="z-50 w-full bg-white py-4 shadow-[rgba(0,_0,_0,_0.25)_0px_25px_50px_-12px] lg:py-6">

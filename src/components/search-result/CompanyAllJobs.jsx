@@ -12,6 +12,7 @@ function CompanyAllJobs() {
   const [updatingJobId, setUpdatingJobId] = useState(null);
   const [jobSaveStatus, setJobSaveStatus] = useState({});
   const [savingJobStatus, setSavingJobStatus] = useState(false);
+  const [loading, setLoading] = useState(true);
   const location = useLocation();
 
   async function toggleJobSaveStatus(jobId) {
@@ -60,11 +61,20 @@ function CompanyAllJobs() {
         setJobSaveStatus(initialSaveStatus);
       } catch (error) {
         console.log("error", error.message);
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchData();
   }, [location.pathname]);
+
+  if (loading)
+    return (
+      <div className="flex justify-center">
+        {loading && <i className="pi pi-spin pi-spinner text-4xl"></i>}
+      </div>
+    );
 
   return (
     <main className="mx-auto px-4 py-16 xl:container">

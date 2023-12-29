@@ -22,6 +22,7 @@ function AddCompanyRatings() {
 
   const location = useLocation();
   const [companyData, setCompanyData] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     (async () => {
@@ -31,8 +32,7 @@ function AddCompanyRatings() {
         if (response.success) {
           setCompanyData({
             title: response.data.companyTitle,
-            companyId:
-              response.data.userRatingForCompany.parametersRating.companyId,
+            companyId: response.data.companyId,
             companyLocation: response.data.companyLocation,
           });
           setReputationRating(
@@ -69,7 +69,11 @@ function AddCompanyRatings() {
               .corporateSocialResponsibility,
           );
         }
-      } catch (error) {}
+      } catch (error) {
+        console.log("err", errro);
+      } finally {
+        setLoading(false);
+      }
     })();
   }, [location.pathname]);
 
@@ -102,6 +106,13 @@ function AddCompanyRatings() {
     } catch (error) {
       toast.error("An error occurred while submitting the rating.");
     }
+  }
+  if (loading) {
+    return (
+      <div className="flex justify-center">
+        {loading && <i className="pi pi-spin pi-spinner text-4xl"></i>}
+      </div>
+    );
   }
   return (
     <>

@@ -14,7 +14,6 @@ const ReactSpeedometerWrapper = styled.div`
 `;
 
 function AddRating({ setRating, initialValue }) {
-  console.log('init',initialValue);
   const [value, setValue] = useState(0);
   function handleSelection(e) {
     setValue(e.value);

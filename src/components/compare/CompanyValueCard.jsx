@@ -26,7 +26,10 @@ function CompanyValueCard({ companyData, companyNo }) {
         </p>
         <h3 className="text-xl font-extrabold">{companyData?.name}</h3>
       </div>
-      {companyData?.length !== 0 &&
+      {companyData?.ratings?.length === 0 ? (
+        <p className="text-center font-bold">NO ratings found</p>
+      ) : (
+        companyData?.parametersAvgRatings &&
         Object.entries(companyData.parametersAvgRatings).map(
           ([_, ratingValue], i) => {
             return (
@@ -60,7 +63,8 @@ function CompanyValueCard({ companyData, companyNo }) {
               </div>
             );
           },
-        )}
+        )
+      )}
     </article>
   );
 }

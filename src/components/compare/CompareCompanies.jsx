@@ -4,6 +4,7 @@ import CompanyValueCard from "./CompanyValueCard";
 import { useEffect, useState } from "react";
 import CompanyDefaultCard from "./CompanyDefaultCard";
 import { getCompanyBySlug } from "../../services/apiCompany";
+import CardSkeleton from "../../ui/CardSkeleton";
 
 const ratingData = [
   "reputation",
@@ -27,6 +28,9 @@ function CompareCompanies() {
   const [showSecondValueCard, setShowSecondValueCard] = useState(false);
   const [firstCompanyData, setFirstCompanyData] = useState([]);
   const [secondCompanyData, setSecondCompanyData] = useState([]);
+  const [firstCompanyDataLoading, setFirstCompanyDataLoading] = useState(false);
+  const [secondCompanyDataLoading, setSecondCompanyDataLoading] =
+    useState(false);
 
   async function fetchCompanyData(companySlug) {
     try {
@@ -57,8 +61,17 @@ function CompareCompanies() {
         //compare/companies/:slug
         case 3:
           if (firstCompanyData?.length === 0) {
-            const res = await fetchCompanyData(pathParts[pathParts.length - 1]);
-            setFirstCompanyData(res.company);
+            try {
+              setFirstCompanyDataLoading(true);
+              const res = await fetchCompanyData(
+                pathParts[pathParts.length - 1],
+              );
+              setFirstCompanyData(res.company);
+            } catch (error) {
+              console.log(error);
+            } finally {
+              setFirstCompanyDataLoading(false);
+            }
           }
           setShowFirstDefaultCard(false);
           setShowFirstValueCard(true);
@@ -67,12 +80,30 @@ function CompareCompanies() {
         //compare/companies/:slug/:slug
         case 4:
           if (firstCompanyData?.length === 0) {
-            const res = await fetchCompanyData(pathParts[pathParts.length - 2]);
-            setFirstCompanyData(res.company);
+            try {
+              setFirstCompanyDataLoading(true);
+              const res = await fetchCompanyData(
+                pathParts[pathParts.length - 2],
+              );
+              setFirstCompanyData(res.company);
+            } catch (error) {
+              console.log(error);
+            } finally {
+              setFirstCompanyDataLoading(false);
+            }
           }
+
           if (secondCompanyData?.length === 0) {
-            const res = await fetchCompanyData(pathParts[pathParts.length - 1]);
-            setSecondCompanyData(res.company);
+            try {
+              const res = await fetchCompanyData(
+                pathParts[pathParts.length - 1],
+              );
+              setSecondCompanyData(res.company);
+            } catch (error) {
+              console.log(error);
+            } finally {
+              setSecondCompanyDataLoading(false);
+            }
           }
           setShowFirstDefaultCard(false);
           setShowSecondDefaultCard(false);
@@ -106,11 +137,14 @@ function CompareCompanies() {
       </div>
       <div className="grid max-w-6xl gap-3 md:grid-cols-2">
         <div className="relative">
-          {showFirstDefaultCard && <CompanyDefaultCard companyNo={1} />}
+          {!firstCompanyDataLoading && showFirstDefaultCard && (
+            <CompanyDefaultCard companyNo={1} />
+          )}
+          {firstCompanyDataLoading && <CardSkeleton />}
           {showFirstValueCard && (
             <CompanyValueCard companyData={firstCompanyData} companyNo={1} />
           )}
-          <div className="absolute top-[272px] -right-36 hidden transform lg:block">
+          <div className="absolute -right-36 top-[272px] hidden transform lg:block">
             {ratingData.map((rating, i) => (
               <div
                 key={i}
@@ -121,7 +155,10 @@ function CompareCompanies() {
             ))}
           </div>
         </div>
-        {showSecondDefaultCard && <CompanyDefaultCard companyNo={2} />}
+        {!secondCompanyDataLoading && showSecondDefaultCard && (
+          <CompanyDefaultCard companyNo={2} />
+        )}
+        {secondCompanyDataLoading && <CardSkeleton />}
         {showSecondValueCard && (
           <CompanyValueCard companyData={secondCompanyData} companyNo={2} />
         )}

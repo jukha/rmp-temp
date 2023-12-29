@@ -25,39 +25,45 @@ function JobValueCard({ jobData, jobNo }) {
         </p>
         <h3 className="text-xl font-extrabold">{jobData?.title}</h3>
       </div>
-      {jobData?.parametersAvgRatings &&
-        Object.entries(jobData?.parametersAvgRatings).map(([_, ratingValue], i) => {
-          return (
-            <div
-              className={`mb-8 flex flex-col items-center gap-4 ${
-                jobNo === 1 ? "sm:flex-row" : "sm:flex-row-reverse"
-              }`}
-              key={i}
-            >
-              <div className="grid grid-cols-[repeat(5,57px)] grid-rows-[18px] gap-[2px]">
-                {Array.from({ length: 5 }, (_, index) => (
-                  <span
-                    key={index}
-                    className={`${
-                      index >= ratingValue ? "bg-gray-400" : "bg-primary"
-                    } ${
-                      index === 0
-                        ? "rounded-bl-md rounded-tl-md"
-                        : index === 4
-                          ? "rounded-br-md rounded-tr-md"
-                          : ""
-                    }`}
-                  ></span>
-                ))}
+      {jobData?.ratings?.length === 0 ? (
+        <p className="text-center font-bold">NO ratings found</p>
+      ) : (
+        jobData?.parametersAvgRatings &&
+        Object.entries(jobData?.parametersAvgRatings).map(
+          ([_, ratingValue], i) => {
+            return (
+              <div
+                className={`mb-8 flex flex-col items-center gap-4 ${
+                  jobNo === 1 ? "sm:flex-row" : "sm:flex-row-reverse"
+                }`}
+                key={i}
+              >
+                <div className="grid grid-cols-[repeat(5,57px)] grid-rows-[18px] gap-[2px]">
+                  {Array.from({ length: 5 }, (_, index) => (
+                    <span
+                      key={index}
+                      className={`${
+                        index >= ratingValue ? "bg-gray-400" : "bg-primary"
+                      } ${
+                        index === 0
+                          ? "rounded-bl-md rounded-tl-md"
+                          : index === 4
+                            ? "rounded-br-md rounded-tr-md"
+                            : ""
+                      }`}
+                    ></span>
+                  ))}
+                </div>
+                <span
+                  className="hidden h-3 w-3 rounded-full sm:inline-block"
+                  style={{ background: getBgColor(ratingValue) }}
+                ></span>
+                <h6 className="font-bold">{ratingValue}</h6>
               </div>
-              <span
-                className="hidden h-3 w-3 rounded-full sm:inline-block"
-                style={{ background: getBgColor(ratingValue) }}
-              ></span>
-              <h6 className="font-bold">{ratingValue}</h6>
-            </div>
-          );
-        })}
+            );
+          },
+        )
+      )}
     </article>
   );
 }

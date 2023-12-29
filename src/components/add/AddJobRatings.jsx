@@ -24,6 +24,7 @@ function AddJobRatings() {
   const [jobId, setJobId] = useState(null);
   const location = useLocation();
   const [apiData, setApiData] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     (async () => {
@@ -37,7 +38,7 @@ function AddJobRatings() {
               jobTitle: response.data.jobTitle,
             },
           ]);
-          setJobId(response.data.userRatingForJob.jobId);
+          setJobId(response.data.jobId);
 
           setCompensationRating(
             response.data.userRatingForJob.parametersRating.compensation,
@@ -68,13 +69,13 @@ function AddJobRatings() {
             response.data.userRatingForJob.parametersRating.flexibility,
           );
         }
-        console.log(response.data);
       } catch (error) {
         console.log(error);
+      } finally {
+        setLoading(false);
       }
     })();
   }, [location.pathname]);
-
   async function handleSubmit() {
     try {
       const data = {
@@ -88,7 +89,7 @@ function AddJobRatings() {
         benefits: benefitsRating,
         flexibility: flexibilityRating,
       };
-      const apiResponse = await addRating("job", jobId._id, data, "Great JOB");
+      const apiResponse = await addRating("job", jobId, data, "Great JOB");
 
       if (apiResponse.success) {
         toast.success(apiResponse.message);
@@ -100,6 +101,14 @@ function AddJobRatings() {
         `An error occurred while submitting the rating.${error.message}`,
       );
     }
+  }
+
+  if (loading) {
+    return (
+      <div className="flex justify-center">
+        {loading && <i className="pi pi-spin pi-spinner text-4xl"></i>}
+      </div>
+    );
   }
 
   return (

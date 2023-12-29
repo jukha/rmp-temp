@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import JobDefaultCard from "./JobDefaultCard";
 
 import { getJobBySlug } from "../../services/apiJob";
+import CardSkeleton from "../../ui/CardSkeleton";
 
 const ratingData = [
   "compensation",
@@ -27,6 +28,10 @@ function CompareJobs() {
   const [showSecondValueCard, setShowSecondValueCard] = useState(false);
   const [firstJobData, setFirstJobData] = useState([]);
   const [secondJobData, setSecondJobData] = useState([]);
+  const [firstJobDataLoading, setFirstJobDataLoading] = useState(false);
+  const [secondJobDataLoading, setSecondJobDataLoading] = useState(false);
+
+  console.log(firstJobDataLoading);
 
   async function fetchJobData(jobSlug) {
     try {
@@ -57,8 +62,15 @@ function CompareJobs() {
         //compare/companies/:slug
         case 3:
           if (firstJobData?.length === 0) {
-            const res = await fetchJobData(pathParts[pathParts.length - 1]);
-            setFirstJobData(res.job);
+            try {
+              setFirstJobDataLoading(true);
+              const res = await fetchJobData(pathParts[pathParts.length - 1]);
+              setFirstJobData(res.job);
+            } catch (error) {
+              console.log(error);
+            } finally {
+              setFirstJobDataLoading(false);
+            }
           }
           setShowFirstDefaultCard(false);
           setShowFirstValueCard(true);
@@ -67,12 +79,26 @@ function CompareJobs() {
         //compare/companies/:slug/:slug
         case 4:
           if (firstJobData?.length === 0) {
-            const res = await fetchJobData(pathParts[pathParts.length - 2]);
-            setFirstJobData(res.job);
+            try {
+              setFirstJobDataLoading(true);
+              const res = await fetchJobData(pathParts[pathParts.length - 2]);
+              setFirstJobData(res.job);
+            } catch (error) {
+              console.log(error);
+            } finally {
+              setFirstJobDataLoading(false);
+            }
           }
           if (secondJobData?.length === 0) {
-            const res = await fetchJobData(pathParts[pathParts.length - 1]);
-            setSecondJobData(res.job);
+            try {
+              setSecondJobDataLoading(true);
+              const res = await fetchJobData(pathParts[pathParts.length - 1]);
+              setSecondJobData(res.job);
+            } catch (error) {
+              console.log(error);
+            } finally {
+              setSecondJobDataLoading(false);
+            }
           }
           setShowFirstDefaultCard(false);
           setShowSecondDefaultCard(false);
@@ -100,7 +126,10 @@ function CompareJobs() {
       </div>
       <div className="grid max-w-6xl gap-3 md:grid-cols-2">
         <div className="relative">
-          {showFirstDefaultCard && <JobDefaultCard jobNo={1} />}
+          {!firstJobDataLoading && showFirstDefaultCard && (
+            <JobDefaultCard jobNo={1} />
+          )}
+          {firstJobDataLoading && <CardSkeleton />}
           {showFirstValueCard && (
             <JobValueCard jobData={firstJobData} jobNo={1} />
           )}
@@ -115,7 +144,10 @@ function CompareJobs() {
             ))}
           </div>
         </div>
-        {showSecondDefaultCard && <JobDefaultCard jobNo={2} />}
+        {!secondJobDataLoading && showSecondDefaultCard && (
+          <JobDefaultCard jobNo={2} />
+        )}
+        {secondJobDataLoading && <CardSkeleton />}
         {showSecondValueCard && (
           <JobValueCard jobData={secondJobData} jobNo={2} />
         )}
