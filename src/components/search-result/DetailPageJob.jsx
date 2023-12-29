@@ -37,7 +37,7 @@ function DetailPageJob() {
         <div className="max-w-md flex-1">
           <div className="mb-3 flex items-start gap-3">
             <h3 className="text-4xl font-extrabold sm:text-7xl">
-              {job?.averageOverallRating}
+              {job?.overallAvgRating}
             </h3>
             <h4 className="text-lg font-medium text-gray-600">/ 5</h4>
           </div>
@@ -53,18 +53,8 @@ function DetailPageJob() {
               <strong> {job?.companyDetails?.name}</strong>
             </Link>
           </p>
-          <div className="my-10 flex gap-5">
-            <div className="text-center">
-              <h5 className="text-2xl font-extrabold sm:text-4xl">100%</h5>
-              <p>Would take again</p>
-            </div>
-            <span className="inline-block h-16 w-[1px] bg-black"></span>
-            <div className="text-center">
-              <h5 className="text-2xl font-extrabold sm:text-4xl">2.6</h5>
-              <p>Level of Difficulty</p>
-            </div>
-          </div>
-          <div className="mb-10 flex items-center gap-3">
+
+          <div className="my-10 flex items-center gap-3">
             <div>
               <Button text="Rate" to={`/add/job-rating/${job?.slug}`} />
             </div>
@@ -74,24 +64,6 @@ function DetailPageJob() {
                 type="primary"
                 to={`/compare/jobs/${job?.slug}`}
               />
-            </div>
-          </div>
-          <h5 className="my-4 font-semibold">I'm Professor Abcede</h5>
-          <div>
-            <h5 className="mb-3 font-semibold">Professor Abcede's Top Tags</h5>
-            <div className="flex flex-wrap gap-4">
-              <span className="inline-block rounded-2xl bg-gray-300 px-4 py-2 uppercase">
-                Extra credit
-              </span>
-              <span className="inline-block rounded-2xl bg-gray-300 px-4 py-2 uppercase">
-                Get ready to read
-              </span>
-              <span className="inline-block rounded-2xl bg-gray-300 px-4 py-2 uppercase">
-                Caring
-              </span>
-              <span className="inline-block rounded-2xl bg-gray-300 px-4 py-2 uppercase">
-                Get ready to read
-              </span>
             </div>
           </div>
         </div>
@@ -143,20 +115,9 @@ function DetailPageJob() {
       </div>
       <div className="mt-14">
         <h2 className="mb-4 text-xl font-bold">
-          Student Ratings: Insights from 5 Reviews
+          Insights from {job?.ratings?.length} Reviews
         </h2>
-        <Dropdown
-          value={course}
-          onChange={(e) => setCourse(e.value)}
-          options={courses}
-          optionLabel="name"
-          placeholder="Select a City"
-          className="w-full  max-w-xs bg-primary font-poppins"
-          pt={{
-            input: { className: "font-poppins py-3" },
-            panel: { className: "bg-primary font-poppins" },
-          }}
-        />
+
         {/* ============== */}
         {/* Ratings result */}
         {/* ============== */}
@@ -170,13 +131,13 @@ function DetailPageJob() {
                 <div className="mb-6">
                   <p className="text-black">Overall Quality</p>
                   <div className="my-2 bg-[#90EE90] px-3 py-4 text-center text-4xl font-extrabold">
-                    {rating.average}
+                    {rating.ratingAverage}
                   </div>
                 </div>
               </div>
               <div className="w-full">
                 <h3 className="mb-2 text-xl font-bold capitalize">{`${rating.user.firstName} ${rating.user.lastName}`}</h3>
-                <p>{rating.text}</p>
+                <p>{rating.ratingText}</p>
                 {/* ============== */}
                 {/* rating actions */}
                 {/* ============== */}

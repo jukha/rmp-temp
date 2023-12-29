@@ -16,7 +16,7 @@ function JobValueCard({ jobData, jobNo }) {
           className="mx-auto mb-2 min-w-[80px] max-w-max px-3 py-4 text-center text-4xl font-extrabold"
           style={{ background: getBgColor(1) }}
         >
-          {jobData?.averageOverallRating}
+          {jobData?.overallAvgRating}
         </div>
         <p className="font-semibold uppercase">Overall</p>
         <p className="mb-6">
@@ -25,8 +25,8 @@ function JobValueCard({ jobData, jobNo }) {
         </p>
         <h3 className="text-xl font-extrabold">{jobData?.title}</h3>
       </div>
-      {jobData?.averageRatings &&
-        Object.entries(jobData?.averageRatings).map(([_, ratingValue], i) => {
+      {jobData?.parametersAvgRatings &&
+        Object.entries(jobData?.parametersAvgRatings).map(([_, ratingValue], i) => {
           return (
             <div
               className={`mb-8 flex flex-col items-center gap-4 ${

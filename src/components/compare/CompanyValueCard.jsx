@@ -17,7 +17,7 @@ function CompanyValueCard({ companyData, companyNo }) {
           className="mx-auto my-2 min-w-[80px] max-w-max px-3 py-4 text-center text-4xl font-extrabold"
           style={{ background: getBgColor(1) }}
         >
-          {companyData?.averageOverallRating}
+          {companyData?.overallAvgRating}
         </div>
         <p className="font-semibold uppercase">Overall</p>
         <p className="mb-6">
@@ -27,7 +27,7 @@ function CompanyValueCard({ companyData, companyNo }) {
         <h3 className="text-xl font-extrabold">{companyData?.name}</h3>
       </div>
       {companyData?.length !== 0 &&
-        Object.entries(companyData.averageRatings).map(
+        Object.entries(companyData.parametersAvgRatings).map(
           ([_, ratingValue], i) => {
             return (
               <div

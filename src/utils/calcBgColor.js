@@ -1,5 +1,5 @@
 export function getBgColor(rating) {
-  switch (rating) {
+  switch (parseInt(rating)) {
     case 5:
       return "#ADD8E6";
     case 4:

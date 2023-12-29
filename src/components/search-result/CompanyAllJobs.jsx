@@ -86,10 +86,10 @@ function CompanyAllJobs() {
               <div>
                 <p className="text-black">Quality</p>
                 <div className="my-2 bg-green-300 px-3 py-4 text-center text-4xl font-extrabold">
-                  {job?.averageOverallRating}
+                  {job?.overallAvgRating}
                 </div>
                 <span className="text-gray-700">
-                  {job?.ratings?.length} ratings
+                  {job?.totalRatings} ratings
                 </span>
               </div>
 

@@ -72,3 +72,32 @@ export const getSavedJobsByUser = async () => {
     handleApiError(error);
   }
 };
+
+export const getUserRatingsForCompany = async (companySlug) => {
+  try {
+    const response = await axios.get(
+      `${BASE_URL}/users/company-ratings/${companySlug}`,
+      {
+        headers: getAuthorizationHeader(),
+      },
+    );
+
+    return response.data;
+  } catch (error) {
+    handleApiError(error);
+  }
+};
+export const getUserRatingsForJob = async (jobSlug) => {
+  try {
+    const response = await axios.get(
+      `${BASE_URL}/users/job-ratings/${jobSlug}`,
+      {
+        headers: getAuthorizationHeader(),
+      },
+    );
+
+    return response.data;
+  } catch (error) {
+    handleApiError(error);
+  }
+};

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { getSavedJobsByUser } from "../../../services/apiJob";
+import { Link } from "react-router-dom";
 
 function SavedJobs() {
   const [savedJobs, setSavedJobs] = useState([]);
@@ -28,18 +29,19 @@ function SavedJobs() {
       </div>
       {!loading &&
         savedJobs.map((el, i) => (
-          <div
+          <Link
             key={i}
+            to={`/jobs/${el?.job?.slug}`}
             className="relative mb-6 mt-6 flex max-w-4xl flex-wrap items-start gap-10 bg-background px-6 py-5"
           >
             <div className="flex flex-wrap items-start gap-10">
               <div>
                 <p className="text-black">Quality</p>
                 <div className="my-2 bg-green-300 px-3 py-4 text-center text-4xl font-extrabold">
-                  {el?.job?.averageOverallRating}
+                  {el?.ratingSummary?.data?.overallAvgRating}
                 </div>
                 <span className="text-gray-700">
-                  {el?.job.ratings?.length} ratings
+                  {el?.ratingSummary?.data?.totalRatings} ratings
                 </span>
               </div>
               <div>
@@ -49,7 +51,7 @@ function SavedJobs() {
                 <p className="mb-2">{el?.job?.description}</p>
               </div>
             </div>
-          </div>
+          </Link>
         ))}
     </div>
   );

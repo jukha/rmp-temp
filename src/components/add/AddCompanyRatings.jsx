@@ -2,8 +2,9 @@ import { useLocation } from "react-router-dom";
 import Button from "../../ui/Button";
 import { useEffect, useState } from "react";
 import AddRating from "../../ui/AddRating";
-import { addCompanyRating, getCompanyBySlug } from "../../services/apiCompany";
 import { toast } from "react-toastify";
+import { addRating } from "../../services/apiRating";
+import { getUserRatingsForCompany } from "../../services/apiJob";
 
 function AddCompanyRatings() {
   const [reputationRating, setReputationRating] = useState(0);
@@ -18,15 +19,57 @@ function AddCompanyRatings() {
   const [socialResponsibilityRating, setSocialResponsibilityRating] =
     useState(0);
   const [financialStability, setFinancialStability] = useState(0);
-  // const [showGuidelinesDialog, setShowGuidelinesDialog] = useState(false);
-  const [company, setCompany] = useState(null);
+
   const location = useLocation();
+  const [companyData, setCompanyData] = useState([]);
 
   useEffect(() => {
     (async () => {
-      const slug = location.pathname.split("/").pop();
-      const response = await getCompanyBySlug(slug);
-      setCompany(response?.company);
+      try {
+        const slug = location.pathname.split("/").pop();
+        const response = await getUserRatingsForCompany(slug);
+        if (response.success) {
+          setCompanyData({
+            title: response.data.companyTitle,
+            companyId:
+              response.data.userRatingForCompany.parametersRating.companyId,
+            companyLocation: response.data.companyLocation,
+          });
+          setReputationRating(
+            response.data.userRatingForCompany.parametersRating.reputation,
+          );
+          setCompanyCultureRating(
+            response.data.userRatingForCompany.parametersRating.companyCulture,
+          );
+          setAdvancementOpportunitiesRating(
+            response.data.userRatingForCompany.parametersRating
+              .opportunitiesForAdvancement,
+          );
+          setWorkLifeBalanceRating(
+            response.data.userRatingForCompany.parametersRating.workLifeBalance,
+          );
+          setBenefitsRating(
+            response.data.userRatingForCompany.parametersRating
+              .employeeBenefits,
+          );
+          setManagementRating(
+            response.data.userRatingForCompany.parametersRating
+              .leadershipAndManagement,
+          );
+          setTechnologyAdoptionRating(
+            response.data.userRatingForCompany.parametersRating
+              .innovationAndTechnologyAdoption,
+          );
+          setDiversityRating(
+            response.data.userRatingForCompany.parametersRating
+              .diversityAndInclusion,
+          );
+          setSocialResponsibilityRating(
+            response.data.userRatingForCompany.parametersRating
+              .corporateSocialResponsibility,
+          );
+        }
+      } catch (error) {}
     })();
   }, [location.pathname]);
 
@@ -44,7 +87,12 @@ function AddCompanyRatings() {
         corporateSocialResponsibility: socialResponsibilityRating,
         financialStability: financialStability,
       };
-      const apiResponse = await addCompanyRating(company.slug, data);
+      const apiResponse = await addRating(
+        "company",
+        companyData.companyId,
+        data,
+        "Great company",
+      );
 
       if (apiResponse.success) {
         toast.success(apiResponse.message);
@@ -60,9 +108,9 @@ function AddCompanyRatings() {
       <div className="w-full bg-white py-4 shadow-[rgba(0,_0,_0,_0.25)_0px_25px_50px_-12px]">
         <div className="container mx-auto flex items-center justify-between px-4">
           <div>
-            <p>{company?.location}</p>
+            <p>{companyData?.companyLocation}</p>
             <h2 className="tex-2xl my-3 font-extrabold sm:text-4xl">
-              {company?.name}
+              {companyData?.title}
             </h2>
           </div>
         </div>
@@ -75,70 +123,100 @@ function AddCompanyRatings() {
                 Reputation
                 <span className="font-medium text-red-600">*</span>
               </h6>
-              <AddRating setRating={setReputationRating} />
+              <AddRating
+                initialValue={reputationRating}
+                setRating={setReputationRating}
+              />
             </div>
             <div className=" bg-white p-7">
               <h6 className="mb-4 text-center text-xl font-medium">
                 Company culture
                 <span className="font-medium text-red-600">*</span>
               </h6>
-              <AddRating setRating={setCompanyCultureRating} />
+              <AddRating
+                initialValue={companyCultureRating}
+                setRating={setCompanyCultureRating}
+              />
             </div>
             <div className=" bg-white p-7">
               <h6 className="mb-4 text-center text-xl font-medium">
                 Opportunities for advancement
                 <span className="font-medium text-red-600">*</span>
               </h6>
-              <AddRating setRating={setAdvancementOpportunitiesRating} />
+              <AddRating
+                initialValue={advancementOpportunitiesRating}
+                setRating={setAdvancementOpportunitiesRating}
+              />
             </div>
             <div className=" bg-white p-7">
               <h6 className="mb-4 text-center text-xl font-medium">
                 Work-life balance
                 <span className="font-medium text-red-600">*</span>
               </h6>
-              <AddRating setRating={setWorkLifeBalanceRating} />
+              <AddRating
+                initialValue={workLifeBalanceRating}
+                setRating={setWorkLifeBalanceRating}
+              />
             </div>
             <div className=" bg-white p-7">
               <h6 className="mb-4 text-center text-xl font-medium">
                 Employee benefits
                 <span className="font-medium text-red-600">*</span>
               </h6>
-              <AddRating setRating={setBenefitsRating} />
+              <AddRating
+                initialValue={benefitsRating}
+                setRating={setBenefitsRating}
+              />
             </div>
             <div className=" bg-white p-7">
               <h6 className="mb-4 text-center text-xl font-medium">
                 Leadership and management
                 <span className="font-medium text-red-600">*</span>
               </h6>
-              <AddRating setRating={setManagementRating} />
+              <AddRating
+                initialValue={managementRating}
+                setRating={setManagementRating}
+              />
             </div>
             <div className=" bg-white p-7">
               <h6 className="mb-4 text-center text-xl font-medium">
                 Innovation and technology adoption
                 <span className="font-medium text-red-600">*</span>
               </h6>
-              <AddRating setRating={setTechnologyAdoptionRating} />
+              <AddRating
+                initialValue={technologyAdoptionRating}
+                setRating={setTechnologyAdoptionRating}
+              />
             </div>
             <div className=" bg-white p-7">
               <h6 className="mb-4 text-center text-xl font-medium">
                 Diversity and inclusion
                 <span className="font-medium text-red-600">*</span>
               </h6>
-              <AddRating setRating={setDiversityRating} />
+              <AddRating
+                initialValue={diversityRating}
+                setRating={setDiversityRating}
+              />
             </div>
             <div className=" bg-white p-7">
               <h6 className="mb-4 text-center text-xl font-medium">
                 Corporate social responsibility
                 <span className="font-medium text-red-600">*</span>
               </h6>
-              <AddRating setRating={setSocialResponsibilityRating} />
+              <AddRating
+                initialValue={socialResponsibilityRating}
+                setRating={setSocialResponsibilityRating}
+              />
             </div>
             <div className=" bg-white p-7">
               <h6 className="mb-4 text-center text-xl font-medium">
                 Financial stability
                 <span className="font-medium text-red-600">*</span>
               </h6>
-              <AddRating setRating={setFinancialStability} />
+              <AddRating
+                initialValue={financialStability}
+                setRating={setFinancialStability}
+              />
             </div>
           </div>
 

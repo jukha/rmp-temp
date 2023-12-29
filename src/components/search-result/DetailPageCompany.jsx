@@ -87,35 +87,33 @@ function DetailPageCompany() {
         <div className="mb-20 flex max-w-max flex-col items-center justify-between gap-10 md:flex-row">
           <div className="">
             <h2 className="text-6xl font-extrabold lg:text-8xl">
-              {company?.averageOverallRating}
+              {company?.overallAvgRating}
             </h2>
             <p>Overall Quality</p>
           </div>
           <div className="grid gap-8 sm:grid-cols-2 sm:gap-x-10 sm:gap-y-4">
-            {company?.averageRatings &&
-              Object.entries(transformRatingKeys(company.averageRatings)).map(
-                ([ratingName, ratingValue], i) => (
-                  <div key={i} className="flex justify-between gap-4">
-                    <div className="flex items-center gap-4">
-                      <i
-                        className={`text-3xl ${getRatingIcon(ratingName)}`}
-                      ></i>
-                      <p className="text-xl first-letter:capitalize">
-                        {ratingName}
-                      </p>
-                    </div>
-                    <div className="relative">
-                      <span
-                        className="absolute block h-full w-2/3 bg-black"
-                        style={{ background: getBgColor(ratingValue) }}
-                      ></span>
-                      <h6 className="relative py-1 text-4xl font-extrabold">
-                        {ratingValue.toFixed(1)}
-                      </h6>
-                    </div>
+            {company?.parametersAvgRatings &&
+              Object.entries(
+                transformRatingKeys(company.parametersAvgRatings),
+              ).map(([ratingName, ratingValue], i) => (
+                <div key={i} className="flex justify-between gap-4">
+                  <div className="flex items-center gap-4">
+                    <i className={`text-3xl ${getRatingIcon(ratingName)}`}></i>
+                    <p className="text-xl first-letter:capitalize">
+                      {ratingName}
+                    </p>
                   </div>
-                ),
-              )}
+                  <div className="relative">
+                    <span
+                      className="absolute block h-full w-2/3 bg-black"
+                      style={{ background: getBgColor(ratingValue) }}
+                    ></span>
+                    <h6 className="relative py-1 text-4xl font-extrabold">
+                      {ratingValue.toFixed(1)}
+                    </h6>
+                  </div>
+                </div>
+              ))}
           </div>
         </div>
         {/* All Ratings */}
@@ -131,9 +129,9 @@ function DetailPageCompany() {
                     <p className="text-black">Overall</p>
                     <div
                       className="my-2 px-3 py-4 text-4xl font-extrabold"
-                      style={{ background: getBgColor(rating?.average) }}
+                      style={{ background: getBgColor(rating?.ratingAverage) }}
                     >
-                      {rating?.average}
+                      {rating?.ratingAverage}
                     </div>
                   </div>
                 </div>
@@ -141,55 +139,55 @@ function DetailPageCompany() {
                   <h3 className="mb-5 text-end font-medium">
                     {format(parseISO(rating.createdAt), "MMM do, yyyy")}
                   </h3>
-                  <p>{rating.text}</p>
+                  <p>{rating.ratingText}</p>
                   <div className="mt-6 grid gap-8 sm:grid-cols-2 sm:gap-x-10 sm:gap-y-4">
-                    {Object.entries(transformRatingKeys(rating.data)).map(
-                      ([ratingName, ratingValue], i) => (
-                        <div
-                          key={i}
-                          className="flex flex-col justify-between gap-3 sm:flex-row"
-                        >
-                          <p className="font-semibold first-letter:capitalize">
-                            {ratingName}
-                          </p>
-                          <div className="grid flex-1 grid-cols-[repeat(5,32px)] grid-rows-[18px] justify-start gap-[2px] sm:justify-end">
-                            {Array.from({ length: 5 }, (_, index) => {
-                              {
-                                if (index + 1 > ratingValue)
-                                  return (
-                                    <span
-                                      key={index}
-                                      className={`bg-gray-300 ${
-                                        index === 0
-                                          ? "rounded-bl-md rounded-tl-md"
-                                          : index === 4
-                                            ? "rounded-br-md rounded-tr-md"
-                                            : ""
-                                      }`}
-                                    ></span>
-                                  );
-                                else
-                                  return (
-                                    <span
-                                      key={index}
-                                      className={`${
-                                        index === 0
-                                          ? "rounded-bl-md rounded-tl-md"
-                                          : index === 4
-                                            ? "rounded-br-md rounded-tr-md"
-                                            : ""
-                                      }`}
-                                      style={{
-                                        background: getBgColor(ratingValue),
-                                      }}
-                                    ></span>
-                                  );
-                              }
-                            })}
-                          </div>
+                    {Object.entries(
+                      transformRatingKeys(rating.parametersRating),
+                    ).map(([ratingName, ratingValue], i) => (
+                      <div
+                        key={i}
+                        className="flex flex-col justify-between gap-3 sm:flex-row"
+                      >
+                        <p className="font-semibold first-letter:capitalize">
+                          {ratingName}
+                        </p>
+                        <div className="grid flex-1 grid-cols-[repeat(5,32px)] grid-rows-[18px] justify-start gap-[2px] sm:justify-end">
+                          {Array.from({ length: 5 }, (_, index) => {
+                            {
+                              if (index + 1 > ratingValue)
+                                return (
+                                  <span
+                                    key={index}
+                                    className={`bg-gray-300 ${
+                                      index === 0
+                                        ? "rounded-bl-md rounded-tl-md"
+                                        : index === 4
+                                          ? "rounded-br-md rounded-tr-md"
+                                          : ""
+                                    }`}
+                                  ></span>
+                                );
+                              else
+                                return (
+                                  <span
+                                    key={index}
+                                    className={`${
+                                      index === 0
+                                        ? "rounded-bl-md rounded-tl-md"
+                                        : index === 4
+                                          ? "rounded-br-md rounded-tr-md"
+                                          : ""
+                                    }`}
+                                    style={{
+                                      background: getBgColor(ratingValue),
+                                    }}
+                                  ></span>
+                                );
+                            }
+                          })}
                         </div>
-                      ),
-                    )}
+                      </div>
+                    ))}
                   </div>
                   {/* ============== */}
                   {/* rating actions */}

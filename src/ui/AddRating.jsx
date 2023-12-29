@@ -1,5 +1,5 @@
 import { InputNumber } from "primereact/inputnumber";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ReactSpeedometer from "react-d3-speedometer";
 import styled from "styled-components";
 
@@ -13,12 +13,18 @@ const ReactSpeedometerWrapper = styled.div`
   }
 `;
 
-function AddRating({ setRating }) {
+function AddRating({ setRating, initialValue }) {
+  console.log('init',initialValue);
   const [value, setValue] = useState(0);
   function handleSelection(e) {
     setValue(e.value);
     setRating(e.value);
   }
+  useEffect(() => {
+    if (initialValue) setValue(initialValue);
+    else setValue(0);
+  }, [initialValue]);
+
   return (
     <div className="flex flex-col items-center justify-center">
       <ReactSpeedometerWrapper>
