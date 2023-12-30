@@ -5,16 +5,25 @@ import { Link, useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useAuth } from "../../contexts/AuthContext";
 import Loader from "../../ui/Loader";
+import LoadMoreBtn from "../../ui/LoadMoreBtn";
 
 function CompanyAllJobs() {
   const { isAuthenticated, user } = useAuth();
   const [companyjobs, setCompanyjobs] = useState([]);
   const [companyName, setCompanyName] = useState("");
+  const [companyId, setCompanyId] = useState(null);
   const [updatingJobId, setUpdatingJobId] = useState(null);
   const [jobSaveStatus, setJobSaveStatus] = useState({});
   const [savingJobStatus, setSavingJobStatus] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [loadingMore, setLoadingMore] = useState(false);
   const location = useLocation();
+  const [pagination, setPagiation] = useState({
+    page: 1,
+    limit: 4,
+    totalPages: 1,
+    totalRecords: 0,
+  });
 
   async function toggleJobSaveStatus(jobId) {
     try {
@@ -36,21 +45,72 @@ function CompanyAllJobs() {
     }
   }
 
+  async function handleLoadMore() {
+    try {
+      setLoadingMore(true);
+
+      const queryObj = { page: pagination.page + 1, limit: pagination.limit };
+      let response;
+      if (isAuthenticated) {
+        response = await getJobsByCompany(companyId, user._id, queryObj);
+      } else {
+        response = await getJobsByCompany(companyId, null, queryObj);
+      }
+      setPagiation((prevPagination) => ({
+        ...prevPagination,
+        page: prevPagination.page + 1,
+      }));
+      setCompanyjobs((prevJobs) => [...prevJobs, ...response?.data]);
+      setPagiation((state) => ({
+        ...state,
+        totalRecords: response?.pagination?.totalRecords,
+        totalPages: response?.pagination?.totalPages,
+      }));
+      const initialSaveStatus = {};
+      response?.data.forEach((job) => {
+        initialSaveStatus[job._id] = job.isSaved;
+      });
+      setJobSaveStatus((prevJobStatus) => ({
+        ...prevJobStatus,
+        ...initialSaveStatus,
+      }));
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoadingMore(false);
+    }
+  }
   useEffect(() => {
     const fetchData = async () => {
       try {
         const pathSegments = location.pathname.split("/");
         let companyId;
-
-        if (isAuthenticated) companyId = pathSegments[pathSegments.length - 2];
-        else companyId = pathSegments.pop();
-
+        const queryObj = { page: pagination.page, limit: pagination.limit };
         let response;
-        if (isAuthenticated)
-          response = await getJobsByCompany(companyId, user._id);
-        else response = await getJobsByCompany(companyId);
+
+        if (isAuthenticated) {
+          setCompanyId(pathSegments[pathSegments.length - 2]);
+          response = await getJobsByCompany(
+            pathSegments[pathSegments.length - 2],
+            user._id,
+            queryObj,
+          );
+        } else {
+          setCompanyId(pathSegments[pathSegments.length - 1]);
+          response = await getJobsByCompany(
+            pathSegments[pathSegments.length - 1],
+            null,
+            queryObj,
+          );
+        }
+
         setCompanyName(response?.companyName);
         setCompanyjobs(response?.data);
+        setPagiation((state) => ({
+          ...state,
+          totalRecords: response?.pagination?.totalRecords,
+          totalPages: response?.pagination?.totalPages,
+        }));
 
         // Initialize job save status based on the response
         const initialSaveStatus = {};
@@ -73,7 +133,7 @@ function CompanyAllJobs() {
   return (
     <main className="mx-auto px-4 py-16 xl:container">
       <p>
-        <strong>{companyjobs?.length}</strong>
+        <strong>{pagination.totalRecords}</strong>
         <span className="px-1">Jobs found at</span>
         <strong>{companyName}</strong>
       </p>
@@ -122,6 +182,9 @@ function CompanyAllJobs() {
             </button>
           </div>
         ))}
+        {pagination.page < pagination.totalPages && (
+          <LoadMoreBtn loading={loadingMore} onClick={handleLoadMore} />
+        )}
       </div>
     </main>
   );

@@ -37,14 +37,19 @@ export const addJobRating = async (slug, data) => {
   }
 };
 
-export const getJobsByCompany = async (companyId, userId) => {
+export const getJobsByCompany = async (companyId, userId, queryObj) => {
   try {
     let response;
-    if (userId)
+    if (userId) {
       response = await axios.get(
         `${JOB_API_URL}/company/${companyId}/${userId}`,
+        { params: queryObj },
       );
-    else response = await axios.get(`${JOB_API_URL}/company/${companyId}`);
+    } else {
+      response = await axios.get(`${JOB_API_URL}/company/${companyId}`, {
+        params: queryObj,
+      });
+    }
     return response.data;
   } catch (error) {
     handleApiError(error);
@@ -62,10 +67,11 @@ export const saveJob = async (jobId) => {
   }
 };
 
-export const getSavedJobsByUser = async () => {
+export const getSavedJobsByUser = async (queryObj) => {
   try {
     const response = await axios.get(`${BASE_URL}/saved-jobs`, {
       headers: getAuthorizationHeader(),
+      params: queryObj,
     });
     return response.data;
   } catch (error) {

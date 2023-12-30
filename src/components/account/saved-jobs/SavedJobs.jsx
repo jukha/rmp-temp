@@ -1,23 +1,54 @@
 import { useEffect, useState } from "react";
 import { getSavedJobsByUser } from "../../../services/apiJob";
 import { Link } from "react-router-dom";
+import LoadMoreBtn from "../../../ui/LoadMoreBtn";
 
 function SavedJobs() {
   const [savedJobs, setSavedJobs] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [loadingMore, setLoadingMore] = useState(false);
+  const [pagination, setPagiation] = useState({
+    page: 1,
+    limit: 3,
+    totalPages: 1,
+    totalRecords: 0,
+  });
+
+  async function handleLoadMore() {
+    try {
+      setLoadingMore(true);
+      const queryObj = { page: pagination.page + 1, limit: pagination.limit };
+      const response = await getSavedJobsByUser(queryObj);
+      setPagiation((prevPagination) => ({
+        ...prevPagination,
+        page: prevPagination.page + 1,
+      }));
+      setSavedJobs((prev) => [...prev, ...response?.data]);
+    } catch (error) {
+      console.error("Error fetching saved jobs:", error);
+    } finally {
+      setLoadingMore(false);
+    }
+  }
+
+  async function fetchData() {
+    try {
+      const queryObj = { page: pagination.page, limit: pagination.limit };
+      const response = await getSavedJobsByUser(queryObj);
+      setPagiation((state) => ({
+        ...state,
+        totalRecords: response?.pagination?.totalRecords,
+        totalPages: response?.pagination?.totalPages,
+      }));
+      setSavedJobs(response?.data);
+    } catch (error) {
+      console.error("Error fetching saved jobs:", error);
+    } finally {
+      setLoading(false);
+    }
+  }
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await getSavedJobsByUser();
-        setSavedJobs(response?.data);
-      } catch (error) {
-        console.error("Error fetching saved jobs:", error);
-      } finally {
-        setLoading(false); // Set loading to false once data is fetched
-      }
-    };
-
     fetchData();
   }, []);
 
@@ -53,6 +84,9 @@ function SavedJobs() {
             </div>
           </Link>
         ))}
+      {pagination.page < pagination.totalPages && (
+        <LoadMoreBtn loading={loadingMore} onClick={handleLoadMore} />
+      )}
     </div>
   );
 }
