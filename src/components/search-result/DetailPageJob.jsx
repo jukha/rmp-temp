@@ -5,6 +5,7 @@ import { Tooltip } from "primereact/tooltip";
 import { getBgColor } from "../../utils/calcBgColor";
 import { getJobBySlug } from "../../services/apiJob";
 import { Link, useLocation } from "react-router-dom";
+import Loader from "../../ui/Loader";
 
 const ratingData = [
   { name: "awesome", value: 5, count: 1 },
@@ -40,11 +41,7 @@ function DetailPageJob() {
   }, [location.pathname]);
 
   if (loading) {
-    return (
-      <div className="flex justify-center">
-        {loading && <i className="pi pi-spin pi-spinner text-4xl"></i>}
-      </div>
-    );
+    return <Loader />
   }
   return (
     <main className="mx-auto px-4 py-16 xl:container">

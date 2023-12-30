@@ -7,6 +7,7 @@ import { getCompanyBySlug } from "../../services/apiCompany";
 import { transformRatingKeys } from "../../utils/transformRatingsData";
 import { format, parseISO } from "date-fns";
 import { useAuth } from "../../contexts/AuthContext";
+import Loader from "../../ui/Loader";
 
 const ratingsData = [
   { icon: "pi pi-sync", name: "reputation" },
@@ -53,13 +54,8 @@ function DetailPageCompany() {
       }
     })();
   }, [location.pathname]);
-  if (loading) {
-    return (
-      <div className="flex justify-center">
-        {loading && <i className="pi pi-spin pi-spinner text-4xl"></i>}
-      </div>
-    );
-  }
+  if (loading) return <Loader />;
+
   return (
     <>
       <div className="z-50 w-full bg-white py-4 shadow-[rgba(0,_0,_0,_0.25)_0px_25px_50px_-12px] lg:py-6">

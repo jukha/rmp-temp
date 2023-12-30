@@ -5,6 +5,7 @@ import AddRating from "../../ui/AddRating";
 import { toast } from "react-toastify";
 import { addRating } from "../../services/apiRating";
 import { getUserRatingsForCompany } from "../../services/apiJob";
+import Loader from "../../ui/Loader";
 
 function AddCompanyRatings() {
   const [reputationRating, setReputationRating] = useState(0);
@@ -108,11 +109,7 @@ function AddCompanyRatings() {
     }
   }
   if (loading) {
-    return (
-      <div className="flex justify-center">
-        {loading && <i className="pi pi-spin pi-spinner text-4xl"></i>}
-      </div>
-    );
+    return <Loader />
   }
   return (
     <>

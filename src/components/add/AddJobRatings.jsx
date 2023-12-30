@@ -9,6 +9,7 @@ import {
 } from "../../services/apiJob";
 import { toast } from "react-toastify";
 import { addRating } from "../../services/apiRating";
+import Loader from "../../ui/Loader";
 
 function AddJobRatings() {
   const [compensationRating, setCompensationRating] = useState(0);
@@ -104,11 +105,7 @@ function AddJobRatings() {
   }
 
   if (loading) {
-    return (
-      <div className="flex justify-center">
-        {loading && <i className="pi pi-spin pi-spinner text-4xl"></i>}
-      </div>
-    );
+    return <Loader />
   }
 
   return (
