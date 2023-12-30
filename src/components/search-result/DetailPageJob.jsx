@@ -15,14 +15,7 @@ const ratingData = [
   { name: "awful", value: 1, count: 4 },
 ];
 
-const courses = [
-  { name: "All courses", value: "all" },
-  { name: "Computer Science", value: "cs" },
-  { name: "Artificial Intelligence", value: "ai" },
-];
-
 function DetailPageJob() {
-  const [course, setCourse] = useState("all");
   const [loading, setLoading] = useState(true);
   const [job, setJob] = useState(null);
   const location = useLocation();
@@ -41,7 +34,7 @@ function DetailPageJob() {
   }, [location.pathname]);
 
   if (loading) {
-    return <Loader />
+    return <Loader />;
   }
   return (
     <main className="mx-auto px-4 py-16 xl:container">
@@ -61,8 +54,11 @@ function DetailPageJob() {
           </h1>
           <p>
             at
-            <Link to={`/companies/${job?.companyDetails?.slug}`}>
-              <strong> {job?.companyDetails?.name}</strong>
+            <Link
+              className="font-bold underline pl-1"
+              to={`/companies/${job?.companyDetails?.slug}`}
+            >
+              {job?.companyDetails?.name}
             </Link>
           </p>
 

@@ -6,6 +6,7 @@ import JobDefaultCard from "./JobDefaultCard";
 
 import { getJobBySlug } from "../../services/apiJob";
 import CardSkeleton from "../../ui/CardSkeleton";
+import { toast } from "react-toastify";
 
 const ratingData = [
   "compensation",
@@ -31,8 +32,6 @@ function CompareJobs() {
   const [firstJobDataLoading, setFirstJobDataLoading] = useState(false);
   const [secondJobDataLoading, setSecondJobDataLoading] = useState(false);
 
-  console.log(firstJobDataLoading);
-
   async function fetchJobData(jobSlug) {
     try {
       const response = await getJobBySlug(jobSlug);
@@ -44,6 +43,16 @@ function CompareJobs() {
     setFirstJobData([]);
     setSecondJobData([]);
     navigate("/compare/jobs");
+  }
+
+  async function handleShareComparison() {
+    try {
+      const textToCopy = window.location.href;
+      await navigator.clipboard.writeText(textToCopy);
+      toast.success("URL copied to clipboard!");
+    } catch (err) {
+      toast.error(`Unable to copy to clipboard: ${err.message}`);
+    }
   }
 
   useEffect(() => {
@@ -117,10 +126,20 @@ function CompareJobs() {
         <h1 className="text-3xl font-extrabold sm:text-4xl">Compare Jobs</h1>
         <div className="flex flex-wrap gap-4">
           <div>
-            <Button type="primary" text="Reset" onClick={handleResetJobsData} />
+            <Button
+              type="primary"
+              text="Reset"
+              disabled={showFirstDefaultCard && showSecondDefaultCard}
+              onClick={handleResetJobsData}
+            />
           </div>
           <div>
-            <Button type="primary" text="Share Comparison" />
+            <Button
+              type="primary"
+              text="Share Comparison"
+              onClick={handleShareComparison}
+              disabled={showFirstDefaultCard || showSecondDefaultCard}
+            />
           </div>
         </div>
       </div>

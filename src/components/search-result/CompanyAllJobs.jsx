@@ -36,8 +36,6 @@ function CompanyAllJobs() {
     }
   }
 
-  console.log("status", jobSaveStatus);
-
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -70,8 +68,7 @@ function CompanyAllJobs() {
     fetchData();
   }, [location.pathname]);
 
-  if (loading)
-    return <Loader />
+  if (loading) return <Loader />;
 
   return (
     <main className="mx-auto px-4 py-16 xl:container">
