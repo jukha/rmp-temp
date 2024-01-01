@@ -16,9 +16,11 @@ export const getCompanySuggestions = async (keyword) => {
   }
 };
 
-export const getCompanyBySlug = async (slug) => {
+export const getCompanyBySlug = async (slug, queryObj) => {
   try {
-    const response = await axios.get(`${BASE_URL}/${slug}`);
+    const response = await axios.get(`${BASE_URL}/${slug}`, {
+      params: queryObj,
+    });
     return response.data.data;
   } catch (error) {
     handleApiError(error);

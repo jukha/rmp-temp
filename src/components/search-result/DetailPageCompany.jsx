@@ -8,8 +8,9 @@ import { transformRatingKeys } from "../../utils/transformRatingsData";
 import { format, parseISO } from "date-fns";
 import { useAuth } from "../../contexts/AuthContext";
 import Loader from "../../ui/Loader";
+import LoadMoreBtn from "../../ui/LoadMoreBtn";
 
-const ratingsData = [
+const ratingsDataForIcons = [
   { icon: "pi pi-sync", name: "reputation" },
   { icon: "pi pi-thumbs-up", name: "company culture" },
   {
@@ -33,20 +34,58 @@ function DetailPageCompany() {
   const location = useLocation();
   const { isAuthenticated, user } = useAuth();
   const [loading, setLoading] = useState(true);
+  const [loadingMore, setLoadingMore] = useState(false);
+  const [ratingsData, setRatingsData] = useState([]);
+  const [ratingsPagination, setRatingsPagination] = useState({
+    page: 1,
+    limit: 1,
+    totalPages: 1,
+    totalRecords: 0,
+  });
 
   function getRatingIcon(ratingParam) {
-    const paramIndex = ratingsData.findIndex(
+    const paramIndex = ratingsDataForIcons.findIndex(
       (el) => el.name.toLowerCase() === ratingParam?.toLowerCase(),
     );
-    return ratingsData[paramIndex].icon;
+    return ratingsDataForIcons[paramIndex].icon;
   }
 
+  async function handleLoadMore() {
+    try {
+      setLoadingMore(true);
+      const queryObj = {
+        page: ratingsPagination.page + 1,
+        limit: ratingsPagination.limit,
+      };
+      const slug = location.pathname.split("/").pop();
+      const response = await getCompanyBySlug(slug, queryObj);
+      setRatingsPagination((prevPagination) => ({
+        ...prevPagination,
+        page: prevPagination.page + 1,
+      }));
+      setRatingsData((prev) => [...prev, ...response?.company?.ratings?.data]);
+    } catch (error) {
+      console.log("error", error);
+    } finally {
+      setLoadingMore(false);
+    }
+  }
   useEffect(() => {
     (async () => {
       try {
+        const queryObj = {
+          page: ratingsPagination.page,
+          limit: ratingsPagination.limit,
+        };
         const slug = location.pathname.split("/").pop();
-        const response = await getCompanyBySlug(slug);
+        const response = await getCompanyBySlug(slug, queryObj);
         setCompany(response?.company);
+        setRatingsData(response?.company?.ratings?.data);
+        setRatingsPagination((state) => ({
+          ...state,
+          totalRecords: response?.company?.ratings?.pagination?.totalRecords,
+          totalPages: response?.company?.ratings?.pagination?.totalPages,
+        }));
       } catch (error) {
         console.log("error", error);
       } finally {
@@ -127,9 +166,9 @@ function DetailPageCompany() {
           </div>
         </div>
         {/* All Ratings */}
-        <div>
-          {company?.ratings &&
-            company?.ratings.map((rating, i) => (
+        <div className="mb-12">
+          {ratingsData &&
+            ratingsData.map((rating, i) => (
               <div
                 key={i}
                 className="mb-6 mt-6 flex max-w-5xl flex-wrap items-start gap-0 bg-background px-6 py-5 lg:gap-10"
@@ -267,6 +306,9 @@ function DetailPageCompany() {
                 </div>
               </div>
             ))}
+          {ratingsPagination.page < ratingsPagination.totalPages && (
+            <LoadMoreBtn loading={loadingMore} onClick={handleLoadMore} />
+          )}
         </div>
       </main>
     </>
