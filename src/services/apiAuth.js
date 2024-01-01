@@ -48,10 +48,11 @@ export const updateUserApi = async (updatedData) => {
   }
 };
 
-export const getUserRatedJobsAndCompanies = async () => {
+export const getUserRatedJobsAndCompanies = async (queryObj) => {
   try {
     const response = await axios.get(`${BASE_URL}/rated-jobs-companies`, {
       headers: getAuthorizationHeader(),
+      params: queryObj,
     });
     return response.data;
   } catch (error) {
