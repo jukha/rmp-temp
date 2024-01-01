@@ -41,3 +41,19 @@ export const getReviews = async ({ jobId, companyId }) => {
     handleApiError(error);
   }
 };
+
+export const updateRatingFeedback = async (ratingId, feedbackType) => {
+  try {
+    const response = await axios.patch(
+      `${BASE_URL}/update-feedback`,
+      {
+        ratingId,
+        feedbackType,
+      },
+      { headers: getAuthorizationHeader() },
+    );
+    return response.data;
+  } catch (error) {
+    handleApiError(error);
+  }
+};
