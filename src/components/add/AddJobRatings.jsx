@@ -2,14 +2,12 @@ import Button from "../../ui/Button";
 import { useEffect, useState } from "react";
 import AddRating from "../../ui/AddRating";
 import { useLocation } from "react-router-dom";
-import {
-  addJobRating,
-  getJobBySlug,
-  getUserRatingsForJob,
-} from "../../services/apiJob";
+import { getUserRatingsForJob } from "../../services/apiJob";
 import { toast } from "react-toastify";
 import { addRating } from "../../services/apiRating";
 import Loader from "../../ui/Loader";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 
 function AddJobRatings() {
   const [compensationRating, setCompensationRating] = useState(0);
@@ -26,6 +24,47 @@ function AddJobRatings() {
   const location = useLocation();
   const [apiData, setApiData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [submitting, setSubmitting] = useState(false);
+
+  const validationSchema = Yup.object().shape({
+    review: Yup.string().required("Review is required"),
+  });
+
+  const formik = useFormik({
+    initialValues: {
+      review: "",
+    },
+    validationSchema,
+    onSubmit: async (values) => {
+      try {
+        setSubmitting(true);
+        const data = {
+          compensation: compensationRating,
+          workLifeBalance: workLifeBalanceRating,
+          jobSecurity: jobSecurityRating,
+          opportunitiesForGrowth: growthOpportunitiesRating,
+          companyCulture: companyCultureRating,
+          jobSatisfaction: jobSatisfactionRating,
+          workload: workloadRating,
+          benefits: benefitsRating,
+          flexibility: flexibilityRating,
+        };
+        const apiResponse = await addRating("job", jobId, data, values.review);
+
+        if (apiResponse.success) {
+          toast.success(apiResponse.message);
+        } else {
+          toast.error(apiResponse.message);
+        }
+      } catch (error) {
+        toast.error(
+          `An error occurred while submitting the rating.${error.message}`,
+        );
+      } finally {
+        setSubmitting(false);
+      }
+    },
+  });
 
   useEffect(() => {
     (async () => {
@@ -69,6 +108,10 @@ function AddJobRatings() {
           setFlexibilityRating(
             response.data.userRatingForJob.parametersRating.flexibility,
           );
+          formik.setFieldValue(
+            "review",
+            response.data.userRatingForJob.ratingText,
+          );
         }
       } catch (error) {
         console.log(error);
@@ -77,35 +120,9 @@ function AddJobRatings() {
       }
     })();
   }, [location.pathname]);
-  async function handleSubmit() {
-    try {
-      const data = {
-        compensation: compensationRating,
-        workLifeBalance: workLifeBalanceRating,
-        jobSecurity: jobSecurityRating,
-        opportunitiesForGrowth: growthOpportunitiesRating,
-        companyCulture: companyCultureRating,
-        jobSatisfaction: jobSatisfactionRating,
-        workload: workloadRating,
-        benefits: benefitsRating,
-        flexibility: flexibilityRating,
-      };
-      const apiResponse = await addRating("job", jobId, data, "Great JOB");
-
-      if (apiResponse.success) {
-        toast.success(apiResponse.message);
-      } else {
-        toast.error(apiResponse.message);
-      }
-    } catch (error) {
-      toast.error(
-        `An error occurred while submitting the rating.${error.message}`,
-      );
-    }
-  }
 
   if (loading) {
-    return <Loader />
+    return <Loader />;
   }
 
   return (
@@ -214,7 +231,27 @@ function AddJobRatings() {
               />
             </div>
           </div>
-          <div className="mx-auto mt-16 max-w-[900px] text-center">
+          <div className="mx-auto my-16 max-w-[900px]">
+            <h3 className="mb-2 font-bold">Write a Review</h3>
+            <p className="mb-2">
+              Discuss your personal experience on this job. What’s great about
+              it? What could use improvement?
+            </p>
+            <div>
+              <textarea
+                name="review"
+                value={formik.values.review}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                className="w-full max-w-[900px] resize-none rounded-[34px] border border-gray-200 bg-white p-6 text-lg font-medium placeholder-gray-500 focus:border-gray-400 focus:outline-none"
+                rows={10}
+              ></textarea>
+              {formik.touched.review && formik.errors.review && (
+                <div className="text-red-500">{formik.errors.review}</div>
+              )}
+            </div>
+          </div>
+          <div className="mx-auto max-w-[900px] text-center">
             <p className="mb-6">
               By clicking the "Submit" button, I acknowledge that I have read
               and agreed to the Rate My Professors Site Guidelines, Terms of Use
@@ -222,7 +259,11 @@ function AddJobRatings() {
               RateMyProfessors.com. IP addresses are logged.
             </p>
             <div className="mx-auto max-w-max">
-              <Button text="Submit Rating" onClick={handleSubmit} />
+              <Button
+                disabled={submitting}
+                text="Submit Rating"
+                onClick={formik.handleSubmit}
+              />
             </div>
           </div>
         </div>

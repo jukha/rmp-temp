@@ -6,6 +6,8 @@ import { toast } from "react-toastify";
 import { addRating } from "../../services/apiRating";
 import { getUserRatingsForCompany } from "../../services/apiJob";
 import Loader from "../../ui/Loader";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 
 function AddCompanyRatings() {
   const [reputationRating, setReputationRating] = useState(0);
@@ -24,6 +26,51 @@ function AddCompanyRatings() {
   const location = useLocation();
   const [companyData, setCompanyData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [submitting, setSubmitting] = useState(false);
+
+  const validationSchema = Yup.object().shape({
+    review: Yup.string().required("Review is required"),
+  });
+
+  const formik = useFormik({
+    initialValues: {
+      review: "",
+    },
+    validationSchema,
+    onSubmit: async (values) => {
+      try {
+        setSubmitting(true);
+        const data = {
+          reputation: reputationRating,
+          companyCulture: companyCultureRating,
+          opportunitiesForAdvancement: advancementOpportunitiesRating,
+          workLifeBalance: workLifeBalanceRating,
+          employeeBenefits: benefitsRating,
+          leadershipAndManagement: managementRating,
+          innovationAndTechnologyAdoption: technologyAdoptionRating,
+          diversityAndInclusion: diversityRating,
+          corporateSocialResponsibility: socialResponsibilityRating,
+          financialStability: financialStability,
+        };
+        const apiResponse = await addRating(
+          "company",
+          companyData.companyId,
+          data,
+          values.review,
+        );
+
+        if (apiResponse.success) {
+          toast.success(apiResponse.message);
+        } else {
+          toast.error(apiResponse.message);
+        }
+      } catch (error) {
+        toast.error("An error occurred while submitting the rating.");
+      } finally {
+        setSubmitting(false);
+      }
+    },
+  });
 
   useEffect(() => {
     (async () => {
@@ -69,6 +116,10 @@ function AddCompanyRatings() {
             response.data.userRatingForCompany.parametersRating
               .corporateSocialResponsibility,
           );
+          formik.setFieldValue(
+            "review",
+            response.data.userRatingForCompany.ratingText,
+          );
         }
       } catch (error) {
         console.log("err", errro);
@@ -78,38 +129,8 @@ function AddCompanyRatings() {
     })();
   }, [location.pathname]);
 
-  async function handleSubmit() {
-    try {
-      const data = {
-        reputation: reputationRating,
-        companyCulture: companyCultureRating,
-        opportunitiesForAdvancement: advancementOpportunitiesRating,
-        workLifeBalance: workLifeBalanceRating,
-        employeeBenefits: benefitsRating,
-        leadershipAndManagement: managementRating,
-        innovationAndTechnologyAdoption: technologyAdoptionRating,
-        diversityAndInclusion: diversityRating,
-        corporateSocialResponsibility: socialResponsibilityRating,
-        financialStability: financialStability,
-      };
-      const apiResponse = await addRating(
-        "company",
-        companyData.companyId,
-        data,
-        "Great company",
-      );
-
-      if (apiResponse.success) {
-        toast.success(apiResponse.message);
-      } else {
-        toast.error(apiResponse.message);
-      }
-    } catch (error) {
-      toast.error("An error occurred while submitting the rating.");
-    }
-  }
   if (loading) {
-    return <Loader />
+    return <Loader />;
   }
   return (
     <>
@@ -228,7 +249,27 @@ function AddCompanyRatings() {
             </div>
           </div>
 
-          <div className="mx-auto mt-16 max-w-[900px] text-center">
+          <div className="mx-auto my-16 max-w-[900px]">
+            <h3 className="mb-2 font-bold">Write a Review</h3>
+            <p className="mb-2">
+              Discuss your personal experience on this company. What’s great
+              about it? What could use improvement?
+            </p>
+            <div>
+              <textarea
+                name="review"
+                value={formik.values.review}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                className="w-full max-w-[900px] resize-none rounded-[34px] border border-gray-200 bg-white p-6 text-lg font-medium placeholder-gray-500 focus:border-gray-400 focus:outline-none"
+                rows={10}
+              ></textarea>
+              {formik.touched.review && formik.errors.review && (
+                <div className="text-red-500">{formik.errors.review}</div>
+              )}
+            </div>
+          </div>
+          <div className="mx-auto max-w-[900px] text-center">
             <p className="mb-6">
               By clicking the "Submit" button, I acknowledge that I have read
               and agreed to the Rate My Professors Site Guidelines, Terms of Use
@@ -236,7 +277,11 @@ function AddCompanyRatings() {
               RateMyProfessors.com. IP addresses are logged.
             </p>
             <div className="mx-auto max-w-max">
-              <Button text="Submit Rating" onClick={handleSubmit} />
+              <Button
+                disabled={submitting}
+                text="Submit Rating"
+                onClick={formik.handleSubmit}
+              />
             </div>
           </div>
         </div>
