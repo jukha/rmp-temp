@@ -3,177 +3,126 @@ import * as Yup from "yup";
 import Button from "../../ui/Button";
 import { Checkbox } from "primereact/checkbox";
 import { useState } from "react";
-import { Dropdown } from "primereact/dropdown";
-
-const departments = [
-  { name: "Any", value: "any" },
-  { name: "Computer Science", value: "cs" },
-  { name: "Socialogy", value: "socialogy" },
-  { name: "Speech", value: "speech" },
-];
+import { toast } from "react-toastify";
+import { addJob } from "../../services/apiJob";
+import SearchCompanyForm from "../header/SearchCompanyForm";
 
 function AddJob() {
   const [checked, setChecked] = useState(false);
-  const [department, setDepartment] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [company, setCompany] = useState(null);
+
   const validationSchema = Yup.object({
-    schoolName: Yup.string().required("School Name is required"),
-    professorFirstName: Yup.string().required(
-      "Professor's First Name is required",
-    ),
-    professorLastName: Yup.string().required(
-      "Professor's Last Name is required",
-    ),
-    directoryListing: Yup.string().required(
-      "Directory Listing of Professor is required",
-    ),
+    title: Yup.string().required("Job title is required"),
+    description: Yup.string().required("Description is required"),
+    location: Yup.string().required("Location is required"),
     agreeToTerms: Yup.boolean().oneOf([true], "You must agree to the terms"),
-    department: Yup.string().required("Department is required"),
   });
 
   const formik = useFormik({
     initialValues: {
-      schoolName: "",
-      professorFirstName: "",
-      professorMiddleName: "",
-      professorLastName: "",
-      directoryListing: "",
+      title: "",
+      description: "",
+      location: "",
       agreeToTerms: false,
-      department: "",
     },
     validationSchema,
-    onSubmit: (values) => {
-      // Handle form submission logic here
-      console.log("Form submitted with values:", values);
+    onSubmit: async (values) => {
+      console.log("vlaues", values);
+      try {
+        setLoading(true);
+        const response = await addJob({ ...values, company });
+        toast.success(response.message);
+      } catch (error) {
+        toast.error(error.message);
+      } finally {
+        setLoading(false);
+      }
     },
   });
+
+  function handleCompanySelect(company) {
+    setCompany(company.id);
+  }
+
+  function handleClearCompany() {
+    setCompany(null);
+  }
+
   return (
     <main className="container mx-auto px-4 py-16">
-      <h1 className="mb-2 text-5xl font-extrabold">Add a Professor</h1>
+      <h1 className="mb-2 text-5xl font-extrabold">Add a Job:{company}</h1>
       <p className="mb-10">
-        Please use the search bar above to make sure that the professor does not
-        already exist at this school.
+        Please use the search bar above to make sure that the company does not
+        already exist.
       </p>
       <form onSubmit={formik.handleSubmit} className="max-w-5xl">
         <div className="mb-6">
-          <label className="mb-2 inline-block" htmlFor="schoolName">
-            Name of School:
+          <label className="mb-2 inline-block" htmlFor="title">
+            Title of Job:
           </label>
           <input
             type="text"
-            id="schoolName"
+            id="title"
             className="w-full rounded-[34px] border border-gray-200 bg-gray-100 py-3 pl-3 text-sm font-medium placeholder-gray-500 focus:border-gray-400 focus:bg-white focus:outline-none"
-            name="schoolName"
+            name="title"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            value={formik.values.schoolName}
+            value={formik.values.title}
           />
-          {formik.touched.schoolName && formik.errors.schoolName ? (
+          {formik.touched.title && formik.errors.title ? (
             <div className="mt-2 text-left text-red-400">
-              {formik.errors.schoolName}
+              {formik.errors.title}
             </div>
           ) : null}
         </div>
 
         <div className="mb-6">
-          <label className="mb-2 inline-block" htmlFor="professorFirstName">
-            Professor's First Name:
+          <label className="mb-2 inline-block" htmlFor="title">
+            Company:
+          </label>
+          <SearchCompanyForm
+            onSelect={handleCompanySelect}
+            onClear={handleClearCompany}
+          />
+        </div>
+
+        <div className="mb-6">
+          <label className="mb-2 inline-block" htmlFor="description">
+            Description:
           </label>
           <input
             type="text"
-            id="professorFirstName"
+            id="description"
             className="w-full rounded-[34px] border border-gray-200 bg-gray-100 py-3 pl-3 text-sm font-medium placeholder-gray-500 focus:border-gray-400 focus:bg-white focus:outline-none"
-            name="professorFirstName"
+            name="description"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            value={formik.values.professorFirstName}
+            value={formik.values.description}
           />
-          {formik.touched.professorFirstName &&
-          formik.errors.professorFirstName ? (
+          {formik.touched.description && formik.errors.description ? (
             <div className="mt-2 text-left text-red-400">
-              {formik.errors.professorFirstName}
+              {formik.errors.description}
             </div>
           ) : null}
         </div>
 
         <div className="mb-6">
-          <label className="mb-2 inline-block" htmlFor="professorMiddleName">
-            Professor's Middle Name:
+          <label className="mb-2 inline-block" htmlFor="location">
+            Location:
           </label>
           <input
             type="text"
-            id="professorMiddleName"
+            id="location"
             className="w-full rounded-[34px] border border-gray-200 bg-gray-100 py-3 pl-3 text-sm font-medium placeholder-gray-500 focus:border-gray-400 focus:bg-white focus:outline-none"
-            name="professorMiddleName"
+            name="location"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            value={formik.values.professorMiddleName}
+            value={formik.values.location}
           />
-          {/* Add error handling if needed */}
-        </div>
-
-        <div className="mb-6">
-          <label className="mb-2 inline-block" htmlFor="professorLastName">
-            Professor's Last Name:
-          </label>
-          <input
-            type="text"
-            id="professorLastName"
-            className="w-full rounded-[34px] border border-gray-200 bg-gray-100 py-3 pl-3 text-sm font-medium placeholder-gray-500 focus:border-gray-400 focus:bg-white focus:outline-none"
-            name="professorLastName"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.professorLastName}
-          />
-          {formik.touched.professorLastName &&
-          formik.errors.professorLastName ? (
+          {formik.touched.location && formik.errors.location ? (
             <div className="mt-2 text-left text-red-400">
-              {formik.errors.professorLastName}
-            </div>
-          ) : null}
-        </div>
-        <div className="mb-6">
-          <label className="mb-2 inline-block" htmlFor="department">
-            Department
-          </label>
-          <Dropdown
-            value={department}
-            onChange={(e) => setDepartment(e.value)}
-            options={departments}
-            optionLabel="name"
-            placeholder="Select..."
-            className="w-full rounded-[34px] border border-gray-200"
-            pt={{
-              root: "bg-gray-100 text-primary",
-              input: "font-poppins py-3 bg-transparent text-black",
-              panel: "bg-transparent font-poppins rounded-[34px]",
-              wrapper: "bg-gray-100 rounded-[inherit]",
-              item: "text-black",
-              trigger: "text-black",
-            }}
-          />
-          {formik.touched.department && formik.errors.department ? (
-            <div className="mt-2 text-left text-red-400">
-              {formik.errors.department}
-            </div>
-          ) : null}
-        </div>
-
-        <div className="mb-6">
-          <label className="mb-2 inline-block" htmlFor="directoryListing">
-            Directory Listing of Professor:
-          </label>
-          <input
-            type="text"
-            id="directoryListing"
-            className="w-full rounded-[34px] border border-gray-200 bg-gray-100 py-3 pl-3 text-sm font-medium placeholder-gray-500 focus:border-gray-400 focus:bg-white focus:outline-none"
-            name="directoryListing"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.directoryListing}
-          />
-          {formik.touched.directoryListing && formik.errors.directoryListing ? (
-            <div className="mt-2 text-left text-red-400">
-              {formik.errors.directoryListing}
+              {formik.errors.location}
             </div>
           ) : null}
         </div>
@@ -181,7 +130,10 @@ function AddJob() {
         <div className="mb-6">
           <div className="flex items-center gap-2">
             <Checkbox
-              onChange={(e) => setChecked(e.checked)}
+              onChange={(e) => {
+                formik.setFieldValue("agreeToTerms", e.checked);
+                setChecked(e.checked);
+              }}
               checked={checked}
               inputId="agreeToTerms"
               pt={{
@@ -199,8 +151,14 @@ function AddJob() {
             </div>
           ) : null}
         </div>
+
         <div className="max-w-max">
-          <Button type="primary" htmlType="submit" text="Add Professor" />
+          <Button
+            disabled={loading}
+            type="primary"
+            htmlType="submit"
+            text="Add Company"
+          />
         </div>
       </form>
     </main>

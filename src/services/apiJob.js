@@ -109,3 +109,14 @@ export const getUserRatingsForJob = async (jobSlug) => {
     handleApiError(error);
   }
 };
+
+export const addJob = async (data) => {
+  try {
+    const response = await axios.post(`${JOB_API_URL}`, data, {
+      headers: getAuthorizationHeader(),
+    });
+    return response.data;
+  } catch (error) {
+    handleApiError(error);
+  }
+};

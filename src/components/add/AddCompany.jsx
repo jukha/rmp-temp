@@ -4,6 +4,8 @@ import Button from "../../ui/Button";
 import { Checkbox } from "primereact/checkbox";
 import { useState } from "react";
 import { Dropdown } from "primereact/dropdown";
+import { toast } from "react-toastify";
+import { addCompany } from "../../services/apiCompany";
 
 const countries = [
   { name: "Select Country", value: "" },
@@ -21,176 +23,100 @@ const states = [
 
 function AddCompany() {
   const [checked, setChecked] = useState(false);
-  const [country, setCountry] = useState("");
-  const [state, setState] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const validationSchema = Yup.object({
-    schoolName: Yup.string().required("School Name is required"),
-    country: Yup.string().required("Country is required"),
-    state: Yup.string().required("State/Province is required"),
-    city: Yup.string().required("City is required"),
-    website: Yup.string().required("Website is required").url("Invalid URL"),
-    yourEmail: Yup.string()
-      .required("Your Email is required")
-      .email("Invalid Email"),
+    name: Yup.string().required("Company name is required"),
+    description: Yup.string().required("Description is required"),
+    location: Yup.string().required("Location is required"),
     agreeToTerms: Yup.boolean().oneOf([true], "You must agree to the terms"),
   });
 
   const formik = useFormik({
     initialValues: {
-      schoolName: "",
-      country: "",
-      state: "",
-      city: "",
-      website: "",
-      yourEmail: "",
+      name: "",
+      description: "",
+      location: "",
       agreeToTerms: false,
     },
     validationSchema,
-    onSubmit: (values) => {
-      // Handle form submission logic here
-      console.log("Form submitted with values:", values);
+    onSubmit: async (values) => {
+      try {
+        setLoading(true);
+        const response = await addCompany(values);
+        toast.success(response.message);
+      } catch (error) {
+        toast.error(error.message);
+      } finally {
+        setLoading(false);
+      }
     },
   });
 
   return (
     <main className="container mx-auto px-4 py-16">
-      <h1 className="mb-2 text-5xl font-extrabold">Add a School</h1>
+      <h1 className="mb-2 text-5xl font-extrabold">Add a Company</h1>
       <p className="mb-10">
-        Please use the search bar above to make sure that the school does not
+        Please use the search bar above to make sure that the company does not
         already exist.
       </p>
       <form onSubmit={formik.handleSubmit} className="max-w-5xl">
         <div className="mb-6">
-          <label className="mb-2 inline-block" htmlFor="schoolName">
-            Name of School:
+          <label className="mb-2 inline-block" htmlFor="name">
+            Name of Company:
           </label>
           <input
             type="text"
-            id="schoolName"
+            id="name"
             className="w-full rounded-[34px] border border-gray-200 bg-gray-100 py-3 pl-3 text-sm font-medium placeholder-gray-500 focus:border-gray-400 focus:bg-white focus:outline-none"
-            name="schoolName"
+            name="name"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            value={formik.values.schoolName}
+            value={formik.values.name}
           />
-          {formik.touched.schoolName && formik.errors.schoolName ? (
+          {formik.touched.name && formik.errors.name ? (
             <div className="mt-2 text-left text-red-400">
-              {formik.errors.schoolName}
+              {formik.errors.name}
             </div>
           ) : null}
         </div>
 
         <div className="mb-6">
-          <label className="mb-2 inline-block" htmlFor="country">
-            Country:
-          </label>
-          <Dropdown
-            value={country}
-            onChange={(e) => setCountry(e.value)}
-            options={countries}
-            optionLabel="name"
-            placeholder="Select Country"
-            className="w-full rounded-[34px] border border-gray-200"
-            pt={{
-              root: "bg-gray-100 text-primary",
-              input: "font-poppins py-3 bg-transparent text-black",
-              panel: "bg-transparent font-poppins rounded-[34px]",
-              wrapper: "bg-gray-100 rounded-[inherit]",
-              item: "text-black",
-              trigger: "text-black",
-            }}
-          />
-          {formik.touched.country && formik.errors.country ? (
-            <div className="mt-2 text-left text-red-400">
-              {formik.errors.country}
-            </div>
-          ) : null}
-        </div>
-
-        <div className="mb-6">
-          <label className="mb-2 inline-block" htmlFor="state">
-            State/Province:
-          </label>
-          <Dropdown
-            value={state}
-            onChange={(e) => setState(e.value)}
-            options={states}
-            optionLabel="name"
-            placeholder="Select State/Province"
-            className="w-full rounded-[34px] border border-gray-200"
-            pt={{
-              root: "bg-gray-100 text-primary",
-              input: "font-poppins py-3 bg-transparent text-black",
-              panel: "bg-transparent font-poppins rounded-[34px]",
-              wrapper: "bg-gray-100 rounded-[inherit]",
-              item: "text-black",
-              trigger: "text-black",
-            }}
-          />
-          {formik.touched.state && formik.errors.state ? (
-            <div className="mt-2 text-left text-red-400">
-              {formik.errors.state}
-            </div>
-          ) : null}
-        </div>
-
-        <div className="mb-6">
-          <label className="mb-2 inline-block" htmlFor="city">
-            City:
+          <label className="mb-2 inline-block" htmlFor="description">
+            Description:
           </label>
           <input
             type="text"
-            id="city"
+            id="description"
             className="w-full rounded-[34px] border border-gray-200 bg-gray-100 py-3 pl-3 text-sm font-medium placeholder-gray-500 focus:border-gray-400 focus:bg-white focus:outline-none"
-            name="city"
+            name="description"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            value={formik.values.city}
+            value={formik.values.description}
           />
-          {formik.touched.city && formik.errors.city ? (
+          {formik.touched.description && formik.errors.description ? (
             <div className="mt-2 text-left text-red-400">
-              {formik.errors.city}
+              {formik.errors.description}
             </div>
           ) : null}
         </div>
 
         <div className="mb-6">
-          <label className="mb-2 inline-block" htmlFor="website">
-            Website:
+          <label className="mb-2 inline-block" htmlFor="location">
+            Location:
           </label>
           <input
             type="text"
-            id="website"
+            id="location"
             className="w-full rounded-[34px] border border-gray-200 bg-gray-100 py-3 pl-3 text-sm font-medium placeholder-gray-500 focus:border-gray-400 focus:bg-white focus:outline-none"
-            name="website"
+            name="location"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            value={formik.values.website}
+            value={formik.values.location}
           />
-          {formik.touched.website && formik.errors.website ? (
+          {formik.touched.location && formik.errors.location ? (
             <div className="mt-2 text-left text-red-400">
-              {formik.errors.website}
-            </div>
-          ) : null}
-        </div>
-
-        <div className="mb-6">
-          <label className="mb-2 inline-block" htmlFor="yourEmail">
-            Your Email:
-          </label>
-          <input
-            type="text"
-            id="yourEmail"
-            className="w-full rounded-[34px] border border-gray-200 bg-gray-100 py-3 pl-3 text-sm font-medium placeholder-gray-500 focus:border-gray-400 focus:bg-white focus:outline-none"
-            name="yourEmail"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.yourEmail}
-          />
-          {formik.touched.yourEmail && formik.errors.yourEmail ? (
-            <div className="mt-2 text-left text-red-400">
-              {formik.errors.yourEmail}
+              {formik.errors.location}
             </div>
           ) : null}
         </div>
@@ -198,7 +124,10 @@ function AddCompany() {
         <div className="mb-6">
           <div className="flex items-center gap-2">
             <Checkbox
-              onChange={(e) => setChecked(e.checked)}
+              onChange={(e) => {
+                formik.setFieldValue("agreeToTerms", e.checked);
+                setChecked(e.checked);
+              }}
               checked={checked}
               inputId="agreeToTerms"
               pt={{
@@ -218,7 +147,12 @@ function AddCompany() {
         </div>
 
         <div className="max-w-max">
-          <Button type="primary" htmlType="submit" text="Add School" />
+          <Button
+            disabled={loading}
+            type="primary"
+            htmlType="submit"
+            text="Add Company"
+          />
         </div>
       </form>
     </main>

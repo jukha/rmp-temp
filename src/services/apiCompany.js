@@ -37,3 +37,14 @@ export const addCompanyRating = async (slug, data) => {
     handleApiError(error);
   }
 };
+
+export const addCompany = async (data) => {
+  try {
+    const response = await axios.post(`${BASE_URL}`, data, {
+      headers: getAuthorizationHeader(),
+    });
+    return response.data;
+  } catch (error) {
+    handleApiError(error);
+  }
+};

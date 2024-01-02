@@ -25,7 +25,7 @@ const CompanyReactSearchAutocomplete = styled(ReactSearchAutocomplete)`
   }
 `;
 
-function SearchCompanyForm({ onSelect, onSetData, disabled }) {
+function SearchCompanyForm({ onSelect, onSetData, disabled, onClear }) {
   const [companySuggestions, setCompanySuggestions] = useState([]);
   const navigate = useNavigate();
 
@@ -63,10 +63,16 @@ function SearchCompanyForm({ onSelect, onSetData, disabled }) {
 
   function handleSelect(item) {
     if (onSelect) {
-      onSelect();
+      onSelect(item);
       return;
     }
     navigate(`/companies/${item.slug}`);
+  }
+
+  function handleClear() {
+    if (onClear) {
+      onClear();
+    }
   }
 
   return (
@@ -76,6 +82,7 @@ function SearchCompanyForm({ onSelect, onSetData, disabled }) {
         showIcon={false}
         formatResult={formatResult}
         onSelect={handleSelect}
+        onClear={handleClear}
         className={disabled ? "pointer-events-none" : "pointer-events-auto"} // for disabling purpose
         placeholder="Search Company"
         onSearch={handleCompanySearch}
