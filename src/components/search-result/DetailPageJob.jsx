@@ -7,6 +7,7 @@ import { getJobBySlug } from "../../services/apiJob";
 import { Link, useLocation } from "react-router-dom";
 import Loader from "../../ui/Loader";
 import LoadMoreBtn from "../../ui/LoadMoreBtn";
+import DetailJobRatingItem from "./DetailJobRatingItem";
 
 const ratingDataDummy = [
   { name: "awesome", value: 5, count: 1 },
@@ -173,88 +174,7 @@ function DetailPageJob() {
         <div>
           {ratingsData &&
             ratingsData.map((rating, i) => (
-              <div
-                key={i}
-                className="mb-6 mt-6 flex max-w-4xl flex-col items-start gap-10 bg-background px-6 py-5 sm:flex-row"
-              >
-                <div>
-                  <div className="mb-6">
-                    <p className="text-black">Overall Quality</p>
-                    <div className="my-2 bg-[#90EE90] px-3 py-4 text-center text-4xl font-extrabold">
-                      {rating.ratingAverage}
-                    </div>
-                  </div>
-                </div>
-                <div className="w-full">
-                  <h3 className="mb-2 text-xl font-bold capitalize">{`${rating.user.firstName} ${rating.user.lastName}`}</h3>
-                  <p>{rating.ratingText}</p>
-                  {/* ============== */}
-                  {/* rating actions */}
-                  {/* ============== */}
-                  <div className="mt-8 flex items-center justify-between">
-                    <div className="flex gap-4">
-                      <Tooltip
-                        className="bg-black font-poppins"
-                        target=".like"
-                        pt={{
-                          text: { className: "bg-black" },
-                        }}
-                      />
-                      <Tooltip
-                        className="bg-black font-poppins"
-                        target=".dislike"
-                        pt={{
-                          text: { className: "bg-black" },
-                        }}
-                      />
-                      <i
-                        className="pi pi-thumbs-up like cursor-pointer text-2xl"
-                        data-pr-tooltip="Helpful"
-                        data-pr-position="right"
-                        data-pr-at="right+5 top"
-                        data-pr-my="left center-2"
-                      ></i>
-                      <i
-                        className="pi pi-thumbs-down dislike cursor-pointer text-2xl"
-                        data-pr-tooltip="Not helpful"
-                        data-pr-position="right"
-                        data-pr-at="right+5 top"
-                        data-pr-my="left center-2"
-                      ></i>
-                    </div>
-                    <div className="flex items-center gap-4">
-                      <Tooltip
-                        className="bg-black font-poppins"
-                        target=".share"
-                        pt={{
-                          text: { className: "bg-black" },
-                        }}
-                      />
-                      <Tooltip
-                        className="bg-black font-poppins"
-                        target=".report"
-                        pt={{
-                          text: { className: "bg-black" },
-                        }}
-                      />
-                      <i
-                        className="pi pi-share-alt share cursor-pointer text-2xl"
-                        data-pr-tooltip="Share this rating"
-                        data-pr-position="right"
-                        data-pr-at="right+5 top"
-                        data-pr-my="left center-2"
-                      ></i>
-                      <i
-                        className="pi pi-flag report cursor-pointer text-2xl"
-                        data-pr-tooltip="Report this rating"
-                        data-pr-position="right"
-                        data-pr-at="right+5 top"
-                        data-pr-my="left center-2"
-                      ></i>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <DetailJobRatingItem rating={rating} key={i} />
             ))}
           {ratingsPagination.page < ratingsPagination.totalPages && (
             <LoadMoreBtn loading={loadingMore} onClick={handleLoadMore} />
@@ -266,3 +186,89 @@ function DetailPageJob() {
 }
 
 export default DetailPageJob;
+
+// {ratingsData &&
+//   ratingsData.map((rating, i) => (
+//     <div
+//       key={i}
+//       className="mb-6 mt-6 flex max-w-4xl flex-col items-start gap-10 bg-background px-6 py-5 sm:flex-row"
+//     >
+//       <div>
+//         <div className="mb-6">
+//           <p className="text-black">Overall Quality</p>
+//           <div className="my-2 bg-[#90EE90] px-3 py-4 text-center text-4xl font-extrabold">
+//             {rating.ratingAverage}
+//           </div>
+//         </div>
+//       </div>
+//       <div className="w-full">
+//         <h3 className="mb-2 text-xl font-bold capitalize">{`${rating.user.firstName} ${rating.user.lastName}`}</h3>
+//         <p>{rating.ratingText}</p>
+//         {/* ============== */}
+//         {/* rating actions */}
+//         {/* ============== */}
+//         <div className="mt-8 flex items-center justify-between">
+//           <div className="flex gap-4">
+//             <Tooltip
+//               className="bg-black font-poppins"
+//               target=".like"
+//               pt={{
+//                 text: { className: "bg-black" },
+//               }}
+//             />
+//             <Tooltip
+//               className="bg-black font-poppins"
+//               target=".dislike"
+//               pt={{
+//                 text: { className: "bg-black" },
+//               }}
+//             />
+//             <i
+//               className="pi pi-thumbs-up like cursor-pointer text-2xl"
+//               data-pr-tooltip="Helpful"
+//               data-pr-position="right"
+//               data-pr-at="right+5 top"
+//               data-pr-my="left center-2"
+//             ></i>
+//             <i
+//               className="pi pi-thumbs-down dislike cursor-pointer text-2xl"
+//               data-pr-tooltip="Not helpful"
+//               data-pr-position="right"
+//               data-pr-at="right+5 top"
+//               data-pr-my="left center-2"
+//             ></i>
+//           </div>
+//           <div className="flex items-center gap-4">
+//             <Tooltip
+//               className="bg-black font-poppins"
+//               target=".share"
+//               pt={{
+//                 text: { className: "bg-black" },
+//               }}
+//             />
+//             <Tooltip
+//               className="bg-black font-poppins"
+//               target=".report"
+//               pt={{
+//                 text: { className: "bg-black" },
+//               }}
+//             />
+//             <i
+//               className="pi pi-share-alt share cursor-pointer text-2xl"
+//               data-pr-tooltip="Share this rating"
+//               data-pr-position="right"
+//               data-pr-at="right+5 top"
+//               data-pr-my="left center-2"
+//             ></i>
+//             <i
+//               className="pi pi-flag report cursor-pointer text-2xl"
+//               data-pr-tooltip="Report this rating"
+//               data-pr-position="right"
+//               data-pr-at="right+5 top"
+//               data-pr-my="left center-2"
+//             ></i>
+//           </div>
+//         </div>
+//       </div>
+//     </div>
+//   ))}

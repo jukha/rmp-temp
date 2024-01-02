@@ -7,7 +7,7 @@ import { getBgColor } from "../../utils/calcBgColor";
 import { transformRatingKeys } from "../../utils/transformRatingsData";
 import { updateRatingFeedback } from "../../services/apiRating";
 
-function DetailCompanyRatingItem({ rating }) {
+function DetailJobRatingItem({ rating }) {
   async function handleRatingInteraction(ratingId, feedbackType, isReported) {
     const response = await updateRatingFeedback(
       ratingId,
@@ -118,4 +118,4 @@ function DetailCompanyRatingItem({ rating }) {
   );
 }
 
-export default DetailCompanyRatingItem;
+export default DetailJobRatingItem;
