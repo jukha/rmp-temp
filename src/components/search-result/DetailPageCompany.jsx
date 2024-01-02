@@ -43,7 +43,7 @@ function DetailPageCompany() {
   const [ratingsData, setRatingsData] = useState([]);
   const [ratingsPagination, setRatingsPagination] = useState({
     page: 1,
-    limit: 1,
+    limit: 3,
     totalPages: 1,
     totalRecords: 0,
   });

@@ -8,17 +8,17 @@ function LikeRatingButton({ parentFunc, likeCount, ratingId, feedbackType }) {
 
   async function onClick() {
     try {
-      if (clickCount > 1) return;
-
       setLoading(true);
 
-      const res = await parentFunc(ratingId, feedbackType);
+      const res = await parentFunc(ratingId, feedbackType, null);
+
+      console.log('res',res);
 
       setLikes(res.data.thumbsUp);
 
       toast.success(res.message);
     } catch (error) {
-      toast.error(error.res);
+      toast.error(error.message);
     } finally {
       setLoading(false);
     }
@@ -34,6 +34,7 @@ function LikeRatingButton({ parentFunc, likeCount, ratingId, feedbackType }) {
             <Tooltip
               className="bg-black font-poppins"
               target=".like"
+              onHide={() => console.log("tooltip hides")}
               pt={{
                 text: { className: "bg-black" },
               }}
@@ -41,8 +42,8 @@ function LikeRatingButton({ parentFunc, likeCount, ratingId, feedbackType }) {
             <i
               className="pi pi-thumbs-up like cursor-pointer text-2xl"
               data-pr-tooltip="Helpful"
-              data-pr-position="right"
-              data-pr-at="right+5 top"
+              data-pr-position="left"
+              data-pr-at="right+20 top"
               data-pr-my="left center-2"
             ></i>
           </span>

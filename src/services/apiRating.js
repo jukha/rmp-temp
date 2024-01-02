@@ -42,13 +42,18 @@ export const getReviews = async ({ jobId, companyId }) => {
   }
 };
 
-export const updateRatingFeedback = async (ratingId, feedbackType) => {
+export const updateRatingFeedback = async (
+  ratingId,
+  feedbackType,
+  isReported,
+) => {
   try {
     const response = await axios.patch(
       `${BASE_URL}/update-feedback`,
       {
         ratingId,
         feedbackType,
+        isReported,
       },
       { headers: getAuthorizationHeader() },
     );

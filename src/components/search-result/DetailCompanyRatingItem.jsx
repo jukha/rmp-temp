@@ -10,14 +10,15 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 
 function DetailCompanyRatingItem({ rating }) {
-  async function handleRatingLike(ratingId, feedbackType) {
-    const response = await updateRatingFeedback(ratingId, feedbackType);
+  async function handleRatingInteraction(ratingId, feedbackType, isReported) {
+    const response = await updateRatingFeedback(
+      ratingId,
+      feedbackType,
+      isReported,
+    );
     return response;
   }
 
-  async function handleRatingDislike(ratingId, feedbackType) {}
-
-  async function handleRatingReport(ratingId, feedbackType) {}
   return (
     <div>
       <div className="mb-6 mt-6 flex max-w-5xl flex-wrap items-start gap-0 bg-background px-6 py-5 lg:flex-nowrap lg:gap-10">
@@ -93,15 +94,24 @@ function DetailCompanyRatingItem({ rating }) {
             <div className="flex gap-4">
               <LikeRatingButton
                 likeCount={rating.thumbsUp}
-                parentFunc={handleRatingLike}
+                parentFunc={handleRatingInteraction}
                 ratingId={rating._id}
                 feedbackType="thumbsUp"
               />
-              <DislikeRatingButton dislikeCount={rating.thumbsDown} />
+              <DislikeRatingButton
+                dislikeCount={rating.thumbsDown}
+                parentFunc={handleRatingInteraction}
+                ratingId={rating._id}
+                feedbackType="thumbsDown"
+              />
             </div>
             <div className="flex items-center gap-4">
               <ShareRatingButton />
-              <ReportRatingButton />
+              <ReportRatingButton
+                isReported={rating.isReported}
+                parentFunc={handleRatingInteraction}
+                ratingId={rating._id}
+              />
             </div>
           </div>
         </div>
