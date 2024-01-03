@@ -4,30 +4,26 @@ function CopyRight() {
       <h1 className="mb-8 text-3xl font-extrabold">Copyright</h1>
       <section className="mb-4">
         <h2 className="mb-2 text-xl font-medium">1. Information We Collect</h2>
-        <p>
-          We may collect and process the following information about you:
           <ul>
+          We may collect and process the following information about you:
             <li>Information you provide when using our website.</li>
             <li>
               Information collected through cookies and similar technologies.
             </li>
             <li>Any other information you choose to send us.</li>
           </ul>
-        </p>
       </section>
 
       <section className="mb-4">
         <h2 className="mb-2 text-xl font-medium">
           2. How We Use Your Information
         </h2>
-        <p>
-          We use the information we collect for various purposes, including:
           <ul>
+          We use the information we collect for various purposes, including:
             <li>Providing and maintaining our services.</li>
             <li>Improving our website and user experience.</li>
             <li>Sending you updates and promotional materials.</li>
           </ul>
-        </p>
       </section>
 
       <section className="mb-4">

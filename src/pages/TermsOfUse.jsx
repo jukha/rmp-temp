@@ -19,14 +19,13 @@ function TermsOfUse() {
 
       <section className="mb-4">
         <h2 className="mb-2 text-xl font-medium">2. User Conduct</h2>
-        <p>
-          When using the Website, you agree to:
+        
           <ul>
+          When using the Website, you agree to:
             <li>Abide by all applicable laws and regulations.</li>
             <li>Avoid engaging in any unlawful or harmful activities.</li>
             <li>Respect the privacy and rights of other users.</li>
           </ul>
-        </p>
       </section>
 
       <section className="mb-4">

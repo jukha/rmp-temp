@@ -55,7 +55,7 @@ function AddCompany() {
 
   return (
     <main className="container mx-auto px-4 py-16">
-      <h1 className="mb-2 text-5xl font-extrabold">Add a Company</h1>
+      <h1 className="mb-2 text-3xl sm:text-5xl font-extrabold">Add a Company</h1>
       <p className="mb-10">
         Please use the search bar above to make sure that the company does not
         already exist.

@@ -138,7 +138,7 @@ function AddJobRatings() {
         </div>
       </div>
       <main className="bg-background">
-        <div className="container mx-auto py-16">
+        <div className="container px-4 mx-auto py-16">
           <div className="grid gap-8 px-4  lg:grid-cols-2">
             <div className=" bg-white p-7">
               <h6 className="mb-4 text-center text-xl font-medium">
@@ -233,7 +233,7 @@ function AddJobRatings() {
           </div>
           <div className="mx-auto my-16 max-w-[900px]">
             <h3 className="mb-2 font-bold">Write a Review</h3>
-            <p className="mb-2">
+            <p className="mb-6">
               Discuss your personal experience on this job. What’s great about
               it? What could use improvement?
             </p>
