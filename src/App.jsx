@@ -1,4 +1,10 @@
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import {
+  BrowserRouter,
+  Navigate,
+  Outlet,
+  Route,
+  Routes,
+} from "react-router-dom";
 import Home from "./pages/Home";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
@@ -26,7 +32,7 @@ import AddCompany from "./components/add/AddCompany";
 import AddJobRatings from "./components/add/AddJobRatings";
 import AddCompanyRatings from "./components/add/AddCompanyRatings";
 import CopyRight from "./pages/Copyright";
-// import PrivacyPolicy from "./pages/PrivacyPolicy";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsOfUse from "./pages/TermsOfUse";
 import SiteGuidelines from "./pages/SiteGuidelines";
 import ComingSoon from "./pages/ComingSoon";
@@ -46,11 +52,29 @@ function App() {
           <Routes>
             <Route element={<AppLayout />}>
               <Route path="/" element={<Home />} />
+              <Route
+                path="/add/*"
+                element={
+                  <ProtectedRoute>
+                    <Outlet />
+                  </ProtectedRoute>
+                }
+              >
+                <Route index element={<Navigate replace to="job" />} />
+                <Route path="job" element={<AddJob />} />
+                <Route path="job-rating/:id" element={<AddJobRatings />} />
+                <Route path="company" element={<AddCompany />} />
+                <Route
+                  path="company-rating/:id"
+                  element={<AddCompanyRatings />}
+                />
+              </Route>
               <Route path="/site-guidelines" element={<SiteGuidelines />} />
-              {/* <Route path="/privacy-policy" element={<PrivacyPolicy />} /> */}
+              <Route path="/privacy-policy" element={<PrivacyPolicy />} />
               <Route path="/copyright" element={<CopyRight />} />
               <Route path="/terms-of-use" element={<TermsOfUse />} />
               <Route path="*" element={<ComingSoon />} />
+
               <Route
                 path="/account"
                 element={
@@ -65,18 +89,12 @@ function App() {
                 <Route path="ratings" element={<Ratings />} />
                 <Route path="saved-jobs" element={<SavedJobs />} />
               </Route>
-              {/* COMPANY */}
+
               <Route
                 path="/companies"
                 element={<SearchResultPageCompanies />}
               />
               <Route path="companies/:id" element={<DetailPageCompany />} />
-              <Route path="/add/company" element={<AddCompany />} />
-              <Route
-                path="/add/company-rating/:id"
-                element={<AddCompanyRatings />}
-              />
-
               <Route path="/compare/companies" element={<CompareCompanies />} />
               <Route
                 path="/compare/companies/:id"
@@ -87,12 +105,10 @@ function App() {
                 element={<CompareCompanies />}
               />
 
-              {/* JOBS */}
               <Route path="/jobs" element={<SearchResultPageJobs />} />
               <Route path="jobs/company/:id/*" element={<CompanyAllJobs />} />
               <Route path="jobs/:id" element={<DetailPageJob />} />
-              <Route path="/add/job" element={<AddJob />} />
-              <Route path="/add/job-rating/:id" element={<AddJobRatings />} />
+
               <Route path="/compare/jobs" element={<CompareJobs />} />
               <Route path="/compare/jobs/:id" element={<CompareJobs />} />
               <Route path="/compare/jobs/:id/:id" element={<CompareJobs />} />
