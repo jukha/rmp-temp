@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { getSavedJobsByUser } from "../../../services/apiJob";
 import { Link } from "react-router-dom";
 import LoadMoreBtn from "../../../ui/LoadMoreBtn";
+import { getBgColor } from "../../../utils/calcBgColor";
+import { toast } from "react-toastify";
 
 function SavedJobs() {
   const [savedJobs, setSavedJobs] = useState([]);
@@ -42,7 +44,7 @@ function SavedJobs() {
       }));
       setSavedJobs(response?.data);
     } catch (error) {
-      console.error("Error fetching saved jobs:", error);
+      toast.error("Error fetching saved jobs:", error);
     } finally {
       setLoading(false);
     }
@@ -68,7 +70,14 @@ function SavedJobs() {
             <div className="flex flex-wrap items-start gap-10">
               <div>
                 <p className="text-black">Quality</p>
-                <div className="my-2 bg-green-300 px-3 py-4 text-center text-4xl font-extrabold">
+                <div
+                  className="my-2 px-3 py-4 text-center text-4xl font-extrabold"
+                  style={{
+                    background: getBgColor(
+                      el?.ratingSummary?.data?.overallAvgRating,
+                    ),
+                  }}
+                >
                   {el?.ratingSummary?.data?.overallAvgRating}
                 </div>
                 <span className="text-gray-700">

@@ -120,3 +120,14 @@ export const addJob = async (data) => {
     handleApiError(error);
   }
 };
+
+export const searchJobs = async (queryObj) => {
+  try {
+    const response = await axios.get(`${JOB_API_URL}/search`, {
+      params: queryObj,
+    });
+    return response.data;
+  } catch (error) {
+    handleApiError(error);
+  }
+};

@@ -48,3 +48,14 @@ export const addCompany = async (data) => {
     handleApiError(error);
   }
 };
+
+export const searchComapnies = async (queryObj) => {
+  try {
+    const response = await axios.get(`${BASE_URL}/search`, {
+      params: queryObj,
+    });
+    return response.data;
+  } catch (error) {
+    handleApiError(error);
+  }
+};

@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { ReactSearchAutocomplete } from "react-search-autocomplete";
 import styled from "styled-components";
 import { getCompanySuggestions } from "../../services/apiCompany";
@@ -25,11 +25,21 @@ const CompanyReactSearchAutocomplete = styled(ReactSearchAutocomplete)`
   }
 `;
 
-function SearchCompanyForm({ onSelect, onSetData, disabled, onClear }) {
+function SearchCompanyForm({
+  onSelect,
+  onSetData,
+  disabled,
+  onClear,
+  ignoreHandleEnter = false,
+}) {
   const [companySuggestions, setCompanySuggestions] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchItem, setSearchItem] = useState(null);
+  const searchBarParentRef = useRef(null);
   const navigate = useNavigate();
 
   async function handleCompanySearch(string, results) {
+    setSearchQuery(string);
     const apiResponse = await getCompanySuggestions(string);
     if (onSetData) {
       onSetData(apiResponse.suggestions);
@@ -66,6 +76,11 @@ function SearchCompanyForm({ onSelect, onSetData, disabled, onClear }) {
       onSelect(item);
       return;
     }
+    if (searchBarParentRef) {
+      searchBarParentRef.current.querySelector("input").blur();
+    }
+
+    setSearchItem(item);
     navigate(`/companies/${item.slug}`);
   }
 
@@ -73,10 +88,36 @@ function SearchCompanyForm({ onSelect, onSetData, disabled, onClear }) {
     if (onClear) {
       onClear();
     }
+    if (searchBarParentRef) {
+      searchBarParentRef.current.querySelector("input").blur();
+    }
   }
 
+  useEffect(() => {
+    function callback(e) {
+      if (e.code === "Enter" && !ignoreHandleEnter) {
+        if (searchBarParentRef) {
+          if (
+            searchBarParentRef.current.querySelector("input") ===
+            document.activeElement
+          ) {
+            if (!searchItem) {
+              searchBarParentRef.current.querySelector("input").blur();
+              navigate(`/companies?q=${searchQuery}`);
+            }
+          }
+        }
+      }
+    }
+    document.addEventListener("keydown", callback);
+    return () => document.removeEventListener("keydown", callback);
+  }, [searchQuery]);
+
   return (
-    <div className="flex flex-grow flex-wrap items-center gap-4 sm:flex-nowrap">
+    <div
+      className="flex flex-grow flex-wrap items-center gap-4 sm:flex-nowrap"
+      ref={searchBarParentRef}
+    >
       <CompanyReactSearchAutocomplete
         items={companySuggestions}
         showIcon={false}
