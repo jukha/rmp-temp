@@ -47,6 +47,7 @@ function JobDefaultCard({ jobNo }) {
             onSelect={handleSelect}
             onSetData={setJobData}
             disabled={jobNo === 2 && disableSecondJobSearch}
+            ignoreHandleEnter={true}
           />
         </div>
       </div>

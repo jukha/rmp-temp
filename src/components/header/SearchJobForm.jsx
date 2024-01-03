@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ReactSearchAutocomplete } from "react-search-autocomplete";
 import styled from "styled-components";
@@ -25,11 +25,15 @@ const JobReactSearchAutocomplete = styled(ReactSearchAutocomplete)`
   }
 `;
 
-function SearchJobForm({ onSelect, onSetData, disabled }) {
+function SearchJobForm({ onSelect, onSetData, disabled, ignoreHandleEnter=false }) {
   const [jobSuggestions, setJobSuggestions] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchItem, setSearchItem] = useState(null);
+  const searchBarParentRef = useRef(null);
   const navigate = useNavigate();
 
   async function handleJobSearch(string, results) {
+    setSearchQuery(string);
     const apiResponse = await getJobSuggestions(string);
     if (onSetData) {
       onSetData(apiResponse.suggestions);
@@ -66,11 +70,42 @@ function SearchJobForm({ onSelect, onSetData, disabled }) {
       onSelect();
       return;
     }
+
+    if (searchBarParentRef) {
+      searchBarParentRef.current.querySelector("input").blur();
+    }
+
+    setSearchItem(item);
     navigate(`/jobs/${item.slug}`);
   }
 
+  useEffect(() => {
+    console.log("searchQuery", searchQuery);
+    function callback(e) {
+      if (e.code === "Enter" && !ignoreHandleEnter) {
+        if (searchBarParentRef) {
+          if (
+            searchBarParentRef.current.querySelector("input") ===
+            document.activeElement
+          ) {
+            if (!searchItem) {
+              console.log("searchQuery", searchQuery);
+              searchBarParentRef.current.querySelector("input").blur();
+              navigate(`/jobs?q=${searchQuery}`);
+            }
+          }
+        }
+      }
+    }
+    document.addEventListener("keydown", callback);
+    return () => document.removeEventListener("keydown", callback);
+  }, [searchQuery]);
+
   return (
-    <div className="flex flex-grow flex-wrap items-center gap-4 sm:flex-nowrap">
+    <div
+      className="flex flex-grow flex-wrap items-center gap-4 sm:flex-nowrap"
+      ref={searchBarParentRef}
+    >
       <JobReactSearchAutocomplete
         items={jobSuggestions}
         showIcon={false}
