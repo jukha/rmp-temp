@@ -3,7 +3,7 @@ import Button from "../../ui/Button";
 import { Dropdown } from "primereact/dropdown";
 import { Tooltip } from "primereact/tooltip";
 import { getBgColor } from "../../utils/calcBgColor";
-import { getJobBySlug } from "../../services/apiJob";
+import { getJobBySlug, getSimilarJobs } from "../../services/apiJob";
 import { Link, useLocation } from "react-router-dom";
 import Loader from "../../ui/Loader";
 import LoadMoreBtn from "../../ui/LoadMoreBtn";
@@ -22,6 +22,7 @@ function DetailPageJob() {
   const [job, setJob] = useState(null);
   const location = useLocation();
   const [loadingMore, setLoadingMore] = useState(false);
+  const [similarJobs, setSimilarJobs] = useState([]);
   const [ratingsData, setRatingsData] = useState([]);
   const [ratingsPagination, setRatingsPagination] = useState({
     page: 1,
@@ -50,14 +51,16 @@ function DetailPageJob() {
       setLoadingMore(false);
     }
   }
-
+  console.log("location.pathname", location.pathname);
   useEffect(() => {
     (async () => {
+      console.log('initial useEffect');
       try {
         const queryObj = {
           page: ratingsPagination.page,
           limit: ratingsPagination.limit,
         };
+        setLoading(true);
         const slug = location.pathname.split("/").pop();
         const response = await getJobBySlug(slug, queryObj);
         setJob(response?.job);
@@ -67,6 +70,12 @@ function DetailPageJob() {
           totalRecords: response?.job?.ratings?.pagination?.totalRecords,
           totalPages: response?.job?.ratings?.pagination?.totalPages,
         }));
+
+        // After fetching original Job, GET similar jobs based on that job id
+        if (response?.job?.id) {
+          const similarJobsResponse = await getSimilarJobs(response.job.id);
+          setSimilarJobs(similarJobsResponse.data);
+        }
       } catch (error) {
         console.log("error", error);
       } finally {
@@ -118,7 +127,7 @@ function DetailPageJob() {
           </div>
         </div>
         {/* rating */}
-        <div className="max-w-xl flex-1">
+        <div className="max-w-3xl flex-1">
           <div className="mb-10 bg-gray-200 p-6">
             <h2 className="mb-4 font-bold">Rating Distribution</h2>
             {ratingDataDummy.map((rating, i) => {
@@ -144,21 +153,21 @@ function DetailPageJob() {
           </div>
           <div>
             <h3 className="mb-2 font-semibold">
-              Check out Similar Professors in the Sociology Department
+              Check out Similar Jobs at {job?.companyDetails?.name}
             </h3>
             <div className="flex flex-col justify-center gap-3 bg-blue-300 p-8 xl:flex-row">
-              <div className="flex gap-2">
-                <span className="bg-primary p-3 font-bold text-white">5.0</span>
-                <h5 className="max-w-[120px]">Alexander Patrick</h5>
-              </div>
-              <div className="flex gap-2">
-                <span className="bg-primary p-3 font-bold text-white">5.0</span>
-                <h5 className="max-w-[120px]">Alexander Patrick</h5>
-              </div>
-              <div className="flex gap-2">
-                <span className="bg-primary p-3 font-bold text-white">5.0</span>
-                <h5 className="max-w-[120px]">Alexander Patrick</h5>
-              </div>
+              {similarJobs.map((similarJob, i) => (
+                <Link
+                key={i}
+                  to={`/jobs/${similarJob.slug}`}
+                  className="flex items-start gap-3"
+                >
+                  <span className="flex min-h-[48px] min-w-[48px] items-center justify-center bg-primary p-3 font-bold text-white">
+                    {similarJob.overallAvgRating}
+                  </span>
+                  <h5>{similarJob.title}</h5>
+                </Link>
+              ))}
             </div>
           </div>
         </div>

@@ -131,3 +131,14 @@ export const searchJobs = async (queryObj) => {
     handleApiError(error);
   }
 };
+
+export const getSimilarJobs = async (originalJobId) => {
+  try {
+    const response = await axios.get(
+      `${JOB_API_URL}/similar-jobs/${originalJobId}`,
+    );
+    return response.data;
+  } catch (error) {
+    handleApiError(error);
+  }
+};
