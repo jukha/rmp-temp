@@ -41,6 +41,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import CompanyAllJobs from "./components/search-result/CompanyAllJobs";
+import ReportRatingForm from "./ui/ReportRatingForm";
 
 function App() {
   return (
@@ -69,6 +70,14 @@ function App() {
                   element={<AddCompanyRatings />}
                 />
               </Route>
+              <Route
+                path="/report/rating/:id"
+                element={
+                  <ProtectedRoute>
+                    <ReportRatingForm />
+                  </ProtectedRoute>
+                }
+              />
               <Route path="/site-guidelines" element={<SiteGuidelines />} />
               <Route path="/privacy-policy" element={<PrivacyPolicy />} />
               <Route path="/copyright" element={<CopyRight />} />

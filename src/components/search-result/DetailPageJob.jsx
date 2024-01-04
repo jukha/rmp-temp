@@ -173,7 +173,7 @@ function DetailPageJob() {
       </div>
       <div className="mt-14">
         <h2 className="mb-4 text-xl font-bold">
-          Insights from {job?.ratings?.length} Reviews
+          Insights from {ratingsData?.length} Reviews
         </h2>
 
         {/* ============== */}

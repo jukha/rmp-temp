@@ -1,28 +1,8 @@
 import { Tooltip } from "primereact/tooltip";
-import { useState } from "react";
-import { toast } from "react-toastify";
+import { Link } from "react-router-dom";
 
-function ReportRatingButton({ parentFunc, isReported, ratingId }) {
-  const [loading, setLoading] = useState(false);
-  const [isFlagged, setIsFlagged] = useState(isReported);
-
-  async function onClick() {
-    try {
-      setLoading(true);
-
-      const res = await parentFunc(ratingId, null, true);
-
-      setIsFlagged(res.data.isReported);
-
-      toast.success(res.message);
-    } catch (error) {
-      toast.error(error.message);
-    } finally {
-      setLoading(false);
-    }
-  }
-
-  if (isFlagged) {
+function ReportRatingButton({ isReported, ratingId }) {
+  if (isReported) {
     return (
       <>
         <button disabled className="cursor-not-allowed opacity-50">
@@ -47,28 +27,24 @@ function ReportRatingButton({ parentFunc, isReported, ratingId }) {
 
   return (
     <>
-      <button onClick={onClick}>
-        {loading ? (
-          <i className="pi pi-spin pi-spinner text-2xl"></i>
-        ) : (
-          <span>
-            <Tooltip
-              className="bg-black font-poppins"
-              target=".report"
-              pt={{
-                text: { className: "bg-black" },
-              }}
-            />
-            <i
-              className="pi report pi-flag cursor-pointer text-2xl"
-              data-pr-tooltip="Report this rating"
-              data-pr-position="right"
-              data-pr-at="right+5 top"
-              data-pr-my="left center-2"
-            ></i>
-          </span>
-        )}
-      </button>
+      <Link to={`/report/rating/${ratingId}`}>
+        <span>
+          <Tooltip
+            className="bg-black font-poppins"
+            target=".report"
+            pt={{
+              text: { className: "bg-black" },
+            }}
+          />
+          <i
+            className="pi report pi-flag cursor-pointer text-2xl"
+            data-pr-tooltip="Report this rating"
+            data-pr-position="right"
+            data-pr-at="right+5 top"
+            data-pr-my="left center-2"
+          ></i>
+        </span>
+      </Link>
     </>
   );
 }

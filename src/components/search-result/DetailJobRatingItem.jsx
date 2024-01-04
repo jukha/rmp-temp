@@ -8,12 +8,8 @@ import { transformRatingKeys } from "../../utils/transformRatingsData";
 import { updateRatingFeedback } from "../../services/apiRating";
 
 function DetailJobRatingItem({ rating }) {
-  async function handleRatingInteraction(ratingId, feedbackType, isReported) {
-    const response = await updateRatingFeedback(
-      ratingId,
-      feedbackType,
-      isReported,
-    );
+  async function handleRatingInteraction(ratingId, feedbackType) {
+    const response = await updateRatingFeedback(ratingId, feedbackType);
     return response;
   }
 
@@ -107,7 +103,6 @@ function DetailJobRatingItem({ rating }) {
               <ShareRatingButton />
               <ReportRatingButton
                 isReported={rating.isReported}
-                parentFunc={handleRatingInteraction}
                 ratingId={rating._id}
               />
             </div>

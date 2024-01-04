@@ -42,22 +42,45 @@ export const getReviews = async ({ jobId, companyId }) => {
   }
 };
 
-export const updateRatingFeedback = async (
-  ratingId,
-  feedbackType,
-  isReported,
-) => {
+export const updateRatingFeedback = async (ratingId, feedbackType) => {
   try {
     const response = await axios.patch(
       `${BASE_URL}/update-feedback`,
       {
         ratingId,
         feedbackType,
-        isReported,
       },
       { headers: getAuthorizationHeader() },
     );
     return response.data;
+  } catch (error) {
+    handleApiError(error);
+  }
+};
+
+export const getRatingDetail = async (ratingId) => {
+  try {
+    const response = await axios.get(`${BASE_URL}/${ratingId}`);
+    return response.data;
+  } catch (error) {
+    handleApiError(error);
+  }
+};
+
+export const reportARating = async (ratingId, isReported, reportingReason) => {
+  try {
+    const response = axios.patch(
+      `${BASE_URL}/report-rating`,
+      {
+        ratingId,
+        isReported,
+        reportingReason,
+      },
+      {
+        headers: getAuthorizationHeader(),
+      },
+    );
+    return (await response).data;
   } catch (error) {
     handleApiError(error);
   }
