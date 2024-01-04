@@ -9,15 +9,8 @@ import Loader from "../../ui/Loader";
 import LoadMoreBtn from "../../ui/LoadMoreBtn";
 import DetailJobRatingItem from "./DetailJobRatingItem";
 
-const ratingDataDummy = [
-  { name: "awesome", value: 5, count: 1 },
-  { name: "great", value: 4, count: 1 },
-  { name: "good", value: 3, count: 4 },
-  { name: "ok", value: 2, count: 6 },
-  { name: "awful", value: 1, count: 4 },
-];
-
 function DetailPageJob() {
+  const [ratingDistribution, steRatingDistribution] = useState([]);
   const [loading, setLoading] = useState(true);
   const [job, setJob] = useState(null);
   const location = useLocation();
@@ -51,10 +44,9 @@ function DetailPageJob() {
       setLoadingMore(false);
     }
   }
-  console.log("location.pathname", location.pathname);
+
   useEffect(() => {
     (async () => {
-      console.log('initial useEffect');
       try {
         const queryObj = {
           page: ratingsPagination.page,
@@ -62,9 +54,15 @@ function DetailPageJob() {
         };
         setLoading(true);
         const slug = location.pathname.split("/").pop();
+
         const response = await getJobBySlug(slug, queryObj);
+
         setJob(response?.job);
+
+        steRatingDistribution(response?.job?.ratingDistribution);
+
         setRatingsData(response?.job?.ratings?.data);
+
         setRatingsPagination((state) => ({
           ...state,
           totalRecords: response?.job?.ratings?.pagination?.totalRecords,
@@ -74,6 +72,7 @@ function DetailPageJob() {
         // After fetching original Job, GET similar jobs based on that job id
         if (response?.job?.id) {
           const similarJobsResponse = await getSimilarJobs(response.job.id);
+
           setSimilarJobs(similarJobsResponse.data);
         }
       } catch (error) {
@@ -130,7 +129,7 @@ function DetailPageJob() {
         <div className="max-w-3xl flex-1">
           <div className="mb-10 bg-gray-200 p-6">
             <h2 className="mb-4 font-bold">Rating Distribution</h2>
-            {ratingDataDummy.map((rating, i) => {
+            {ratingDistribution.map((rating, i) => {
               return (
                 <div
                   key={i}
@@ -158,7 +157,7 @@ function DetailPageJob() {
             <div className="flex flex-col justify-center gap-3 bg-blue-300 p-8 xl:flex-row">
               {similarJobs.map((similarJob, i) => (
                 <Link
-                key={i}
+                  key={i}
                   to={`/jobs/${similarJob.slug}`}
                   className="flex items-start gap-3"
                 >
@@ -195,89 +194,3 @@ function DetailPageJob() {
 }
 
 export default DetailPageJob;
-
-// {ratingsData &&
-//   ratingsData.map((rating, i) => (
-//     <div
-//       key={i}
-//       className="mb-6 mt-6 flex max-w-4xl flex-col items-start gap-10 bg-background px-6 py-5 sm:flex-row"
-//     >
-//       <div>
-//         <div className="mb-6">
-//           <p className="text-black">Overall Quality</p>
-//           <div className="my-2 bg-[#90EE90] px-3 py-4 text-center text-4xl font-extrabold">
-//             {rating.ratingAverage}
-//           </div>
-//         </div>
-//       </div>
-//       <div className="w-full">
-//         <h3 className="mb-2 text-xl font-bold capitalize">{`${rating.user.firstName} ${rating.user.lastName}`}</h3>
-//         <p>{rating.ratingText}</p>
-//         {/* ============== */}
-//         {/* rating actions */}
-//         {/* ============== */}
-//         <div className="mt-8 flex items-center justify-between">
-//           <div className="flex gap-4">
-//             <Tooltip
-//               className="bg-black font-poppins"
-//               target=".like"
-//               pt={{
-//                 text: { className: "bg-black" },
-//               }}
-//             />
-//             <Tooltip
-//               className="bg-black font-poppins"
-//               target=".dislike"
-//               pt={{
-//                 text: { className: "bg-black" },
-//               }}
-//             />
-//             <i
-//               className="pi pi-thumbs-up like cursor-pointer text-2xl"
-//               data-pr-tooltip="Helpful"
-//               data-pr-position="right"
-//               data-pr-at="right+5 top"
-//               data-pr-my="left center-2"
-//             ></i>
-//             <i
-//               className="pi pi-thumbs-down dislike cursor-pointer text-2xl"
-//               data-pr-tooltip="Not helpful"
-//               data-pr-position="right"
-//               data-pr-at="right+5 top"
-//               data-pr-my="left center-2"
-//             ></i>
-//           </div>
-//           <div className="flex items-center gap-4">
-//             <Tooltip
-//               className="bg-black font-poppins"
-//               target=".share"
-//               pt={{
-//                 text: { className: "bg-black" },
-//               }}
-//             />
-//             <Tooltip
-//               className="bg-black font-poppins"
-//               target=".report"
-//               pt={{
-//                 text: { className: "bg-black" },
-//               }}
-//             />
-//             <i
-//               className="pi pi-share-alt share cursor-pointer text-2xl"
-//               data-pr-tooltip="Share this rating"
-//               data-pr-position="right"
-//               data-pr-at="right+5 top"
-//               data-pr-my="left center-2"
-//             ></i>
-//             <i
-//               className="pi pi-flag report cursor-pointer text-2xl"
-//               data-pr-tooltip="Report this rating"
-//               data-pr-position="right"
-//               data-pr-at="right+5 top"
-//               data-pr-my="left center-2"
-//             ></i>
-//           </div>
-//         </div>
-//       </div>
-//     </div>
-//   ))}
