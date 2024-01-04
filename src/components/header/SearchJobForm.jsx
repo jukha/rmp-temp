@@ -115,6 +115,9 @@ function SearchJobForm({ onSelect, onSetData, disabled, ignoreHandleEnter=false 
         placeholder="Search Jobs"
         onSearch={handleJobSearch}
         inputDebounce={250}
+        styling={{
+          hoverBackgroundColor: "#e1d4d4",
+        }}
       />
     </div>
   );

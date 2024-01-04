@@ -15,9 +15,11 @@ const CompanyReactSearchAutocomplete = styled(ReactSearchAutocomplete)`
       border: 1px solid #004080;
       background: #f3f3f3;
       padding: 12px;
+
       & > :first-child {
         min-height: unset;
       }
+
       & * {
         font-family: "Poppins";
       }
@@ -128,6 +130,9 @@ function SearchCompanyForm({
         placeholder="Search Company"
         onSearch={handleCompanySearch}
         inputDebounce={100}
+        styling={{
+          hoverBackgroundColor: "#e1d4d4",
+        }}
       />
     </div>
   );
