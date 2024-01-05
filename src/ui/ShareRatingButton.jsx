@@ -1,6 +1,19 @@
 import { Tooltip } from "primereact/tooltip";
+import { toast } from "react-toastify";
 
 function ShareRatingButton() {
+  async function handleClick() {
+    try {
+      const textToCopy = window.location.href;
+
+      await navigator.clipboard.writeText(textToCopy);
+
+      toast.success("URL copied to clipboard!");
+    } catch (err) {
+      toast.error(`Unable to copy to clipboard: ${err.message}`);
+    }
+  }
+
   return (
     <>
       <Tooltip
@@ -10,7 +23,7 @@ function ShareRatingButton() {
           text: { className: "bg-black" },
         }}
       />
-      <button>
+      <button onClick={handleClick}>
         <i
           className="pi pi-share-alt share cursor-pointer text-2xl"
           data-pr-tooltip="Share this rating"

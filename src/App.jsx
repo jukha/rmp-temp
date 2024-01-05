@@ -42,6 +42,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import CompanyAllJobs from "./components/search-result/CompanyAllJobs";
 import ReportRatingForm from "./ui/ReportRatingForm";
+import SharedRating from "./components/ratings/SharedRating";
 
 function App() {
   return (
@@ -78,6 +79,7 @@ function App() {
                   </ProtectedRoute>
                 }
               />
+              <Route path="/rating/:id" element={<SharedRating />} />
               <Route path="/site-guidelines" element={<SiteGuidelines />} />
               <Route path="/privacy-policy" element={<PrivacyPolicy />} />
               <Route path="/copyright" element={<CopyRight />} />
