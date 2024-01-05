@@ -8,15 +8,16 @@ import CardSkeleton from "../../ui/CardSkeleton";
 import { toast } from "react-toastify";
 
 const ratingData = [
-  "compensation",
-  "workLifeBalance",
-  "jobSecurity",
-  "opportunitiesForGrowth",
-  "companyCulture",
-  "jobSatisfaction",
-  "workload",
-  "benefits",
-  "flexibility",
+  "Reputation",
+  "Company culture",
+  "Opportunities for advancement",
+  "Work life balance",
+  "Employee benefits",
+  "Leadership and management",
+  "Innovation and technology adoption",
+  "Diversity and inclusion",
+  "Corporate social responsibility",
+  "Financial stability",
 ];
 
 function CompareCompanies() {
@@ -200,7 +201,7 @@ function CompareCompanies() {
           </div>
         </div>
       </div>
-      <div className="grid max-w-6xl gap-3 md:grid-cols-2">
+      <div className="grid max-w-6xl gap-3 lg:grid-cols-2">
         <div className="relative">
           {!firstCompanyDataLoading && showFirstDefaultCard && (
             <CompanyDefaultCard companyNo={1} />
@@ -211,10 +212,7 @@ function CompareCompanies() {
           )}
           <div className="absolute -right-32 top-[272px] hidden transform lg:block">
             {ratingData.map((rating, i) => (
-              <div
-                key={i}
-                className="mb-8 text-center font-semibold capitalize"
-              >
+              <div key={i} className="mb-8 text-center font-semibold">
                 {rating}
               </div>
             ))}

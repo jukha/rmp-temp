@@ -1,12 +1,5 @@
 import { getBgColor } from "../../utils/calcBgColor";
-
-const ratingData = [
-  { name: "awesome", value: 5, count: 1 },
-  { name: "great", value: 4, count: 1 },
-  { name: "good", value: 3, count: 4 },
-  { name: "ok", value: 2, count: 6 },
-  { name: "awful", value: 1, count: 4 },
-];
+import { transformRatingKeys } from "../../utils/transformRatingsData";
 
 function CompanyValueCard({ companyData, companyNo }) {
   return (
@@ -29,40 +22,43 @@ function CompanyValueCard({ companyData, companyNo }) {
         <p className="text-center font-bold">NO ratings found</p>
       ) : (
         companyData?.parametersAvgRatings &&
-        Object.entries(companyData.parametersAvgRatings).map(
-          ([_, ratingValue], i) => {
-            return (
-              <div
-                className={`mb-8 flex flex-col items-center gap-4 ${
-                  companyNo === 1 ? "sm:flex-row" : "sm:flex-row-reverse"
-                }`}
-                key={i}
-              >
-                <div className="grid grid-cols-[repeat(5,57px)] grid-rows-[18px] gap-[2px]">
-                  {Array.from({ length: 5 }, (_, index) => (
-                    <span
-                      key={index}
-                      className={`${
-                        index >= ratingValue ? "bg-gray-400" : "bg-primary"
-                      } ${
-                        index === 0
-                          ? "rounded-bl-md rounded-tl-md"
-                          : index === 4
-                            ? "rounded-br-md rounded-tr-md"
-                            : ""
-                      }`}
-                    ></span>
-                  ))}
-                </div>
-                <span
-                  className="hidden h-3 w-3 rounded-full sm:inline-block"
-                  style={{ background: getBgColor(ratingValue) }}
-                ></span>
-                <h6 className="font-bold">{ratingValue}</h6>
+        Object.entries(
+          transformRatingKeys(companyData.parametersAvgRatings),
+        ).map(([ratingName, ratingValue], i) => {
+          return (
+            <div
+              className={`mb-8 flex flex-col items-center gap-4 ${
+                companyNo === 1 ? "sm:flex-row" : "sm:flex-row-reverse"
+              }`}
+              key={i}
+            >
+              <div className="grid grid-cols-[repeat(5,57px)] grid-rows-[18px] gap-[2px]">
+                {Array.from({ length: 5 }, (_, index) => (
+                  <span
+                    key={index}
+                    className={`${
+                      index >= ratingValue ? "bg-gray-400" : "bg-primary"
+                    } ${
+                      index === 0
+                        ? "rounded-bl-md rounded-tl-md"
+                        : index === 4
+                          ? "rounded-br-md rounded-tr-md"
+                          : ""
+                    }`}
+                  ></span>
+                ))}
               </div>
-            );
-          },
-        )
+              <p className="font-semibold first-letter:capitalize lg:hidden">
+                {ratingName}
+              </p>
+              <span
+                className="hidden h-3 w-3 rounded-full sm:inline-block"
+                style={{ background: getBgColor(ratingValue) }}
+              ></span>
+              <h6 className="font-bold">{ratingValue}</h6>
+            </div>
+          );
+        })
       )}
     </article>
   );

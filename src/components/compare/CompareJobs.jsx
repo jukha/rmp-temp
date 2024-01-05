@@ -9,15 +9,15 @@ import CardSkeleton from "../../ui/CardSkeleton";
 import { toast } from "react-toastify";
 
 const ratingData = [
-  "compensation",
-  "workLifeBalance",
-  "jobSecurity",
-  "opportunitiesForGrowth",
-  "companyCulture",
-  "jobSatisfaction",
-  "workload",
-  "benefits",
-  "flexibility",
+  "Compensation",
+  "Work life balance",
+  "Job security",
+  "Opportunities for growth",
+  "Company culture",
+  "job satisfaction",
+  "Workload",
+  "Benefits",
+  "Flexibility",
 ];
 
 function CompareJobs() {
@@ -189,7 +189,7 @@ function CompareJobs() {
           </div>
         </div>
       </div>
-      <div className="grid max-w-6xl gap-3 md:grid-cols-2">
+      <div className="grid max-w-6xl gap-3 lg:grid-cols-2">
         <div className="relative">
           {!firstJobDataLoading && showFirstDefaultCard && (
             <JobDefaultCard jobNo={1} />
@@ -202,7 +202,7 @@ function CompareJobs() {
             {ratingData.map((rating, i) => (
               <div
                 key={i}
-                className="mb-8 text-center font-semibold capitalize"
+                className="mb-8 text-center font-semibold"
               >
                 {rating}
               </div>

@@ -1,12 +1,5 @@
 import { getBgColor } from "../../utils/calcBgColor";
-
-const ratingData = [
-  { name: "awesome", value: 5, count: 1 },
-  { name: "great", value: 4, count: 1 },
-  { name: "good", value: 3, count: 4 },
-  { name: "ok", value: 2, count: 6 },
-  { name: "awful", value: 1, count: 4 },
-];
+import { transformRatingKeys } from "../../utils/transformRatingsData";
 
 function JobValueCard({ jobData, jobNo }) {
   return (
@@ -29,8 +22,8 @@ function JobValueCard({ jobData, jobNo }) {
         <p className="text-center font-bold">NO ratings found</p>
       ) : (
         jobData?.parametersAvgRatings &&
-        Object.entries(jobData?.parametersAvgRatings).map(
-          ([_, ratingValue], i) => {
+        Object.entries(transformRatingKeys(jobData?.parametersAvgRatings)).map(
+          ([ratingName, ratingValue], i) => {
             return (
               <div
                 className={`mb-8 flex flex-col items-center gap-4 ${
@@ -54,6 +47,9 @@ function JobValueCard({ jobData, jobNo }) {
                     ></span>
                   ))}
                 </div>
+                <p className="font-semibold first-letter:capitalize lg:hidden">
+                  {ratingName}
+                </p>
                 <span
                   className="hidden h-3 w-3 rounded-full sm:inline-block"
                   style={{ background: getBgColor(ratingValue) }}
