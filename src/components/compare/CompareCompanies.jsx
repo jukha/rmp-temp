@@ -1,23 +1,22 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import Button from "../../ui/Button";
-import CompanyValueCard from "./CompanyValueCard";
 import { useEffect, useState } from "react";
+import CompanyValueCard from "./CompanyValueCard";
 import CompanyDefaultCard from "./CompanyDefaultCard";
 import { getCompanyBySlug } from "../../services/apiCompany";
 import CardSkeleton from "../../ui/CardSkeleton";
 import { toast } from "react-toastify";
 
 const ratingData = [
-  "reputation",
-  "companyCulture",
-  "opportunitiesForAdvancement",
+  "compensation",
   "workLifeBalance",
-  "employeeBenefits",
-  "leadershipAndManagement",
-  "innovationAndTechnologyAdoption",
-  "diversityAndInclusion",
-  "corporateSocialResponsibility",
-  "financialStability",
+  "jobSecurity",
+  "opportunitiesForGrowth",
+  "companyCulture",
+  "jobSatisfaction",
+  "workload",
+  "benefits",
+  "flexibility",
 ];
 
 function CompareCompanies() {
@@ -37,7 +36,9 @@ function CompareCompanies() {
     try {
       const response = await getCompanyBySlug(companySlug);
       return response;
-    } catch (error) {}
+    } catch (error) {
+      console.log("error", error.message);
+    }
   }
 
   function handleResetCompaniesData() {
@@ -64,8 +65,11 @@ function CompareCompanies() {
         // DEFAULT URL: compare/companies
         case 2:
           setShowFirstDefaultCard(true);
+
           setShowSecondDefaultCard(true);
+
           setShowFirstValueCard(false);
+
           setShowSecondValueCard(false);
           break;
 
@@ -90,6 +94,50 @@ function CompareCompanies() {
 
         //compare/companies/:slug/:slug
         case 4:
+          // Sent concurrent requests if both companies data needs to be fetched
+          if (
+            firstCompanyData?.length === 0 &&
+            secondCompanyData?.length === 0
+          ) {
+            const promisesArr = [
+              (async () => {
+                try {
+                  setFirstCompanyDataLoading(true);
+                  const res = await fetchCompanyData(
+                    pathParts[pathParts.length - 2],
+                  );
+                  setFirstCompanyData(res.company);
+                } catch (error) {
+                  console.log(error);
+                }
+              })(),
+              (async () => {
+                try {
+                  setSecondCompanyDataLoading(true);
+                  const res = await fetchCompanyData(
+                    pathParts[pathParts.length - 1],
+                  );
+                  setSecondCompanyData(res.company);
+                } catch (error) {
+                  console.log(error);
+                }
+              })(),
+            ];
+            const result = await Promise.all(promisesArr);
+            // console.log("hi", result);
+            setFirstCompanyDataLoading(false);
+
+            setSecondCompanyDataLoading(false);
+
+            setShowFirstDefaultCard(false);
+
+            setShowSecondDefaultCard(false);
+
+            setShowFirstValueCard(true);
+
+            setShowSecondValueCard(true);
+            return;
+          }
           if (firstCompanyData?.length === 0) {
             try {
               setFirstCompanyDataLoading(true);
@@ -103,9 +151,9 @@ function CompareCompanies() {
               setFirstCompanyDataLoading(false);
             }
           }
-
           if (secondCompanyData?.length === 0) {
             try {
+              setSecondCompanyDataLoading(true);
               const res = await fetchCompanyData(
                 pathParts[pathParts.length - 1],
               );
@@ -146,8 +194,8 @@ function CompareCompanies() {
             <Button
               type="primary"
               text="Share Comparison"
-              disabled={showFirstDefaultCard || showSecondDefaultCard}
               onClick={handleShareComparison}
+              disabled={showFirstDefaultCard || showSecondDefaultCard}
             />
           </div>
         </div>
@@ -161,7 +209,7 @@ function CompareCompanies() {
           {showFirstValueCard && (
             <CompanyValueCard companyData={firstCompanyData} companyNo={1} />
           )}
-          <div className="absolute -right-36 top-[272px] hidden transform lg:block">
+          <div className="absolute -right-32 top-[272px] hidden transform lg:block">
             {ratingData.map((rating, i) => (
               <div
                 key={i}

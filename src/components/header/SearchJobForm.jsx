@@ -25,7 +25,12 @@ const JobReactSearchAutocomplete = styled(ReactSearchAutocomplete)`
   }
 `;
 
-function SearchJobForm({ onSelect, onSetData, disabled, ignoreHandleEnter=false }) {
+function SearchJobForm({
+  onSelect,
+  onSetData,
+  disabled,
+  ignoreHandleEnter = false,
+}) {
   const [jobSuggestions, setJobSuggestions] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchItem, setSearchItem] = useState(null);
@@ -80,7 +85,6 @@ function SearchJobForm({ onSelect, onSetData, disabled, ignoreHandleEnter=false 
   }
 
   useEffect(() => {
-    console.log("searchQuery", searchQuery);
     function callback(e) {
       if (e.code === "Enter" && !ignoreHandleEnter) {
         if (searchBarParentRef) {
@@ -89,7 +93,6 @@ function SearchJobForm({ onSelect, onSetData, disabled, ignoreHandleEnter=false 
             document.activeElement
           ) {
             if (!searchItem) {
-              console.log("searchQuery", searchQuery);
               searchBarParentRef.current.querySelector("input").blur();
               navigate(`/jobs?q=${searchQuery}`);
             }

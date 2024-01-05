@@ -20,7 +20,6 @@ function CompanyDefaultCard({ companyNo }) {
       );
     }
   }
-  console.log("hi");
   useEffect(() => {
     const pathParts = location.pathname.split("/").filter(Boolean);
 

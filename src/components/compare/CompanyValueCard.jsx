@@ -9,7 +9,6 @@ const ratingData = [
 ];
 
 function CompanyValueCard({ companyData, companyNo }) {
-  console.log(companyData);
   return (
     <article>
       <div className="mb-8 flex h-60 flex-col items-center justify-center bg-background text-center">

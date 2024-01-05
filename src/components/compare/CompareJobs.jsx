@@ -36,7 +36,9 @@ function CompareJobs() {
     try {
       const response = await getJobBySlug(jobSlug);
       return response;
-    } catch (error) {}
+    } catch (error) {
+      console.log("error", error.message);
+    }
   }
 
   function handleResetJobsData() {
@@ -63,8 +65,11 @@ function CompareJobs() {
         // DEFAULT URL: compare/companies
         case 2:
           setShowFirstDefaultCard(true);
+
           setShowSecondDefaultCard(true);
+
           setShowFirstValueCard(false);
+
           setShowSecondValueCard(false);
           break;
 
@@ -87,6 +92,47 @@ function CompareJobs() {
 
         //compare/companies/:slug/:slug
         case 4:
+          // Sent concurrent requests if both jobs data needs to be fetched
+          if (firstJobData?.length === 0 && secondJobData?.length === 0) {
+            const promisesArr = [
+              (async () => {
+                try {
+                  setFirstJobDataLoading(true);
+                  const res = await fetchJobData(
+                    pathParts[pathParts.length - 2],
+                  );
+                  setFirstJobData(res.job);
+                } catch (error) {
+                  console.log(error);
+                }
+              })(),
+              (async () => {
+                try {
+                  setSecondJobDataLoading(true);
+                  const res = await fetchJobData(
+                    pathParts[pathParts.length - 1],
+                  );
+                  setSecondJobData(res.job);
+                } catch (error) {
+                  console.log(error);
+                }
+              })(),
+            ];
+            const result = await Promise.all(promisesArr);
+            // console.log("hi", result);
+            setFirstJobDataLoading(false);
+
+            setSecondJobDataLoading(false);
+
+            setShowFirstDefaultCard(false);
+
+            setShowSecondDefaultCard(false);
+
+            setShowFirstValueCard(true);
+
+            setShowSecondValueCard(true);
+            return;
+          }
           if (firstJobData?.length === 0) {
             try {
               setFirstJobDataLoading(true);
