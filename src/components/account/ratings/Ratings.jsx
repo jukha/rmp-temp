@@ -103,11 +103,9 @@ function Ratings() {
     );
   }
 
-  
-
   return (
     <div>
-      <div className="grid grid-cols-2 gap-6">
+      <div className="grid gap-6 lg:grid-cols-2">
         <div>
           <h2 className="font-bold">Rated Jobs</h2>
           <ul>

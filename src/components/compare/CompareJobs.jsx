@@ -3,7 +3,6 @@ import Button from "../../ui/Button";
 import JobValueCard from "./JobValueCard";
 import { useEffect, useState } from "react";
 import JobDefaultCard from "./JobDefaultCard";
-
 import { getJobBySlug } from "../../services/apiJob";
 import CardSkeleton from "../../ui/CardSkeleton";
 import { toast } from "react-toastify";
@@ -37,7 +36,7 @@ function CompareJobs() {
       const response = await getJobBySlug(jobSlug);
       return response;
     } catch (error) {
-      console.log("error", error.message);
+      toast.error(error.message);
     }
   }
 
@@ -79,7 +78,7 @@ function CompareJobs() {
             try {
               setFirstJobDataLoading(true);
               const res = await fetchJobData(pathParts[pathParts.length - 1]);
-              setFirstJobData(res.job);
+              setFirstJobData(res?.job);
             } catch (error) {
               console.log(error);
             } finally {
@@ -101,7 +100,7 @@ function CompareJobs() {
                   const res = await fetchJobData(
                     pathParts[pathParts.length - 2],
                   );
-                  setFirstJobData(res.job);
+                  setFirstJobData(res?.job);
                 } catch (error) {
                   console.log(error);
                 }
@@ -112,7 +111,7 @@ function CompareJobs() {
                   const res = await fetchJobData(
                     pathParts[pathParts.length - 1],
                   );
-                  setSecondJobData(res.job);
+                  setSecondJobData(res?.job);
                 } catch (error) {
                   console.log(error);
                 }
@@ -137,7 +136,7 @@ function CompareJobs() {
             try {
               setFirstJobDataLoading(true);
               const res = await fetchJobData(pathParts[pathParts.length - 2]);
-              setFirstJobData(res.job);
+              setFirstJobData(res?.job);
             } catch (error) {
               console.log(error);
             } finally {
@@ -148,7 +147,7 @@ function CompareJobs() {
             try {
               setSecondJobDataLoading(true);
               const res = await fetchJobData(pathParts[pathParts.length - 1]);
-              setSecondJobData(res.job);
+              setSecondJobData(res?.job);
             } catch (error) {
               console.log(error);
             } finally {
@@ -198,16 +197,16 @@ function CompareJobs() {
           {showFirstValueCard && (
             <JobValueCard jobData={firstJobData} jobNo={1} />
           )}
-          <div className="absolute -right-32 top-[272px] hidden transform lg:block">
-            {ratingData.map((rating, i) => (
-              <div
-                key={i}
-                className="mb-8 text-center font-semibold"
-              >
-                {rating}
-              </div>
-            ))}
-          </div>
+          {(firstJobData?.ratings?.data?.length > 0 ||
+            secondJobData?.ratings?.data?.length > 0) && (
+            <div className="absolute -right-32 top-[272px] hidden transform lg:block">
+              {ratingData.map((rating, i) => (
+                <div key={i} className="mb-8 text-center font-semibold">
+                  {rating}
+                </div>
+              ))}
+            </div>
+          )}
         </div>
         {!secondJobDataLoading && showSecondDefaultCard && (
           <JobDefaultCard jobNo={2} />

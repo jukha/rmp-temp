@@ -11,14 +11,14 @@ const searchByTypes = [
 function SearchForms() {
   const [searchBy, setSearchBy] = useState("jobs");
   return (
-    <div className="flex flex-grow flex-wrap items-center gap-4 lg:flex-nowrap">
+    <div className="flex flex-grow flex-col lg:items-center gap-4 lg:flex-row">
       <Dropdown
         value={searchBy}
         onChange={(e) => setSearchBy(e.value)}
         options={searchByTypes}
         optionLabel="name"
         placeholder="Select a City"
-        className="bg-primary  font-poppins"
+        className="bg-primary  font-poppins w-max"
         pt={{
           input: { className: "font-poppins py-3" },
           panel: { className: "bg-primary font-poppins" },

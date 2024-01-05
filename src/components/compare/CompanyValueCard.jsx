@@ -2,6 +2,13 @@ import { getBgColor } from "../../utils/calcBgColor";
 import { transformRatingKeys } from "../../utils/transformRatingsData";
 
 function CompanyValueCard({ companyData, companyNo }) {
+  if (!companyData) {
+    return (
+      <div className="mb-8 flex h-60 flex-col items-center justify-center bg-background text-center">
+        No data found
+      </div>
+    );
+  }
   return (
     <article>
       <div className="mb-8 flex h-60 flex-col items-center justify-center bg-background text-center">
@@ -13,7 +20,7 @@ function CompanyValueCard({ companyData, companyNo }) {
         </div>
         <p className="font-semibold uppercase">Overall</p>
         <p className="mb-6">
-          <span className="pr-1">{companyData.ratings?.length}</span>
+          <span className="pr-1">{companyData?.ratings?.length}</span>
           Rating
         </p>
         <h3 className="text-xl font-extrabold">{companyData?.name}</h3>

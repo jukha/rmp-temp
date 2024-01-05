@@ -2,6 +2,15 @@ import { getBgColor } from "../../utils/calcBgColor";
 import { transformRatingKeys } from "../../utils/transformRatingsData";
 
 function JobValueCard({ jobData, jobNo }) {
+
+  console.log(jobData?.ratings?.length);
+  if (!jobData) {
+    return (
+      <div className="mb-8 flex h-60 flex-col items-center justify-center bg-background text-center">
+        No data found
+      </div>
+    );
+  }
   return (
     <article>
       <div className="mb-8 flex h-60 flex-col items-center justify-center bg-background text-center">

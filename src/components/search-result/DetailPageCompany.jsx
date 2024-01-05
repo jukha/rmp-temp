@@ -120,7 +120,7 @@ function DetailPageCompany() {
               View all Jobs
             </Link>
           </div>
-          <div className="mt-6 flex flex-wrap items-center gap-3">
+          <div className="mt-6 flex flex-wrap justify-end items-center gap-3">
             <div>
               <Button
                 text="Rate"
@@ -145,7 +145,7 @@ function DetailPageCompany() {
             </h2>
             <p>Overall Quality</p>
           </div>
-          <div className="grid gap-8 sm:grid-cols-2 sm:gap-x-10 sm:gap-y-4">
+          <div className="grid gap-8 lg:grid-cols-2 sm:gap-x-10 sm:gap-y-4">
             {company?.parametersAvgRatings &&
               Object.entries(
                 transformRatingKeys(company.parametersAvgRatings),

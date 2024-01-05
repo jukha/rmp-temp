@@ -15,7 +15,7 @@ function DetailCompanyRatingItem({ rating }) {
 
   return (
     <div>
-      <div className="mb-6 mt-6 flex max-w-5xl flex-wrap items-start gap-0 bg-background px-6 py-5 lg:flex-nowrap lg:gap-10">
+      <div className="mb-6 mt-6 flex max-w-5xl flex-col items-start gap-0 bg-background px-6 py-5 lg:flex-row lg:gap-10">
         <div>
           <div className="mb-6">
             <p className="text-black">Overall</p>
@@ -32,7 +32,7 @@ function DetailCompanyRatingItem({ rating }) {
             {format(parseISO(rating.createdAt), "MMM do, yyyy")}
           </h3>
           <p>{rating.ratingText}</p>
-          <div className="mt-6 grid gap-8 sm:grid-cols-2 sm:gap-x-10 sm:gap-y-4">
+          <div className="mt-6 grid gap-8 md:grid-cols-2 sm:gap-x-10 sm:gap-y-4">
             {Object.entries(transformRatingKeys(rating.parametersRating)).map(
               ([ratingName, ratingValue], i) => (
                 <div

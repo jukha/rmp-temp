@@ -38,7 +38,7 @@ function CompareCompanies() {
       const response = await getCompanyBySlug(companySlug);
       return response;
     } catch (error) {
-      console.log("error", error.message);
+      toast.error(error.message);
     }
   }
 
@@ -57,7 +57,7 @@ function CompareCompanies() {
       toast.error(`Unable to copy to clipboard: ${err.message}`);
     }
   }
-
+  console.log(firstCompanyData);
   useEffect(() => {
     async function initialCheckup() {
       const pathParts = location.pathname.split("/").filter(Boolean);
@@ -72,6 +72,7 @@ function CompareCompanies() {
           setShowFirstValueCard(false);
 
           setShowSecondValueCard(false);
+
           break;
 
         //compare/companies/:slug
@@ -82,9 +83,9 @@ function CompareCompanies() {
               const res = await fetchCompanyData(
                 pathParts[pathParts.length - 1],
               );
-              setFirstCompanyData(res.company);
+              setFirstCompanyData(res?.company);
             } catch (error) {
-              console.log(error);
+              toast.error(error.message);
             } finally {
               setFirstCompanyDataLoading(false);
             }
@@ -107,9 +108,9 @@ function CompareCompanies() {
                   const res = await fetchCompanyData(
                     pathParts[pathParts.length - 2],
                   );
-                  setFirstCompanyData(res.company);
+                  setFirstCompanyData(res?.company);
                 } catch (error) {
-                  console.log(error);
+                  toast.error(error.message);
                 }
               })(),
               (async () => {
@@ -118,13 +119,13 @@ function CompareCompanies() {
                   const res = await fetchCompanyData(
                     pathParts[pathParts.length - 1],
                   );
-                  setSecondCompanyData(res.company);
+                  setSecondCompanyData(res?.company);
                 } catch (error) {
-                  console.log(error);
+                  toast.error(error.message);
                 }
               })(),
             ];
-            const result = await Promise.all(promisesArr);
+            await Promise.all(promisesArr);
             // console.log("hi", result);
             setFirstCompanyDataLoading(false);
 
@@ -145,9 +146,9 @@ function CompareCompanies() {
               const res = await fetchCompanyData(
                 pathParts[pathParts.length - 2],
               );
-              setFirstCompanyData(res.company);
+              setFirstCompanyData(res?.company);
             } catch (error) {
-              console.log(error);
+              toast.error(error.message);
             } finally {
               setFirstCompanyDataLoading(false);
             }
@@ -158,9 +159,9 @@ function CompareCompanies() {
               const res = await fetchCompanyData(
                 pathParts[pathParts.length - 1],
               );
-              setSecondCompanyData(res.company);
+              setSecondCompanyData(res?.company);
             } catch (error) {
-              console.log(error);
+              toast.error(error.message);
             } finally {
               setSecondCompanyDataLoading(false);
             }
@@ -210,13 +211,16 @@ function CompareCompanies() {
           {showFirstValueCard && (
             <CompanyValueCard companyData={firstCompanyData} companyNo={1} />
           )}
-          <div className="absolute -right-32 top-[272px] hidden transform lg:block">
-            {ratingData.map((rating, i) => (
-              <div key={i} className="mb-8 text-center font-semibold">
-                {rating}
-              </div>
-            ))}
-          </div>
+          {(firstCompanyData?.ratings?.data?.length > 0 ||
+            secondCompanyData?.ratings?.data?.length > 0) && (
+            <div className="absolute -right-32 top-[272px] hidden transform lg:block">
+              {ratingData.map((rating, i) => (
+                <div key={i} className="mb-8 text-center font-semibold">
+                  {rating}
+                </div>
+              ))}
+            </div>
+          )}
         </div>
         {!secondCompanyDataLoading && showSecondDefaultCard && (
           <CompanyDefaultCard companyNo={2} />
