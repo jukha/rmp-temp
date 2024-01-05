@@ -28,7 +28,7 @@ function Footer() {
 
             <li className="py-1">
               <Link
-                to="/comingsoon"
+                to="/site-guidelines"
                 className="text-[18px] font-light text-[#E8EDFF]"
               >
                 Site Guidelines

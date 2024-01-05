@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import CompanyDefaultCard from "./CompanyDefaultCard";
 import { getCompanyBySlug } from "../../services/apiCompany";
 import CardSkeleton from "../../ui/CardSkeleton";
+import { toast } from "react-toastify";
 
 const ratingData = [
   "reputation",
@@ -44,7 +45,17 @@ function CompareCompanies() {
     setSecondCompanyData([]);
     navigate("/compare/companies");
   }
-  console.log("firstCompanyData", firstCompanyData);
+
+  async function handleShareComparison() {
+    try {
+      const textToCopy = window.location.href;
+      await navigator.clipboard.writeText(textToCopy);
+      toast.success("URL copied to clipboard!");
+    } catch (err) {
+      toast.error(`Unable to copy to clipboard: ${err.message}`);
+    }
+  }
+
   useEffect(() => {
     async function initialCheckup() {
       const pathParts = location.pathname.split("/").filter(Boolean);
@@ -127,11 +138,17 @@ function CompareCompanies() {
             <Button
               type="primary"
               text="Reset"
+              disabled={showFirstDefaultCard && showSecondDefaultCard}
               onClick={handleResetCompaniesData}
             />
           </div>
           <div>
-            <Button type="primary" text="Share Comparison" />
+            <Button
+              type="primary"
+              text="Share Comparison"
+              disabled={showFirstDefaultCard || showSecondDefaultCard}
+              onClick={handleShareComparison}
+            />
           </div>
         </div>
       </div>

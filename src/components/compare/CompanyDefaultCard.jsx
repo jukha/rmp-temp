@@ -51,6 +51,7 @@ function CompanyDefaultCard({ companyNo }) {
             onSelect={handleSelect}
             onSetData={setCompanyData}
             disabled={companyNo === 2 && disableSecondCompanySearch}
+            ignoreHandleEnter={true}
           />
         </div>
       </div>
