@@ -1,10 +1,10 @@
 import { Tooltip } from "primereact/tooltip";
 import { toast } from "react-toastify";
 
-function ShareRatingButton() {
+function ShareRatingButton({ ratingId }) {
   async function handleClick() {
     try {
-      const textToCopy = window.location.href;
+      const textToCopy = `${window.location.origin}/rating/${ratingId}`;
 
       await navigator.clipboard.writeText(textToCopy);
 

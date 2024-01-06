@@ -100,7 +100,7 @@ function DetailJobRatingItem({ rating }) {
               />
             </div>
             <div className="flex items-center gap-4">
-              <ShareRatingButton />
+              <ShareRatingButton ratingId={rating._id} />
               <ReportRatingButton
                 isReported={rating.isReported}
                 ratingId={rating._id}

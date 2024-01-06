@@ -95,6 +95,7 @@ export const getUserRatingsForCompany = async (companySlug) => {
     handleApiError(error);
   }
 };
+
 export const getUserRatingsForJob = async (jobSlug) => {
   try {
     const response = await axios.get(

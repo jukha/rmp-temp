@@ -32,7 +32,7 @@ function DetailCompanyRatingItem({ rating }) {
             {format(parseISO(rating.createdAt), "MMM do, yyyy")}
           </h3>
           <p>{rating.ratingText}</p>
-          <div className="mt-6 grid gap-8 md:grid-cols-2 sm:gap-x-10 sm:gap-y-4">
+          <div className="mt-6 grid gap-8 sm:gap-x-10 sm:gap-y-4 md:grid-cols-2">
             {Object.entries(transformRatingKeys(rating.parametersRating)).map(
               ([ratingName, ratingValue], i) => (
                 <div
@@ -100,7 +100,7 @@ function DetailCompanyRatingItem({ rating }) {
               />
             </div>
             <div className="flex items-center gap-4">
-              <ShareRatingButton />
+              <ShareRatingButton ratingId={rating._id} />
               <ReportRatingButton
                 isReported={rating.isReported}
                 ratingId={rating._id}
