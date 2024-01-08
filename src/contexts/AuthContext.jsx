@@ -128,10 +128,10 @@ function AuthProvider({ children }) {
       dispatch({ type: "start_loading" });
 
       const response = await updateUserApi(data);
-      const updatedUser = response.data.user;
-
+      const { user: updatedUser, token: updatedToken } = response.data;
+      
       localStorage.setItem("user", JSON.stringify(updatedUser));
-      localStorage.setItem("token", token);
+      localStorage.setItem("token", updatedToken);
       dispatch({ type: "update_user", payload: { user: updatedUser } });
 
       toast.success(response.message);
