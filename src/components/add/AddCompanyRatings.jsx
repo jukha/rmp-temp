@@ -83,46 +83,51 @@ function AddCompanyRatings() {
             companyId: response.data.companyId,
             companyLocation: response.data.companyLocation,
           });
-          setReputationRating(
-            response.data.userRatingForCompany.parametersRating.reputation,
-          );
-          setCompanyCultureRating(
-            response.data.userRatingForCompany.parametersRating.companyCulture,
-          );
-          setAdvancementOpportunitiesRating(
-            response.data.userRatingForCompany.parametersRating
-              .opportunitiesForAdvancement,
-          );
-          setWorkLifeBalanceRating(
-            response.data.userRatingForCompany.parametersRating.workLifeBalance,
-          );
-          setBenefitsRating(
-            response.data.userRatingForCompany.parametersRating
-              .employeeBenefits,
-          );
-          setManagementRating(
-            response.data.userRatingForCompany.parametersRating
-              .leadershipAndManagement,
-          );
-          setTechnologyAdoptionRating(
-            response.data.userRatingForCompany.parametersRating
-              .innovationAndTechnologyAdoption,
-          );
-          setDiversityRating(
-            response.data.userRatingForCompany.parametersRating
-              .diversityAndInclusion,
-          );
-          setSocialResponsibilityRating(
-            response.data.userRatingForCompany.parametersRating
-              .corporateSocialResponsibility,
-          );
-          formik.setFieldValue(
-            "review",
-            response.data.userRatingForCompany.ratingText,
-          );
+
+          if (response.data.userRatingForCompany) {
+            setReputationRating(
+              response.data.userRatingForCompany.parametersRating.reputation,
+            );
+            setCompanyCultureRating(
+              response.data.userRatingForCompany.parametersRating
+                .companyCulture,
+            );
+            setAdvancementOpportunitiesRating(
+              response.data.userRatingForCompany.parametersRating
+                .opportunitiesForAdvancement,
+            );
+            setWorkLifeBalanceRating(
+              response.data.userRatingForCompany.parametersRating
+                .workLifeBalance,
+            );
+            setBenefitsRating(
+              response.data.userRatingForCompany.parametersRating
+                .employeeBenefits,
+            );
+            setManagementRating(
+              response.data.userRatingForCompany.parametersRating
+                .leadershipAndManagement,
+            );
+            setTechnologyAdoptionRating(
+              response.data.userRatingForCompany.parametersRating
+                .innovationAndTechnologyAdoption,
+            );
+            setDiversityRating(
+              response.data.userRatingForCompany.parametersRating
+                .diversityAndInclusion,
+            );
+            setSocialResponsibilityRating(
+              response.data.userRatingForCompany.parametersRating
+                .corporateSocialResponsibility,
+            );
+            formik.setFieldValue(
+              "review",
+              response.data.userRatingForCompany.ratingText,
+            );
+          }
         }
       } catch (error) {
-        console.log("err", errro);
+        console.log("err", error);
       } finally {
         setLoading(false);
       }
@@ -134,7 +139,7 @@ function AddCompanyRatings() {
   }
   return (
     <>
-      <div className="w-full bg-white py-4 shadow-[rgba(0,_0,_0,_0.25)_0px_25px_50px_-12px]">
+      <div className="w-full bg-white py-4 shadow-[rgba(0,_0,_0,_0.25)_0px_25px_50px_-12px] dark:bg-black">
         <div className="container mx-auto flex items-center justify-between px-4">
           <div>
             <p>{companyData?.companyLocation}</p>
@@ -144,11 +149,11 @@ function AddCompanyRatings() {
           </div>
         </div>
       </div>
-      <main className="bg-background">
-        <div className="container mx-auto px-4 py-8 sm:py-16">
+      <main className="bg-background dark:bg-black">
+        <div className="container mx-auto px-4 py-8 sm:py-16 ">
           <div className="grid gap-8 px-4  lg:grid-cols-2">
-            <div className=" bg-white p-7">
-              <h6 className="mb-4 text-center text-xl font-medium">
+            <div className=" bg-white p-7 dark:bg-black">
+              <h6 className="mb-4 text-center text-lg font-medium lg:text-xl">
                 Reputation
                 <span className="font-medium text-red-600">*</span>
               </h6>
@@ -157,8 +162,8 @@ function AddCompanyRatings() {
                 setRating={setReputationRating}
               />
             </div>
-            <div className=" bg-white p-7">
-              <h6 className="mb-4 text-center text-xl font-medium">
+            <div className=" bg-white p-7 dark:bg-black">
+              <h6 className="mb-4 text-center text-lg font-medium lg:text-xl">
                 Company culture
                 <span className="font-medium text-red-600">*</span>
               </h6>
@@ -167,8 +172,8 @@ function AddCompanyRatings() {
                 setRating={setCompanyCultureRating}
               />
             </div>
-            <div className=" bg-white p-7">
-              <h6 className="mb-4 text-center text-xl font-medium">
+            <div className=" bg-white p-7 dark:bg-black">
+              <h6 className="mb-4 text-center text-lg font-medium lg:text-xl">
                 Opportunities for advancement
                 <span className="font-medium text-red-600">*</span>
               </h6>
@@ -177,8 +182,8 @@ function AddCompanyRatings() {
                 setRating={setAdvancementOpportunitiesRating}
               />
             </div>
-            <div className=" bg-white p-7">
-              <h6 className="mb-4 text-center text-xl font-medium">
+            <div className=" bg-white p-7 dark:bg-black">
+              <h6 className="mb-4 text-center text-lg font-medium lg:text-xl">
                 Work-life balance
                 <span className="font-medium text-red-600">*</span>
               </h6>
@@ -187,8 +192,8 @@ function AddCompanyRatings() {
                 setRating={setWorkLifeBalanceRating}
               />
             </div>
-            <div className=" bg-white p-7">
-              <h6 className="mb-4 text-center text-xl font-medium">
+            <div className=" bg-white p-7 dark:bg-black">
+              <h6 className="mb-4 text-center text-lg font-medium lg:text-xl">
                 Employee benefits
                 <span className="font-medium text-red-600">*</span>
               </h6>
@@ -197,8 +202,8 @@ function AddCompanyRatings() {
                 setRating={setBenefitsRating}
               />
             </div>
-            <div className=" bg-white p-7">
-              <h6 className="mb-4 text-center text-xl font-medium">
+            <div className=" bg-white p-7 dark:bg-black">
+              <h6 className="mb-4 text-center text-lg font-medium lg:text-xl">
                 Leadership and management
                 <span className="font-medium text-red-600">*</span>
               </h6>
@@ -207,8 +212,8 @@ function AddCompanyRatings() {
                 setRating={setManagementRating}
               />
             </div>
-            <div className=" bg-white p-7">
-              <h6 className="mb-4 text-center text-xl font-medium">
+            <div className=" bg-white p-7 dark:bg-black">
+              <h6 className="mb-4 text-center text-lg font-medium lg:text-xl">
                 Innovation and technology adoption
                 <span className="font-medium text-red-600">*</span>
               </h6>
@@ -217,8 +222,8 @@ function AddCompanyRatings() {
                 setRating={setTechnologyAdoptionRating}
               />
             </div>
-            <div className=" bg-white p-7">
-              <h6 className="mb-4 text-center text-xl font-medium">
+            <div className=" bg-white p-7 dark:bg-black">
+              <h6 className="mb-4 text-center text-lg font-medium lg:text-xl">
                 Diversity and inclusion
                 <span className="font-medium text-red-600">*</span>
               </h6>
@@ -227,8 +232,8 @@ function AddCompanyRatings() {
                 setRating={setDiversityRating}
               />
             </div>
-            <div className=" bg-white p-7">
-              <h6 className="mb-4 text-center text-xl font-medium">
+            <div className=" bg-white p-7 dark:bg-black">
+              <h6 className="mb-4 text-center text-lg font-medium lg:text-xl">
                 Corporate social responsibility
                 <span className="font-medium text-red-600">*</span>
               </h6>
@@ -237,8 +242,8 @@ function AddCompanyRatings() {
                 setRating={setSocialResponsibilityRating}
               />
             </div>
-            <div className=" bg-white p-7">
-              <h6 className="mb-4 text-center text-xl font-medium">
+            <div className=" bg-white p-7 dark:bg-black">
+              <h6 className="mb-4 text-center text-lg font-medium lg:text-xl">
                 Financial stability
                 <span className="font-medium text-red-600">*</span>
               </h6>
@@ -261,7 +266,7 @@ function AddCompanyRatings() {
                 value={formik.values.review}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                className="w-full max-w-[900px] resize-none rounded-[34px] border border-gray-200 bg-white p-6 text-lg font-medium placeholder-gray-500 focus:border-gray-400 focus:outline-none"
+                className="w-full max-w-[900px] resize-none rounded-[34px] border border-gray-200 bg-white p-6 text-lg font-medium placeholder-gray-500 focus:border-gray-400 focus:outline-none dark:bg-gray-700"
                 rows={10}
               ></textarea>
               {formik.touched.review && formik.errors.review && (
@@ -272,9 +277,9 @@ function AddCompanyRatings() {
           <div className="mx-auto max-w-[900px] text-center">
             <p className="mb-6">
               By clicking the "Submit" button, I acknowledge that I have read
-              and agreed to the Rate My Professors Site Guidelines, Terms of Use
-              and Privacy Policy. Submitted data becomes the property of
-              RateMyProfessors.com. IP addresses are logged.
+              and agreed to the Job Joy Meter Site Guidelines, Terms of Use and
+              Privacy Policy. Submitted data becomes the property of Job Joy
+              Meter. IP addresses are logged.
             </p>
             <div className="mx-auto max-w-max">
               <Button

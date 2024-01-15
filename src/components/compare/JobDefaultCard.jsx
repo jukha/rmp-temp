@@ -40,7 +40,7 @@ function JobDefaultCard({ jobNo }) {
     <article>
       <div className="mb-8 flex h-60 flex-col justify-center bg-background px-8 text-center">
         <div>
-          <div className="mx-auto mb-8 max-w-max bg-gray-400 p-6 text-4xl font-extrabold">
+          <div className="mx-auto mb-8 max-w-max bg-gray-400 text-black p-6 text-4xl font-extrabold">
             N/A
           </div>
           <SearchJobForm
@@ -64,7 +64,7 @@ function JobDefaultCard({ jobNo }) {
                 return (
                   <span
                     key={index}
-                    className={`bg-gray-400 ${
+                    className={`bg-gray-400 dark:bg-gray-800 ${
                       index === 0
                         ? "rounded-bl-md rounded-tl-md"
                         : index === 4

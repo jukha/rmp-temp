@@ -25,7 +25,7 @@ function ShareRatingButton({ ratingId }) {
       />
       <button onClick={handleClick}>
         <i
-          className="pi pi-share-alt share cursor-pointer text-2xl"
+          className="pi pi-share-alt share cursor-pointer text-2xl text-black dark:text-white"
           data-pr-tooltip="Share this rating"
           data-pr-position="right"
           data-pr-at="right+5 top"

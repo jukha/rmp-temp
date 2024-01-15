@@ -13,17 +13,17 @@ function CompanyValueCard({ companyData, companyNo }) {
     <article>
       <div className="mb-8 flex h-60 flex-col items-center justify-center bg-background text-center">
         <div
-          className="mx-auto my-2 min-w-[80px] max-w-max px-3 py-4 text-center text-4xl font-extrabold"
+          className="mx-auto my-2 min-w-[80px] max-w-max px-3 py-4 text-center text-4xl font-extrabold text-black"
           style={{ background: getBgColor(1) }}
         >
           {companyData?.overallAvgRating}
         </div>
-        <p className="font-semibold uppercase">Overall</p>
-        <p className="mb-6">
+        <p className="font-semibold uppercase text-black">Overall</p>
+        <p className="mb-6 text-black">
           <span className="pr-1">{companyData?.ratings?.length}</span>
           Rating
         </p>
-        <h3 className="text-xl font-extrabold">{companyData?.name}</h3>
+        <h3 className="text-xl font-extrabold text-black">{companyData?.name}</h3>
       </div>
       {companyData?.ratings?.length === 0 ? (
         <p className="text-center font-bold">NO ratings found</p>
@@ -44,7 +44,7 @@ function CompanyValueCard({ companyData, companyNo }) {
                   <span
                     key={index}
                     className={`${
-                      index >= ratingValue ? "bg-gray-400" : "bg-primary"
+                      index >= ratingValue ? "bg-gray-400 dark:bg-gray-800" : "bg-primary"
                     } ${
                       index === 0
                         ? "rounded-bl-md rounded-tl-md"

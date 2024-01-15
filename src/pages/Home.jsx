@@ -4,7 +4,7 @@ import Button from "../ui/Button";
 function Home() {
   return (
     <main>
-      <section className="flex flex-col items-center justify-center bg-[linear-gradient(to_right_bottom,rgba(49,84,44,0.8),rgba(16,71,52,0.8)),url('/assets/man-reading-book.ec0041cf.jpeg')] bg-cover bg-center px-4 py-60">
+      <section className="flex flex-col items-center justify-center bg-[linear-gradient(to_right_bottom,rgba(49,84,44,0.8),rgba(16,71,52,0.8)),url('/assets/teamwork-3213924_1280.jpg')] bg-cover bg-center px-4 py-60">
         <h2 className="mb-10 text-3xl text-white lg:text-4xl">
           Enter your <b>company</b> to get started
         </h2>
@@ -12,7 +12,7 @@ function Home() {
           <SearchCompanyForm />
         </div>
       </section>
-      <section className="container mx-auto px-4 py-40 text-center">
+      {/* <section className="container mx-auto px-4 py-40 text-center">
         <h2 className="mb-4 text-3xl font-extrabold text-primary lg:text-4xl">
           Join the RMP Family
         </h2>
@@ -51,7 +51,7 @@ function Home() {
         <div className="mx-auto max-w-max">
           <Button text="Sign Up" type="primary" to="/signup" />
         </div>
-      </section>
+      </section> */}
     </main>
   );
 }

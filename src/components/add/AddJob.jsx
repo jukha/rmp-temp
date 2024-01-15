@@ -158,7 +158,7 @@ function AddJob() {
             disabled={loading}
             type="primary"
             htmlType="submit"
-            text="Add Company"
+            text="Add Job"
           />
         </div>
       </form>

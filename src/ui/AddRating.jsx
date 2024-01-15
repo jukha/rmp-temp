@@ -1,42 +1,75 @@
 import { InputNumber } from "primereact/inputnumber";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import ReactSpeedometer from "react-d3-speedometer";
 import styled from "styled-components";
 
 const ReactSpeedometerWrapper = styled.div`
+  width: 300px;
+  height: 200px;
+  @media (max-width: 576px) {
+    width: 250px;
+    height: 200px;
+  }
   .segment-value,
   .current-value {
     user-select: none;
-  }
-  svg {
-    height: 200px !important;
   }
 `;
 
 function AddRating({ setRating, initialValue }) {
   const [value, setValue] = useState(0);
+  const wrapperRef = useRef(null);
+
   function handleSelection(e) {
     setValue(e.value);
     setRating(e.value);
+g  }
+
+  function handleBlur() {
+    const parent = wrapperRef.current.parentNode;
+    const stickyHeaderHeight = "100";
+
+    if (parent && parent.nextElementSibling) {
+      const offset = parent.nextElementSibling.offsetTop - stickyHeaderHeight;
+
+      window.scrollTo({
+        top: offset,
+        behavior: "smooth",
+      });
+    }
   }
+
   useEffect(() => {
     if (initialValue) setValue(initialValue);
     else setValue(0);
   }, [initialValue]);
 
   return (
-    <div className="flex flex-col items-center justify-center">
+    <div ref={wrapperRef} className="flex flex-col items-center justify-center">
       <ReactSpeedometerWrapper>
-        <ReactSpeedometer minValue={0} maxValue={5} value={value} />
+        <ReactSpeedometer
+          segmentColors={[
+            "#FFB6C1",
+            "#FFD700",
+            "#BFBFA2",
+            "#90EE90",
+            "#ADD8E6",
+          ]}
+          fluidWidth={true}
+          minValue={0}
+          maxValue={5}
+          value={value}
+        />
       </ReactSpeedometerWrapper>
       <div>
         <InputNumber
           inputId="integeronly"
-          inputClassName="bg-transparent border-primary border p-2 font-poppins w-[150px] mx-auto text-center"
+          inputClassName="bg-transparent border-primary border p-2 font-poppins w-[150px] mx-auto text-center text-black dark:text-white"
           value={value}
           min={0}
           max={5}
           onValueChange={handleSelection}
+          onBlur={handleBlur}
         />
       </div>
     </div>

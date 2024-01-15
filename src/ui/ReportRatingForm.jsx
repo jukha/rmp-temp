@@ -79,13 +79,13 @@ function ReportRatingForm() {
           </strong>
         </h3>
         <div className="rounded-md border border-gray-400 p-6 shadow-lg ">
-          <div className="mb-6 bg-gray-200 p-4">
+          <div className="mb-6 bg-gray-200 p-4 dark:bg-black">
             <h4 className="mb-1 font-medium">You're reporting:</h4>
             <p className="mb-4">{ratingDetail?.ratingText}</p>
             <h4 className="mb-1 font-medium">What's the problem?</h4>
             <p>
-              If you think this comment is inconsistent with Rate My Professors
-              Site Guidelines, report it and tell us why.
+              If you think this comment is inconsistent with Job Joy Meter Site
+              Guidelines, report it and tell us why.
             </p>
           </div>
           <form onSubmit={formik.handleSubmit}>
@@ -95,7 +95,7 @@ function ReportRatingForm() {
                 value={formik.values.reportingReason}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                className="w-full resize-none rounded-md border border-gray-400 bg-white p-4 text-lg font-medium placeholder-gray-400 focus:border-gray-800 focus:outline-none"
+                className="w-full resize-none rounded-md border border-gray-400 bg-white p-4 text-lg font-medium placeholder-gray-400 focus:border-gray-800 focus:outline-none dark:bg-black"
                 placeholder="Tell us what's wrong with this comment..."
                 rows={10}
               ></textarea>
@@ -107,7 +107,12 @@ function ReportRatingForm() {
                 )}
             </div>
             <div className="mt-6 flex max-w-max gap-3">
-              <Button text="Report" disabled={reporting} htmlType="submit" type="primary" />
+              <Button
+                text="Report"
+                disabled={reporting}
+                htmlType="submit"
+                type="primary"
+              />
               <Button text="Cancel" />
             </div>
           </form>

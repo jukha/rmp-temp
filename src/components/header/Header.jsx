@@ -99,7 +99,7 @@ function Header() {
             className="lg:hidden"
             onClick={() => setshowMobileSearchForms(true)}
           >
-            <i className="pi pi-search text-xl"></i>
+            <i className="pi pi-search text-xl text-black"></i>
           </button>
         )}
         {isAuthenticated && (
@@ -109,7 +109,7 @@ function Header() {
         )}
         {isAuthenticated ? (
           <div className="flex items-center gap-4">
-            <p className="hidden capitalize sm:block">Welcome {userName}!</p>
+            <p className="hidden capitalize sm:block text-black">Welcome {userName}!</p>
             <button
               className="flex h-[50px] w-[50px] items-center justify-center rounded-full bg-primary text-xl uppercase text-white"
               onClick={(e) => userMenuRef.current.toggle(e)}
@@ -132,7 +132,7 @@ function Header() {
               className="absolute right-6 top-4"
               onClick={() => setshowMobileSearchForms(false)}
             >
-              <i className="pi pi-times"></i>
+              <i className="pi pi-times text-black"></i>
             </button>
             <SearchForms />
           </div>
@@ -143,7 +143,7 @@ function Header() {
               className="absolute right-6 top-4"
               onClick={() => setShowMobileAuthGroup(false)}
             >
-              <i className="pi pi-times"></i>
+              <i className="pi pi-times text-black"></i>
             </button>
             <AuthBtnGroup />
           </div>

@@ -5,11 +5,11 @@ import { useState } from "react";
 
 const searchByTypes = [
   { name: "Jobs", value: "jobs" },
-  { name: "Company", value: "company" },
+  { name: "Company", value: "companies" },
 ];
 
 function SearchForms() {
-  const [searchBy, setSearchBy] = useState("jobs");
+  const [searchBy, setSearchBy] = useState("companies");
   return (
     <div className="flex flex-grow flex-col lg:items-center gap-4 lg:flex-row">
       <Dropdown
@@ -17,14 +17,13 @@ function SearchForms() {
         onChange={(e) => setSearchBy(e.value)}
         options={searchByTypes}
         optionLabel="name"
-        placeholder="Select a City"
         className="bg-primary  font-poppins w-max"
         pt={{
           input: { className: "font-poppins py-3" },
           panel: { className: "bg-primary font-poppins" },
         }}
       />
-      {searchBy === "company" ? <SearchCompanyForm /> : <SearchJobForm />}
+      {searchBy === "companies" ? <SearchCompanyForm /> : <SearchJobForm />}
     </div>
   );
 }

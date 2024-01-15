@@ -40,7 +40,7 @@ function LikeRatingButton({ parentFunc, likeCount, ratingId, feedbackType }) {
               }}
             />
             <i
-              className="pi pi-thumbs-up like cursor-pointer text-2xl"
+              className="pi pi-thumbs-up like cursor-pointer text-2xl text-black dark:text-white"
               data-pr-tooltip="Helpful"
               data-pr-position="left"
               data-pr-at="right+20 top"

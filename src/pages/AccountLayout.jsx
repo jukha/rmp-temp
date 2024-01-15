@@ -17,6 +17,12 @@ const CustomTabMenu = styled(TabMenu)`
   .p-tabmenuitem.p-highlight .p-menuitem-link {
     border-bottom: 2px solid rgb(21, 21, 21);
   }
+
+  @media (prefers-color-scheme: dark) {
+    .p-tabmenuitem.p-highlight .p-menuitem-link {
+      border-color: #fff;
+    }
+  }
 `;
 
 function AccountLayout() {

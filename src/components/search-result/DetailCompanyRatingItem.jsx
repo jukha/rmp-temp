@@ -15,12 +15,12 @@ function DetailCompanyRatingItem({ rating }) {
 
   return (
     <div>
-      <div className="mb-6 mt-6 flex max-w-5xl flex-col items-start gap-0 bg-background px-6 py-5 lg:flex-row lg:gap-10">
+      <div className="mb-6 mt-6 flex max-w-5xl flex-col items-start gap-0 bg-background dark:bg-black px-6 py-5 lg:flex-row lg:gap-10">
         <div>
           <div className="mb-6">
             <p className="text-black">Overall</p>
             <div
-              className="my-2 px-3 py-4 text-4xl font-extrabold"
+              className="my-2 px-3 py-4 text-4xl font-extrabold dark:text-black"
               style={{ background: getBgColor(rating?.ratingAverage) }}
             >
               {rating?.ratingAverage}
@@ -49,7 +49,7 @@ function DetailCompanyRatingItem({ rating }) {
                           return (
                             <span
                               key={index}
-                              className={`bg-gray-300 ${
+                              className={`bg-gray-300 dark:bg-gray-800 ${
                                 index === 0
                                   ? "rounded-bl-md rounded-tl-md"
                                   : index === 4

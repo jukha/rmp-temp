@@ -141,7 +141,7 @@ function CompanyAllJobs() {
         {companyjobs.map((job, i) => (
           <div
             key={i}
-            className="relative mb-6 mt-6 flex max-w-4xl flex-wrap items-start gap-10 bg-background px-6 py-5"
+            className="relative mb-6 mt-6 flex max-w-4xl flex-wrap items-start gap-10 bg-background dark:bg-black px-6 py-5"
           >
             <Link
               className=" flex  flex-wrap items-start gap-10"
@@ -149,10 +149,10 @@ function CompanyAllJobs() {
             >
               <div>
                 <p className="text-black">Quality</p>
-                <div className="my-2 bg-green-300 px-3 py-4 text-center text-4xl font-extrabold">
+                <div className="my-2 bg-green-300 text-black px-3 py-4 text-center text-4xl font-extrabold">
                   {job?.overallAvgRating}
                 </div>
-                <span className="text-gray-700">
+                <span className="text-gray-700 dark:text-white">
                   {job?.totalRatings} ratings
                 </span>
               </div>

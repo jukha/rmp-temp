@@ -128,7 +128,7 @@ function DetailPageJob() {
         {/* rating */}
         <div className="max-w-3xl flex-1">
           <div className="mb-10 bg-gray-200 p-6">
-            <h2 className="mb-4 font-bold">Rating Distribution</h2>
+            <h2 className="mb-4 font-bold text-black">Rating Distribution</h2>
             {ratingDistribution.map((rating, i) => {
               return (
                 <div
@@ -136,16 +136,16 @@ function DetailPageJob() {
                   className="mb-4 grid grid-cols-[100px_1fr_50px] gap-3"
                 >
                   <div className="flex justify-end gap-2">
-                    <span className="text-end font-medium capitalize">
+                    <span className="text-end font-medium capitalize text-black">
                       {rating.name}
                     </span>
-                    <span>{rating.value}</span>
+                    <span className="text-black">{rating.value}</span>
                   </div>
                   <span
-                    className="w-full rounded-3xl py-3"
+                    className="w-full rounded-3xl py-3 text-black"
                     style={{ background: getBgColor(rating.value) }}
                   ></span>
-                  <span>{rating.count}</span>
+                  <span className="text-black">{rating.count}</span>
                 </div>
               );
             })}
@@ -164,7 +164,7 @@ function DetailPageJob() {
                   <span className="flex min-h-[48px] min-w-[48px] items-center justify-center bg-primary p-3 font-bold text-white">
                     {similarJob.overallAvgRating}
                   </span>
-                  <h5>{similarJob.title}</h5>
+                  <h5 className="text-black">{similarJob.title}</h5>
                 </Link>
               ))}
             </div>

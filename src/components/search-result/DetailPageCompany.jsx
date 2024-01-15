@@ -102,7 +102,7 @@ function DetailPageCompany() {
 
   return (
     <>
-      <div className="z-50 w-full bg-white py-4 shadow-[rgba(0,_0,_0,_0.25)_0px_25px_50px_-12px] lg:py-6">
+      <div className="z-50 w-full bg-white dark:bg-black py-4 shadow-[rgba(0,_0,_0,_0.25)_0px_25px_50px_-12px] lg:py-6">
         <div className="container mx-auto flex items-center justify-between px-4">
           <div>
             <p>{company?.location}</p>
@@ -159,10 +159,10 @@ function DetailPageCompany() {
                   </div>
                   <div className="relative">
                     <span
-                      className="absolute block h-full w-2/3 bg-black"
+                      className="absolute block h-full w-full"
                       style={{ background: getBgColor(ratingValue) }}
                     ></span>
-                    <h6 className="relative py-1 text-4xl font-extrabold">
+                    <h6 className="relative p-2 text-4xl font-extrabold dark:text-black">
                       {ratingValue.toFixed(1)}
                     </h6>
                   </div>

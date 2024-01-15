@@ -32,7 +32,7 @@ function DislikeRatingButton({
     <>
       <button onClick={onClick} className="flex items-center gap-2">
         {loading ? (
-          <i className="pi pi-spin pi-spinner text-2xl"></i>
+          <i className="pi pi-spin pi-spinner text-2xl text-black dark:text-white"></i>
         ) : (
           <span>
             <Tooltip

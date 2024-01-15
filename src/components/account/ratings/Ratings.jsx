@@ -111,7 +111,7 @@ function Ratings() {
           <ul>
             {userRatedJobs.map((jobElement) => (
               <li
-                className="mb-6 mt-6  max-w-4xl bg-background px-6 py-5"
+                className="mb-6 mt-6  max-w-4xl bg-background dark:bg-black px-6 py-5"
                 key={jobElement._id}
               >
                 <Link
@@ -121,7 +121,7 @@ function Ratings() {
                   <div>
                     <p className="text-black">Quality</p>
                     <div
-                      className="my-2 px-3 py-4 text-center text-4xl font-extrabold"
+                      className="my-2 px-3 py-4 text-center text-4xl font-extrabold text-black"
                       style={{
                         background: getBgColor(jobElement.ratingAverage),
                       }}

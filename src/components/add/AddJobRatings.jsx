@@ -80,38 +80,40 @@ function AddJobRatings() {
           ]);
           setJobId(response.data.jobId);
 
-          setCompensationRating(
-            response.data.userRatingForJob.parametersRating.compensation,
-          );
-          setWorkLifeBalanceRating(
-            response.data.userRatingForJob.parametersRating.workLifeBalance,
-          );
-          setJobSecurityRating(
-            response.data.userRatingForJob.parametersRating.jobSecurity,
-          );
-          setGrowthOpportunitiesRating(
-            response.data.userRatingForJob.parametersRating
-              .opportunitiesForGrowth,
-          );
-          setCompanyCultureRating(
-            response.data.userRatingForJob.parametersRating.companyCulture,
-          );
-          setJobSatisfactionRating(
-            response.data.userRatingForJob.parametersRating.jobSatisfaction,
-          );
-          setWorkloadRating(
-            response.data.userRatingForJob.parametersRating.workload,
-          );
-          setBenefitsRating(
-            response.data.userRatingForJob.parametersRating.benefits,
-          );
-          setFlexibilityRating(
-            response.data.userRatingForJob.parametersRating.flexibility,
-          );
-          formik.setFieldValue(
-            "review",
-            response.data.userRatingForJob.ratingText,
-          );
+          if (response.data.userRatingForJob) {
+            setCompensationRating(
+              response.data.userRatingForJob.parametersRating.compensation,
+            );
+            setWorkLifeBalanceRating(
+              response.data.userRatingForJob.parametersRating.workLifeBalance,
+            );
+            setJobSecurityRating(
+              response.data.userRatingForJob.parametersRating.jobSecurity,
+            );
+            setGrowthOpportunitiesRating(
+              response.data.userRatingForJob.parametersRating
+                .opportunitiesForGrowth,
+            );
+            setCompanyCultureRating(
+              response.data.userRatingForJob.parametersRating.companyCulture,
+            );
+            setJobSatisfactionRating(
+              response.data.userRatingForJob.parametersRating.jobSatisfaction,
+            );
+            setWorkloadRating(
+              response.data.userRatingForJob.parametersRating.workload,
+            );
+            setBenefitsRating(
+              response.data.userRatingForJob.parametersRating.benefits,
+            );
+            setFlexibilityRating(
+              response.data.userRatingForJob.parametersRating.flexibility,
+            );
+            formik.setFieldValue(
+              "review",
+              response.data.userRatingForJob.ratingText,
+            );
+          }
         }
       } catch (error) {
         console.log(error);
@@ -127,7 +129,7 @@ function AddJobRatings() {
 
   return (
     <>
-      <div className="z-50 w-full bg-white py-4 shadow-[rgba(0,_0,_0,_0.25)_0px_25px_50px_-12px]">
+      <div className="z-50 w-full bg-white py-4 shadow-[rgba(0,_0,_0,_0.25)_0px_25px_50px_-12px] dark:bg-black">
         <div className="container mx-auto flex items-center justify-between px-4">
           <div>
             <p>{apiData[0]?.companyTitle}</p>
@@ -137,10 +139,10 @@ function AddJobRatings() {
           </div>
         </div>
       </div>
-      <main className="bg-background">
-        <div className="container px-4 mx-auto py-16">
+      <main className="bg-background dark:bg-black">
+        <div className="container mx-auto px-4 py-16">
           <div className="grid gap-8 px-4  lg:grid-cols-2">
-            <div className=" bg-white p-7">
+            <div className=" bg-white p-7 dark:bg-black">
               <h6 className="mb-4 text-center text-xl font-medium">
                 Compensation
                 <span className="font-medium text-red-600">*</span>
@@ -150,7 +152,7 @@ function AddJobRatings() {
                 setRating={setCompensationRating}
               />
             </div>
-            <div className=" bg-white p-7">
+            <div className=" bg-white p-7 dark:bg-black">
               <h6 className="mb-4 text-center text-xl font-medium">
                 Work-life balance
                 <span className="font-medium text-red-600">*</span>
@@ -160,7 +162,7 @@ function AddJobRatings() {
                 setRating={setWorkLifeBalanceRating}
               />
             </div>
-            <div className=" bg-white p-7">
+            <div className=" bg-white p-7 dark:bg-black">
               <h6 className="mb-4 text-center text-xl font-medium">
                 Job security
                 <span className="font-medium text-red-600">*</span>
@@ -170,7 +172,7 @@ function AddJobRatings() {
                 setRating={setJobSecurityRating}
               />
             </div>
-            <div className=" bg-white p-7">
+            <div className=" bg-white p-7 dark:bg-black">
               <h6 className="mb-4 text-center text-xl font-medium">
                 Opportunities for growth
                 <span className="font-medium text-red-600">*</span>
@@ -180,7 +182,7 @@ function AddJobRatings() {
                 setRating={setGrowthOpportunitiesRating}
               />
             </div>
-            <div className=" bg-white p-7">
+            <div className=" bg-white p-7 dark:bg-black">
               <h6 className="mb-4 text-center text-xl font-medium">
                 Company culture
                 <span className="font-medium text-red-600">*</span>
@@ -190,7 +192,7 @@ function AddJobRatings() {
                 setRating={setCompanyCultureRating}
               />
             </div>
-            <div className=" bg-white p-7">
+            <div className=" bg-white p-7 dark:bg-black">
               <h6 className="mb-4 text-center text-xl font-medium">
                 Job satisfaction
                 <span className="font-medium text-red-600">*</span>
@@ -200,7 +202,7 @@ function AddJobRatings() {
                 setRating={setJobSatisfactionRating}
               />
             </div>
-            <div className=" bg-white p-7">
+            <div className=" bg-white p-7 dark:bg-black">
               <h6 className="mb-4 text-center text-xl font-medium">
                 Workload
                 <span className="font-medium text-red-600">*</span>
@@ -210,7 +212,7 @@ function AddJobRatings() {
                 setRating={setWorkloadRating}
               />
             </div>
-            <div className=" bg-white p-7">
+            <div className=" bg-white p-7 dark:bg-black">
               <h6 className="mb-4 text-center text-xl font-medium">
                 Benefits
                 <span className="font-medium text-red-600">*</span>
@@ -220,7 +222,7 @@ function AddJobRatings() {
                 setRating={setBenefitsRating}
               />
             </div>
-            <div className=" bg-white p-7">
+            <div className=" bg-white p-7 dark:bg-black">
               <h6 className="mb-4 text-center text-xl font-medium">
                 Flexibility
                 <span className="font-medium text-red-600">*</span>
@@ -243,7 +245,7 @@ function AddJobRatings() {
                 value={formik.values.review}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                className="w-full max-w-[900px] resize-none rounded-[34px] border border-gray-200 bg-white p-6 text-lg font-medium placeholder-gray-500 focus:border-gray-400 focus:outline-none"
+                className="w-full max-w-[900px] resize-none rounded-[34px] border border-gray-200 bg-white p-6 text-lg font-medium placeholder-gray-500 focus:border-gray-400 focus:outline-none dark:bg-gray-700"
                 rows={10}
               ></textarea>
               {formik.touched.review && formik.errors.review && (
@@ -254,9 +256,9 @@ function AddJobRatings() {
           <div className="mx-auto max-w-[900px] text-center">
             <p className="mb-6">
               By clicking the "Submit" button, I acknowledge that I have read
-              and agreed to the Rate My Professors Site Guidelines, Terms of Use
-              and Privacy Policy. Submitted data becomes the property of
-              RateMyProfessors.com. IP addresses are logged.
+              and agreed to the Job Joy Meter Site Guidelines, Terms of Use and
+              Privacy Policy. Submitted data becomes the property of Job Joy
+              Meter. IP addresses are logged.
             </p>
             <div className="mx-auto max-w-max">
               <Button

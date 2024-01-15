@@ -65,13 +65,13 @@ function SavedJobs() {
           <Link
             key={i}
             to={`/jobs/${el?.job?.slug}`}
-            className="relative mb-6 mt-6 flex max-w-4xl flex-wrap items-start gap-10 bg-background px-6 py-5"
+            className="relative mb-6 mt-6 flex max-w-4xl flex-wrap items-start gap-10 bg-background dark:bg-black px-6 py-5"
           >
             <div className="flex flex-wrap items-start gap-10">
               <div>
                 <p className="text-black">Quality</p>
                 <div
-                  className="my-2 px-3 py-4 text-center text-4xl font-extrabold"
+                  className="my-2 px-3 py-4 text-center text-4xl font-extrabold text-black"
                   style={{
                     background: getBgColor(
                       el?.ratingSummary?.data?.overallAvgRating,
@@ -80,7 +80,7 @@ function SavedJobs() {
                 >
                   {el?.ratingSummary?.data?.overallAvgRating}
                 </div>
-                <span className="text-gray-700">
+                <span className="text-gray-700 dark:text-gray-400">
                   {el?.ratingSummary?.data?.totalRatings} ratings
                 </span>
               </div>
