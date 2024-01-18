@@ -82,7 +82,7 @@ function SearchResultPageJobs() {
             <div>
               <p className="text-black">Quality</p>
               <div
-                className="my-2 px-3 py-4 text-4xl font-extrabold"
+                className="my-2 px-3 py-4 text-4xl font-extrabold text-black"
                 style={{
                   background: getBgColor(
                     job?.ratingSummary?.data?.overallAvgRating,
@@ -97,9 +97,9 @@ function SearchResultPageJobs() {
             </div>
 
             <div>
-              <h3 className="mb-2 text-xl font-bold">{job.title}</h3>
-              <h4 className="mb-2">{job.description}</h4>
-              <p className="mb-2 font-medium">{job.company.name}</p>
+              <h3 className="mb-2 text-xl font-bold text-black">{job.title}</h3>
+              <h4 className="mb-2 text-black">{job.description}</h4>
+              <p className="mb-2 font-medium text-black">{job.company.name}</p>
             </div>
           </Link>
         ))}
