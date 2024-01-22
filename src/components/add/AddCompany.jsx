@@ -70,7 +70,7 @@ function AddCompany() {
           <input
             type="text"
             id="name"
-            className="w-full rounded-[34px] border border-gray-200 bg-gray-100 focus:bg-transparent  py-3 pl-3 text-sm font-medium placeholder-gray-500 focus:border-gray-400 focus:bg-transparent focus:bg-white focus:outline-none dark:bg-transparent"
+            className="w-full rounded-[34px] border border-gray-200 bg-gray-100  py-3 pl-3 text-sm font-medium placeholder-gray-500 focus:border-gray-400 focus:bg-transparent focus:bg-white focus:outline-none dark:bg-transparent dark:focus:bg-transparent"
             name="name"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
@@ -90,7 +90,7 @@ function AddCompany() {
           <input
             type="text"
             id="description"
-            className="w-full rounded-[34px] border border-gray-200 bg-gray-100 focus:bg-transparent  py-3 pl-3 text-sm font-medium placeholder-gray-500 focus:border-gray-400 focus:bg-transparent focus:bg-white focus:outline-none dark:bg-transparent"
+            className="w-full rounded-[34px] border border-gray-200 bg-gray-100 py-3  pl-3 text-sm font-medium placeholder-gray-500 focus:border-gray-400 dark:focus:bg-transparent focus:bg-transparent focus:bg-white focus:outline-none dark:bg-transparent"
             name="description"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
@@ -110,7 +110,7 @@ function AddCompany() {
           <input
             type="text"
             id="location"
-            className="w-full rounded-[34px] border border-gray-200 bg-gray-100 focus:bg-transparent  py-3 pl-3 text-sm font-medium placeholder-gray-500 focus:border-gray-400 focus:bg-transparent focus:bg-white focus:outline-none dark:bg-transparent"
+            className="w-full rounded-[34px] border border-gray-200 bg-gray-100 py-3  pl-3 text-sm font-medium placeholder-gray-500 focus:border-gray-400 dark:focus:bg-transparent focus:bg-transparent focus:bg-white focus:outline-none dark:bg-transparent"
             name="location"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}

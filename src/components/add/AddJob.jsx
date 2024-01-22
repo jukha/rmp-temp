@@ -51,7 +51,7 @@ function AddJob() {
 
   return (
     <main className="container mx-auto px-4 py-16">
-      <h1 className="mb-2 text-3xl sm:text-5xl font-extrabold">Add a Job</h1>
+      <h1 className="mb-2 text-3xl font-extrabold sm:text-5xl">Add a Job</h1>
       <p className="mb-10">
         Please use the search bar above to make sure that the company does not
         already exist.
@@ -64,7 +64,7 @@ function AddJob() {
           <input
             type="text"
             id="title"
-            className="w-full rounded-[34px] border border-gray-200 bg-gray-100 dark:bg-transparent focus:bg-transparent py-3 pl-3 text-sm font-medium placeholder-gray-500 focus:border-gray-400 focus:bg-white focus:outline-none"
+            className="w-full rounded-[34px] border border-gray-200 bg-gray-100 py-3 pl-3 text-sm font-medium placeholder-gray-500 focus:border-gray-400 focus:bg-transparent focus:bg-white focus:outline-none dark:bg-transparent"
             name="title"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
@@ -95,7 +95,7 @@ function AddJob() {
           <input
             type="text"
             id="description"
-            className="w-full rounded-[34px] border border-gray-200 bg-gray-100 dark:bg-transparent focus:bg-transparent py-3 pl-3 text-sm font-medium placeholder-gray-500 focus:border-gray-400 focus:bg-white focus:outline-none"
+            className="w-full rounded-[34px] border border-gray-200 bg-gray-100 py-3 pl-3 text-sm font-medium placeholder-gray-500 focus:border-gray-400 focus:bg-transparent focus:bg-white focus:outline-none dark:bg-transparent dark:focus:bg-transparent"
             name="description"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
@@ -115,7 +115,7 @@ function AddJob() {
           <input
             type="text"
             id="location"
-            className="w-full rounded-[34px] border border-gray-200 bg-gray-100 dark:bg-transparent focus:bg-transparent py-3 pl-3 text-sm font-medium placeholder-gray-500 focus:border-gray-400 focus:bg-white focus:outline-none"
+            className="w-full rounded-[34px] border border-gray-200 bg-gray-100 py-3 pl-3 text-sm font-medium placeholder-gray-500 focus:border-gray-400 focus:bg-transparent focus:bg-white focus:outline-none dark:bg-transparent dark:focus:bg-transparent"
             name="location"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
