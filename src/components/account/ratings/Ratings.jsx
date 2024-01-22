@@ -111,7 +111,7 @@ function Ratings() {
           <ul>
             {userRatedJobs.map((jobElement) => (
               <li
-                className="mb-6 mt-6  max-w-4xl bg-background dark:bg-black px-6 py-5"
+                className="mb-6 mt-6  max-w-4xl bg-background px-6 py-5 dark:bg-black"
                 key={jobElement._id}
               >
                 <Link
@@ -145,7 +145,7 @@ function Ratings() {
           <ul>
             {userRatedCompanies.map((companyElement) => (
               <li
-                className="mb-6 mt-6  max-w-4xl bg-background px-6 py-5"
+                className="mb-6 mt-6  max-w-4xl bg-background dark:bg-black px-6 py-5"
                 key={companyElement._id}
               >
                 <Link

@@ -59,13 +59,13 @@ const AccountSettings = () => {
           </div>
           <div className="mb-6">
             <span className="mb-2 inline-block">Email:</span>
-            <div className="rounded-[34px] border border-gray-200 bg-gray-100 py-3 pl-3 text-sm font-medium ">
+            <div className="rounded-[34px] border border-gray-200 bg-gray-100 dark:bg-transparent py-3 pl-3 text-sm font-medium ">
               {user.email}
             </div>
           </div>
           <div className="mb-6">
             <span className="mb-2 inline-block">Password:</span>
-            <div className="flex items-center gap-1 rounded-[34px] border border-gray-200 bg-gray-100 py-3 pl-3 ">
+            <div className="flex items-center gap-1 rounded-[34px] border border-gray-200 bg-gray-100 dark:bg-transparent py-3 pl-3 ">
               <i className="pi pi-ellipsis-h font-medium"></i>
               <i className="pi pi-ellipsis-h font-medium"></i>
             </div>
@@ -88,7 +88,7 @@ const AccountSettings = () => {
                 type="password"
                 id="oldPassword"
                 name="oldPassword"
-                className="w-full rounded-[34px] border border-gray-200 bg-gray-100 py-3 pl-3 text-sm font-medium placeholder-gray-500 focus:border-gray-400 focus:bg-white focus:outline-none"
+                className="w-full rounded-[34px] border border-gray-200 bg-gray-100 dark:bg-transparent py-3 pl-3 text-sm font-medium placeholder-gray-500 focus:border-gray-400 focus:bg-white focus:outline-none"
               />
               <ErrorMessage
                 name="oldPassword"
@@ -104,7 +104,7 @@ const AccountSettings = () => {
                 type="password"
                 id="newPassword"
                 name="newPassword"
-                className="w-full rounded-[34px] border border-gray-200 bg-gray-100 py-3 pl-3 text-sm font-medium placeholder-gray-500 focus:border-gray-400 focus:bg-white focus:outline-none"
+                className="w-full rounded-[34px] border border-gray-200 bg-gray-100 dark:bg-transparent py-3 pl-3 text-sm font-medium placeholder-gray-500 focus:border-gray-400 focus:bg-white focus:outline-none"
               />
               <ErrorMessage
                 name="newPassword"

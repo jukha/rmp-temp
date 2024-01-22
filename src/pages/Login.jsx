@@ -170,13 +170,13 @@ function Login() {
                   ) : null}
                 </div>
 
-                <Link
+                {/* <Link
                   className="my-5 block text-center text-primary"
                   to="/forget"
                 >
                   Forgot Password?
-                </Link>
-                <div className="mt-5">
+                </Link> */}
+                <div className="mt-9">
                   <Button type="primary" htmlType="submit" text="Continue" />
                 </div>
                 <p className="mt-6 text-center text-xs text-gray-600">

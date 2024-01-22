@@ -64,7 +64,7 @@ function AddJob() {
           <input
             type="text"
             id="title"
-            className="w-full rounded-[34px] border border-gray-200 bg-gray-100 py-3 pl-3 text-sm font-medium placeholder-gray-500 focus:border-gray-400 focus:bg-white focus:outline-none"
+            className="w-full rounded-[34px] border border-gray-200 bg-gray-100 dark:bg-transparent focus:bg-transparent py-3 pl-3 text-sm font-medium placeholder-gray-500 focus:border-gray-400 focus:bg-white focus:outline-none"
             name="title"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
@@ -95,7 +95,7 @@ function AddJob() {
           <input
             type="text"
             id="description"
-            className="w-full rounded-[34px] border border-gray-200 bg-gray-100 py-3 pl-3 text-sm font-medium placeholder-gray-500 focus:border-gray-400 focus:bg-white focus:outline-none"
+            className="w-full rounded-[34px] border border-gray-200 bg-gray-100 dark:bg-transparent focus:bg-transparent py-3 pl-3 text-sm font-medium placeholder-gray-500 focus:border-gray-400 focus:bg-white focus:outline-none"
             name="description"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
@@ -115,7 +115,7 @@ function AddJob() {
           <input
             type="text"
             id="location"
-            className="w-full rounded-[34px] border border-gray-200 bg-gray-100 py-3 pl-3 text-sm font-medium placeholder-gray-500 focus:border-gray-400 focus:bg-white focus:outline-none"
+            className="w-full rounded-[34px] border border-gray-200 bg-gray-100 dark:bg-transparent focus:bg-transparent py-3 pl-3 text-sm font-medium placeholder-gray-500 focus:border-gray-400 focus:bg-white focus:outline-none"
             name="location"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}

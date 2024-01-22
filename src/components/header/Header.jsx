@@ -65,7 +65,7 @@ function Header() {
   }, [location.pathname]);
   return (
     <header className="sticky top-0 z-50 bg-background">
-      <nav className="mx-auto flex items-center justify-between gap-7 px-4 py-6 xl:container">
+      <nav className="mx-auto flex items-center justify-between gap-7 px-4 py-6 xl:container dark:bg-gray-900">
         {!isAuthenticated && (
           <>
             <ul className="hidden items-center gap-5 lg:flex">
@@ -99,7 +99,7 @@ function Header() {
             className="lg:hidden"
             onClick={() => setshowMobileSearchForms(true)}
           >
-            <i className="pi pi-search text-xl text-black"></i>
+            <i className="pi pi-search text-xl text-black dark:text-white"></i>
           </button>
         )}
         {isAuthenticated && (
@@ -109,7 +109,9 @@ function Header() {
         )}
         {isAuthenticated ? (
           <div className="flex items-center gap-4">
-            <p className="hidden capitalize sm:block text-black">Welcome {userName}!</p>
+            <p className="hidden capitalize text-black sm:block">
+              Welcome {userName}!
+            </p>
             <button
               className="flex h-[50px] w-[50px] items-center justify-center rounded-full bg-primary text-xl uppercase text-white"
               onClick={(e) => userMenuRef.current.toggle(e)}
@@ -138,12 +140,12 @@ function Header() {
           </div>
         )}
         {showMobileAuthGroup && (
-          <div className="fixed left-0 right-0 top-0 flex w-full justify-center bg-white px-4 py-8">
+          <div className="fixed left-0 right-0 top-0 flex w-full justify-center bg-white px-4 py-8 dark:bg-gray-900">
             <button
               className="absolute right-6 top-4"
               onClick={() => setShowMobileAuthGroup(false)}
             >
-              <i className="pi pi-times text-black"></i>
+              <i className="pi pi-times text-black dark:text-white"></i>
             </button>
             <AuthBtnGroup />
           </div>
