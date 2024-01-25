@@ -1,4 +1,5 @@
 import { InputNumber } from "primereact/inputnumber";
+import { Slider } from "primereact/slider";
 import { useEffect, useState, useRef } from "react";
 import ReactSpeedometer from "react-d3-speedometer";
 import styled from "styled-components";
@@ -19,11 +20,15 @@ const ReactSpeedometerWrapper = styled.div`
 function AddRating({ setRating, initialValue }) {
   const [value, setValue] = useState(0);
   const wrapperRef = useRef(null);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
   function handleSelection(e) {
     setValue(e.value);
     setRating(e.value);
-g  }
+    if (windowWidth < 768) {
+      setTimeout(() => handleBlur(), 1000);
+    }
+  }
 
   function handleBlur() {
     const parent = wrapperRef.current.parentNode;
@@ -43,6 +48,19 @@ g  }
     if (initialValue) setValue(initialValue);
     else setValue(0);
   }, [initialValue]);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    // Cleanup the event listener on component unmount
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   return (
     <div ref={wrapperRef} className="flex flex-col items-center justify-center">
@@ -69,8 +87,22 @@ g  }
           min={0}
           max={5}
           onValueChange={handleSelection}
+          readOnly={windowWidth < 768}
           onBlur={handleBlur}
         />
+        {windowWidth < 768 && (
+          <Slider
+            value={value}
+            min={0}
+            max={5}
+            // onChange={(e) => setValue(e.value)}
+            onChange={handleSelection}
+            className="bg-primary"
+            pt={{
+              range: "bg-accent",
+            }}
+          />
+        )}
       </div>
     </div>
   );
